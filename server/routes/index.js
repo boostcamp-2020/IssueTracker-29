@@ -1,9 +1,14 @@
+const express = require('express');
+const router = express.Router();
+
 const userRouter = require('./user');
 const milestoneRouter = require('./milestone');
 const issueRouter = require('./issue');
 const commentRouter = require('./comment');
 
-app.use('/user', userRouter);
-app.use('/milestone', milestoneRouter);
-app.use('/issue', issueRouter);
-app.use('/comment', commentRouter);
+router.use('/user', userRouter);
+router.use('/milestone', milestoneRouter);
+router.use('/issue', issueRouter);
+router.use('/comment', commentRouter);
+
+module.exports = router;
