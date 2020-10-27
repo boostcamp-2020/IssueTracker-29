@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 
-const config = require("../config")[process.env.NODE_ENV || "development"];
+const config = require('../config')[process.env.NODE_ENV || 'development'];
 
 const pool = mysql.createPool({
   host: config.host,
@@ -11,7 +11,7 @@ const pool = mysql.createPool({
 
 const db = async (sql, params = []) => {
   try {
-    const connection = await pool.getConnection(async conn => conn);
+    const connection = await pool.getConnection(async (conn) => conn);
     try {
       const [result] = await connection.query(sql, params);
       connection.release();
