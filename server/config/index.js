@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: "config/.env" });
+
 const {
   DB_USER,
   DB_PASSWD,
