@@ -47,7 +47,6 @@ const updateIssue = async (req, res) => {
 
 const deleteIssue = async (req, res) => {
   const { issueid: issueID } = req.params;
-    console.log(issueID);
   const selectedIssue = await db(READ_ISSUE_BY_ID, [issueID]);
 
   if (!selectedIssue) {
