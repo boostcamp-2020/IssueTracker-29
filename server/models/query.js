@@ -9,6 +9,11 @@ module.exports = {
   UPDATE_LABEL: 'update label set name = ?, description = ?, color = ? where id = ?;',
   DELETE_LABEL: 'delete from label where id = ?;',
 
+  READ_LABEL_IN_ISSUE: 'select id, label_id, issue_id from label_issue where issue_id = ?;',
+  CHECK_DUPLICATE_LABEL_IN_ISSUE: 'select id from label_issue where label_id = ? and issue_id = ?',
+  CREATE_LABEL_IN_ISSUE: 'insert into label_issue(label_id, issue_id) values(?, ?);',
+  DELETE_LABEL_IN_ISSUE: 'delete from label_issue where label_id = ? and issue_id = ?',
+
   READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue',
   CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
 
