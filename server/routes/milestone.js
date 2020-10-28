@@ -2,12 +2,12 @@ const express = require('express');
 const milestoneMiddleware = require('../middlewares/milestone');
 const router = express.Router();
 
-router.get('/', milestoneMiddleware.readMilestone);
+router.get('/:state', milestoneMiddleware.readMilestone);
 router.post('/', milestoneMiddleware.createMilestone);
 router.put('/:milestoneid', milestoneMiddleware.updateMilestone);
 router.delete('/:milestoneid', milestoneMiddleware.deleteMilestone);
 
-router.get('/issue', milestoneMiddleware.readIssueByMilestone);
+router.get('/:milestoneid/issue', milestoneMiddleware.readIssueByMilestone);
 router.post('/:milestoneid/issue', milestoneMiddleware.createIssueByMilestone);
 router.put('/:milestoneid/state', milestoneMiddleware.toggleMilestoneState);
 
