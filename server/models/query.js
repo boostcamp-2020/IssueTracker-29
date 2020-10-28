@@ -4,6 +4,14 @@ module.exports = {
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
   DELETE_COMMEN: 'delete from comment where id = ?;',
 
+  READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue',
+  CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
+
+  READ_ISSUE_BY_ID: 'select id, title, contents, is_open, user_id, milestone_id from issue where id = ?;',
+  UPDATE_ISSUE: 'update issue set title = ?, contents = ?, is_open = ? where id = ?;',
+  DELETE_ISSUE: 'delete from issue where id = ?;',
+  TOGGLE_ISSUE_STATE: 'update issue set isOpen = ? where id = ?;',
+
   READ_MILESTONE: `select id, title, due_date, description, (select count(*) from milestone where is_open=1) as openCount, (select count(*) from milestone where is_open=0) as closeCount
   from milestone where is_open = ?;`,
   CREATE_MILESTONE: 'insert into milestone(title, due_date, description, is_open, user_id) values(?, ?, ?, ?, ?);',
