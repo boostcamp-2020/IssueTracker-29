@@ -17,7 +17,7 @@ router.post('/:issueid/comment', commentMiddleware.createComment);
 
 router.get('/:issueid/label/', labelMiddleware.readLabelInIssue);
 router.post('/:issueid/label/:labelid', labelMiddleware.createLabelInIssue);
-router.delete('/:issueid/label/:labelid', labelMiddleware.deleteLabelInIssue)
+router.delete('/:issueid/label/:labelid', labelMiddleware.deleteLabelInIssue);
 
 
 module.exports = router;
