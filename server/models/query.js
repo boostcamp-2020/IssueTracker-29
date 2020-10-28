@@ -2,7 +2,12 @@ module.exports = {
   CREATE_COMMENT: 'insert into comment(contents, issue_id, user_id) values(?, ?, ?);',
   READ_COMMENT: 'select id, contents from comment where issue_id = ?;',
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
-  DELETE_COMMEN: 'delete from comment where id = ?;',
+  DELETE_COMMENT: 'delete from comment where id = ?;',
+
+  CREATE_LABEL: 'insert into label(name, description, color) values(?, ?, ?);',
+  READ_LABEL: 'select name, description, color from label;',
+  UPDATE_LABEL: 'update label set name = ?, description = ?, color = ? where id = ?;',
+  DELETE_LABEL: 'delete from label where id = ?;',
 
   READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue',
   CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
