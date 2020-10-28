@@ -10,8 +10,8 @@ const readAllIssues = async (req, res) => {
 };
 
 const createIssue = async (req, res) => {
-  const { title, contents, userID, milestoneID } = req.body;
-  const result = await db(CREATE_ISSUE, [title, contents, OPEN, userID, milestoneID]);
+  const { title, contents, milestoneID } = req.body;
+  const result = await db(CREATE_ISSUE, [title, contents, OPEN, req.user.id, milestoneID]);
 
   return res.status(201).json({ success: true, result: result.insertId });
 };
@@ -28,7 +28,7 @@ const readIssueByID = async (req ,res) => {
 };
 
 const updateIssue = async (req, res) => {
-  const { title, contents, isopen } = req.body;
+  const { title, contents, isOpen } = req.body;
   const { issueid: issueID } = req.params;
   
   const selectedIssue = await db(READ_ISSUE_BY_ID, [issueID]);
@@ -41,19 +41,19 @@ const updateIssue = async (req, res) => {
     return res.status(401).json({ success: false, message: '허용되지 않은 작업입니다' });
   }
   
-  await db(UPDATE_ISSUE, [title, contents, isopen]);
+  await db(UPDATE_ISSUE, [title, contents, isOpen, issueID]);
   return res.status(200).json({ success: true });
 };
 
 const deleteIssue = async (req, res) => {
   const { issueid: issueID } = req.params;
-
+    console.log(issueID);
   const selectedIssue = await db(READ_ISSUE_BY_ID, [issueID]);
 
   if (!selectedIssue) {
     return res.status(404).json({ success: false, message: '없는 이슈입니다' });
   }
-
+  
   if (selectedIssue[0].user_id !== req.user.id) {
     return res.status(401).json({ success: false, message: '허용되지 않은 작업입니다' });
   }
