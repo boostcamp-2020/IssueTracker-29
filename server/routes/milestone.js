@@ -7,4 +7,7 @@ router.post('/', milestoneMiddleware.createMilestone);
 router.put('/:milestoneid', milestoneMiddleware.updateMilestone);
 router.delete('/:milestoneid', milestoneMiddleware.deleteMilestone);
 
+router.get('/issue', milestoneMiddleware.readIssueByMilestone);
+router.post('/:milestoneid/issue', milestoneMiddleware.createIssueByMilestone);
+
 module.exports = router;
