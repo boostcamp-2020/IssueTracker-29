@@ -4,10 +4,10 @@ module.exports = {
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
   DELETE_COMMEN: 'delete from comment where id = ?;',
 
-  READ_ALL_ISSUE: 'select * from issue',
+  READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue',
   CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
 
-  READ_ISSUE_BY_ID: 'select * from issue where id = ?;',
+  READ_ISSUE_BY_ID: 'select id, title, contents, is_open, user_id from issue where id = ?;',
   UPDATE_ISSUE: 'update issue set title = ?, contents = ?, is_open = ? where id = ?;',
   DELETE_ISSUE: 'delete from issue where id = ?;',
   TOGGLE_ISSUE_STATE: 'update issue set isOpen = ? where id = ?;',

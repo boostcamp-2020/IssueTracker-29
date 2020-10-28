@@ -2,6 +2,7 @@ const db = require('../models/connection');
 const { CREATE_ISSUE, READ_ISSUE_BY_ID, UPDATE_ISSUE, DELETE_ISSUE, READ_ALL_ISSUE, TOGGLE_ISSUE_STATE } = require('../models/query');
 
 const OPEN = 1;
+const CLOSE = 0;
 
 const readAllIssues = async (req, res) => {
   const result = await db(READ_ALL_ISSUE);
@@ -47,7 +48,6 @@ const updateIssue = async (req, res) => {
 
 const deleteIssue = async (req, res) => {
   const { issueid: issueID } = req.params;
-    console.log(issueID);
   const selectedIssue = await db(READ_ISSUE_BY_ID, [issueID]);
 
   if (!selectedIssue) {
@@ -68,11 +68,11 @@ const toggleIssueState = async (req, res) => {
 
   let revertedState;
 
-  if (isOpen === 0) {
-      revertedState = 1;
+  if (isOpen === CLOSE) {
+      revertedState = OPEN;
   }
   else {
-      revertedState = 0;
+      revertedState = CLOSE;
   }
 
   await db(TOGGLE_ISSUE_STATE, [revertedState]);
