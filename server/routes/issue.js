@@ -14,9 +14,12 @@ router.put('/:issueid', issueMiddleware.updateIssue);
 
 router.delete('/:issueid', issueMiddleware.deleteIssue);
 
+router.put('/:issueid/state', issueMiddleware.toggleIssueState);
+
 // add or get comment by issue
 router.get('/:issueid/comment', commentMiddleware.readCommentsByIssueID);
 
 router.post('/:issueid/comment', commentMiddleware.createComment);
+
 
 module.exports = router;

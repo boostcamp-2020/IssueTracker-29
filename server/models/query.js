@@ -10,7 +10,8 @@ module.exports = {
   READ_ISSUE_BY_ID: 'select * from issue where id = ?;',
   UPDATE_ISSUE: 'update issue set title = ?, contents = ?, is_open = ? where id = ?;',
   DELETE_ISSUE: 'delete from issue where id = ?;',
-  
+  TOGGLE_ISSUE_STATE: 'update issue set isOpen = ? where id = ?;',
+
   READ_MILESTONE: `select id, title, due_date, description, (select count(*) from milestone where is_open=1) as openCount, (select count(*) from milestone where is_open=0) as closeCount
   from milestone where is_open = ?;`,
   CREATE_MILESTONE: 'insert into milestone(title, due_date, description, is_open, user_id) values(?, ?, ?, ?, ?);',

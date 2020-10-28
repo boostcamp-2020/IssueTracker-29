@@ -1,5 +1,5 @@
 const db = require('../models/connection');
-const { CREATE_ISSUE, READ_ISSUE_BY_ID, UPDATE_ISSUE, DELETE_ISSUE, READ_ALL_ISSUE } = require('../models/query');
+const { CREATE_ISSUE, READ_ISSUE_BY_ID, UPDATE_ISSUE, DELETE_ISSUE, READ_ALL_ISSUE, TOGGLE_ISSUE_STATE } = require('../models/query');
 
 const OPEN = 1;
 
@@ -63,4 +63,21 @@ const deleteIssue = async (req, res) => {
   return res.status(200).json({success: true});
 };
 
-module.exports = { readAllIssues, createIssue, readIssueByID, updateIssue, deleteIssue };
+const toggleIssueState = async (req, res) => {
+  const { isOpen } = req.body;
+
+  let revertedState;
+
+  if (isOpen === 0) {
+      revertedState = 1;
+  }
+  else {
+      revertedState = 0;
+  }
+
+  await db(TOGGLE_ISSUE_STATE, [revertedState]);
+
+  return res.status(200).json({success: true});
+}
+
+module.exports = { readAllIssues, createIssue, readIssueByID, updateIssue, deleteIssue, toggleIssueState };
