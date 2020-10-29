@@ -12,7 +12,7 @@ module.exports = {
   ignorePatterns: ['node_modules/'],
   rules: {
     'prettier/prettier': 'error',
-    'no-console': 'off',
-    'class-methods-use-this': 'enable',
+    'no-console': 'warn',
+    'class-methods-use-this': 'warn',
   },
 };
