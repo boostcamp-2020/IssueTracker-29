@@ -5,14 +5,16 @@ const { CREATE_USER, READ_USER } = require('../../models/query');
 const db = require('../../models/connection');
 
 module.exports = () => {
-  passport.serializeUser( (user, done) => {
+  passport.serializeUser((user, done) => {
     return done(null, user);
   });
 
   const githubCallback = async (accessToken, refreshToken, profile, done) => {
     let user = await db(READ_USER, [profile.username]);
-    if(!user) await db(CREATE_USER, [true, profile.username, null]);
-    user = await db(READ_USER, [profile.username]);
+    if(!user) {
+      await db(CREATE_USER, [true, profile.username, null]);
+      user = await db(READ_USER, [profile.username]);
+    }
     return done(null, user[0]);
   };
 

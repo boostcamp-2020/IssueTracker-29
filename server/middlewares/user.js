@@ -4,14 +4,11 @@ const db = require('../models/connection');
 const { READ_USER } = require('../models/query');
 
 const createToken = (req, res) => {
-  console.log(req.user.username);
   if(!req.user) return res.status(404).json({ success: false, message: '유저가 없습니다.' });
 
   const payload = { id: req.user.id, username: req.user.username };
   const expiresIn = { expiresIn: '1 days'};
   const token = jwt.sign(payload, config.secretKey, expiresIn);
-
-  console.log(req.user, token);
 
   res.cookie('user', token, { httpOnly: true });
   return res.status(200).json({ success: true });
