@@ -78,6 +78,6 @@ const toggleIssueState = async (req, res) => {
   await db(TOGGLE_ISSUE_STATE, [revertedState]);
 
   return res.status(200).json({success: true});
-}
+};
 
 module.exports = { readAllIssues, createIssue, readIssueByID, updateIssue, deleteIssue, toggleIssueState };

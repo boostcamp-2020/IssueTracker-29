@@ -12,7 +12,12 @@ module.exports = {
   UPDATE_LABEL: 'update label set name = ?, description = ?, color = ? where id = ?;',
   DELETE_LABEL: 'delete from label where id = ?;',
 
-  READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue',
+  READ_LABEL_IN_ISSUE: 'select id, label_id, issue_id from label_issue where issue_id = ?;',
+  CHECK_DUPLICATE_LABEL_IN_ISSUE: 'select id from label_issue where label_id = ? and issue_id = ?;',
+  CREATE_LABEL_IN_ISSUE: 'insert into label_issue(label_id, issue_id) values(?, ?);',
+  DELETE_LABEL_IN_ISSUE: 'delete from label_issue where label_id = ? and issue_id = ?;',
+
+  READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue;',
   CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
 
   READ_ISSUE_BY_ID: 'select id, title, contents, is_open, user_id, milestone_id from issue where id = ?;',
@@ -25,8 +30,9 @@ module.exports = {
   CREATE_MILESTONE: 'insert into milestone(title, due_date, description, is_open, user_id) values(?, ?, ?, ?, ?);',
   UPDATE_MILESTONE: 'update milestone set title = ?, due_date = ?, description = ? where id = ?;',
   DELETE_MILESTONE: 'delete from milestone where id = ?;',
+  TOGGLE_MILESTONE_STATE: 'update milestone set isOpen = ? where id = ?;',
 
   READ_ISSUE_BY_MILESTONE: `select id, title, contents, user_id, (select count(*) from issue where is_open=1 AND milestone_id = ?) as openCount, (select count(*) from issue where is_open=0 AND milestone_id = ?) as closeCount
-  from issue where milestoneid = ? AND is_open = 1`,
-  CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?)',
+  from issue where milestoneid = ? AND is_open = 1;`,
+  CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?);',
 }
