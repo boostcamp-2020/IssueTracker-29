@@ -25,12 +25,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');module.exports = 
   },// webpack-dev-server의 옵션을 설정
   devServer: {
 	// 정적 파일 경로 설정
-    contentBase: path.join(__dirname, "public/"),
-    port: 3000,
-	// 번들된 코드가 실제로 어디 있는지 서버에게 알려주는 거임
-    publicPath: "http://localhost:3000/dist/",
-	// devserver 에서만 핫로딩 가능하게
-    hotOnly: true
+    contentBase: path.join(__dirname, "./dist"),
+    port: 80,
+    hotOnly: true,
+    historyApiFallback: true
   },
   plugins: [
 	new webpack.HotModuleReplacementPlugin(),
