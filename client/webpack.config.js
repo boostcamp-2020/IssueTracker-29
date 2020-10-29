@@ -19,8 +19,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');module.exports = 
   resolve: { extensions: ["*", ".js", ".jsx"] },// output: 번들링 된 결과물을 어디다 둘 것인지에 대한 설정이 가능.
   output: {
     path: path.resolve(__dirname, "dist/"),
-	// 번들이 생기는 경로를 지정. webpack-dev-server도 이를 참조
-    publicPath: "",
     filename: "bundle.js"
   },// webpack-dev-server의 옵션을 설정
   devServer: {
