@@ -13,11 +13,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');module.exports = 
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
         options: { presets: ["@babel/env"] }
-      },
-	// 두번째 룰: CSS 처리에 대한 것. css-loader가 작동하기 위해서는 style-loader가 필요.
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
       }
     ]
   },// resolve: 웹팩이 해석할 확장자를 지정. 
@@ -25,7 +20,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');module.exports = 
   output: {
     path: path.resolve(__dirname, "dist/"),
 	// 번들이 생기는 경로를 지정. webpack-dev-server도 이를 참조
-    publicPath: "/dist/",
+    publicPath: "",
     filename: "bundle.js"
   },// webpack-dev-server의 옵션을 설정
   devServer: {
@@ -36,12 +31,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');module.exports = 
     publicPath: "http://localhost:3000/dist/",
 	// devserver 에서만 핫로딩 가능하게
     hotOnly: true
-  },  plugins: [
+  },
+  plugins: [
 	new webpack.HotModuleReplacementPlugin(),
 	new HtmlWebpackPlugin({
 	// 번들링된 JS를 주입하고 결과물을 옮길 대상이 되는 파일을 지정
       template: './public/index.html',
     }),
-	new CleanWebpackPlugin(),
-]
+    new CleanWebpackPlugin(),
+  ]
 };
