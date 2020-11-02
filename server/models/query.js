@@ -32,6 +32,7 @@ module.exports = {
   DELETE_MILESTONE: 'delete from milestone where id = ?;',
   TOGGLE_MILESTONE_STATE: 'update milestone set isOpen = ? where id = ?;',
 
+  READ_EVERY_ISSUE_LABEL: 'select label_issue.id, label_issue.label_id, label_issue.issue_id, label.name, label.color from label_issue join label where label_issue.label_id = label.id;',
   READ_ISSUE_BY_MILESTONE: `select id, title, contents, user_id, (select count(*) from issue where is_open=1 AND milestone_id = ?) as openCount, (select count(*) from issue where is_open=0 AND milestone_id = ?) as closeCount
   from issue where milestoneid = ? AND is_open = 1;`,
   CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?);',
