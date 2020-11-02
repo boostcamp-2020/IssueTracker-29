@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+import { useIssues } from './api.js';
+
+import TopBar from '../topbar/topbar.js';
+import IssueItem from './issueItem.js';
+
 const Issue = (props) => {
-    const [issues, setIssues] = useState([]);
-    let mappedIssue = ["안녕", "ㅎㅇ", "니하오", "Guten Morgen"];
+  const issues = useIssues();
+  
+  let issueComponent = issues.map((item, idx) => <IssueItem key={idx} title={item.title} />);
 
-    useEffect(() => {
-    })
-
-    let issueComponent = mappedIssue.map(item => <p>{item}</p>);
-
-    return (
-        <div>
-            {issueComponent}
-        </div>
-    )
+  return (
+    <>
+      <TopBar/>
+      <div>
+        {issueComponent}
+      </div>
+    </>
+  )
 }
 
 export default Issue;
