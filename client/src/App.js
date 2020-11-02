@@ -4,6 +4,8 @@ import { createGlobalStyle } from 'styled-components';
 import Header from './components/header/header.js';
 import Login from "./components/login/index.js";
 import Issue from "./components/issue/issue.js";
+import IssueItem from "./components/issue/issueItem.js";
+import IssueDetail from "./components/issue/issueDetail.js";
 
 const ResetStyle = createGlobalStyle`
   body {
@@ -18,6 +20,7 @@ const App = () => {
             <>
                 <ResetStyle />
                 <Header />
+                <Route exact path="/issue/:id" component={IssueDetail} />
                 <Route exact path="/issue" component={Issue}/>
                 <Route exact path="/" component={Login}/>
             </>
