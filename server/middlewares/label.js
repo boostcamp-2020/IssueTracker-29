@@ -1,5 +1,5 @@
 const db = require('../models/connection');
-const { CREATE_LABEL, READ_LABEL, UPDATE_LABEL, DELETE_LABEL, READ_EVERY_ISSUE_LABEL, READ_LABEL_IN_ISSUE, CREATE_LABEL_IN_ISSUE, DELETE_LABEL_IN_ISSUE, CHECK_DUPLICATE_LABEL_IN_ISSUE } = require('../models/query');
+const { CREATE_LABEL, READ_LABEL, UPDATE_LABEL, DELETE_LABEL, READ_ALL_ISSUE_LABEL, READ_LABEL_IN_ISSUE, CREATE_LABEL_IN_ISSUE, DELETE_LABEL_IN_ISSUE, CHECK_DUPLICATE_LABEL_IN_ISSUE } = require('../models/query');
 
 const createLabel = async (req, res) => {
     const { name, description, color } = req.body;
@@ -26,7 +26,7 @@ const deleteLabel = async (req, res) => {
 };
 
 const readEveryIssueLabel = async (req, res) => {
-    const result = await db(READ_EVERY_ISSUE_LABEL);
+    const result = await db(READ_ALL_ISSUE_LABEL);
     return res.json({success: true, result});
 }
 
