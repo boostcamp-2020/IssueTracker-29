@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
+import { Link } from "react-router-dom";
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -38,7 +39,9 @@ const TopBar = (props) => {
             <SearchIssueContainer placeholder="is:open is:issue"/>
             <LabelButton>Labels</LabelButton>
             <MilestoneButton>Milestones</MilestoneButton>
-            <NewIssueButton>New issue</NewIssueButton>
+            <Link to="/issue/create">
+                <NewIssueButton>New issue</NewIssueButton>
+            </Link>
         </TopBarConatiner>
     )
 }
