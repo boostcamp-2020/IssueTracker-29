@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import FilterButton from './filterButton';
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -7,8 +8,6 @@ const TopBarConatiner = styled.div`
     flex-direction: row;
     justify-content: center;
 `;
-
-const FilterButton = styled.select``;
 
 const SearchIssueContainer = styled.input``;
 
@@ -35,15 +34,7 @@ const TopBar = (props) => {
 
     return (
         <TopBarConatiner>
-            <FilterButton>
-              <option selected disabled hidden>Filters</option>
-              <option disabled>Filter issues</option>
-              <option>Open issues</option>
-              <option>Your issues</option>
-              <option>Everything assigned to you</option>
-              <option>Everything mentioning you</option>
-              <option>Closed issues</option>
-            </FilterButton>
+            <FilterButton />
             <SearchIssueContainer placeholder="is:open is:issue"/>
             <LabelButton>Labels</LabelButton>
             <MilestoneButton>Milestones</MilestoneButton>
