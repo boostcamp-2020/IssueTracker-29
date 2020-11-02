@@ -41,12 +41,12 @@ const IssueItem = (props) => {
       {isOpenLogo}
       <div>
         <TitleContainer>
-          <Link to={'/issue/' + props.article.id}><p>{props.article.title}</p></Link>
+          <Link to={'/issue/' + props.article.id}><p>{props.article.issue_title}</p></Link>
           <LabelListContainer>
             {labelComponents}
           </LabelListContainer>
         </TitleContainer>
-        <p>#{props.article.id}</p>
+        <p>#{props.article.id} by {props.article.username}</p>
       </div>
     </IssueItemContainer>
   )
