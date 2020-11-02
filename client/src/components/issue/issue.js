@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 
 import { useIssues } from './api.js';
 
@@ -9,7 +8,7 @@ import IssueItem from './issueItem.js';
 const Issue = (props) => {
   const issues = useIssues();
   
-  let issueComponent = issues.map((item, idx) => <IssueItem key={idx} title={item.title} />);
+  let issueComponent = issues.map((item) => <IssueItem key={item.id} article={item} />);
 
   return (
     <>
