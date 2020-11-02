@@ -3,8 +3,8 @@ import { Route } from "react-router-dom";
 import { createGlobalStyle } from 'styled-components';
 import Header from './components/header/header.js';
 import Login from "./components/login/index.js";
-import Issue from "./components/issue/issue.js";
-import NewIssue from "./components/issue/newIssue/newIssue.js";
+import Issue from "./components/issuelist/issuelist.js";
+import NewIssue from "./components/newIssue/newIssue.js";
 
 const ResetStyle = createGlobalStyle`
   body {
