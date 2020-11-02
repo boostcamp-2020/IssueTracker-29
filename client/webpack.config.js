@@ -24,7 +24,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');module.exports = 
   devServer: {
 	// 정적 파일 경로 설정
     contentBase: path.join(__dirname, "./dist"),
-    port: 80,
+    port: 8080,
     hotOnly: true,
     historyApiFallback: true
   },
