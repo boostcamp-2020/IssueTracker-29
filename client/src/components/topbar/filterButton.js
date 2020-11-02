@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import ModalContainer from '../../../util/modal';
+import Modal from '../common/modal';
 
 const FilterButton = (props) => {
   const [onModal, setOnModal] = useState(false);
@@ -16,7 +16,7 @@ const FilterButton = (props) => {
   return (
     <div onClick={null}>
       <input type="button" value="Filters ▼" onClick={() => setOnModal(!onModal)} />
-      <ModalContainer onModal={onModal} title={title} items={option} />
+      <Modal onModal={onModal} title={title} items={option} />
     </div>
   );
 };
