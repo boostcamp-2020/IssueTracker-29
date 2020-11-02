@@ -19,14 +19,27 @@ const SubmitButton = styled.button`
 `;
 
 const NewIssue = (props) => {
-    return (
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
+    const changeTitleData = (e) => {
+        setTitle(e.target.value);
+    };
+
+    const changeContentData = (e) => {
+        setContent(e.target.value);
+    };
+
+    const submitClickEvent = (e) => {
+        // alert(title + content);
+    };
+
+    return (
         <NewIssueContainer>
-            <TitleContainer placeholder="Title"/>
-            <ContentContainer placeholder="Leave a comment"/>
-            <SubmitButton>Submit new issue</SubmitButton>
+            <TitleContainer placeholder="Title" onChange={changeTitleData}/>
+            <ContentContainer placeholder="Leave a comment" onChange={changeContentData}/>
+            <SubmitButton onClick={submitClickEvent}>Submit new issue</SubmitButton>
         </NewIssueContainer>
-    
     )
 };
 
