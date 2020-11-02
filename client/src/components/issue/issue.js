@@ -12,7 +12,8 @@ const Issue = (props) => {
 
   return (
     <>
-      <TopBar/>
+      <TopBar />
+      <TabList />
       <div>
         {issueComponent}
       </div>
