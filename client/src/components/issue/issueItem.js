@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import SvgCloseLogo from './svgCloseLogo';
 import SvgOpenLogo from './svgOpenLogo';
@@ -28,7 +29,7 @@ const IssueItem = (props) => {
       <input type="checkbox"/>
       {isOpenLogo}
       <div>
-        <p>{props.article.title}</p>
+        <Link to={'/issue/' + props.article.id}><p>{props.article.title}</p></Link>
         <p>#{props.article.id}</p>
       </div>
     </IssueItemContainer>
