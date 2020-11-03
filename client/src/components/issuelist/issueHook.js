@@ -3,7 +3,7 @@ import { sendGetRequest } from '../common/api.js';
 
 const putIssuesInState = async (setIssues) => {
     const issues = await sendGetRequest('/issue');
-    setIssues(issues);
+    setIssues(issues.map(item => ({...item, checked: false})));
 }
 
 const useIssues = () => {
@@ -13,7 +13,7 @@ const useIssues = () => {
     putIssuesInState(setIssues);
   }, []);
 
-  return issues;
+  return [issues, setIssues];
 }
 
 const putIssueLabelsInState = async (setLabels) => {
@@ -30,7 +30,5 @@ const useIssueLabels = () => {
 
   return labels;
 }
-
-
 
 export { useIssues, useIssueLabels };

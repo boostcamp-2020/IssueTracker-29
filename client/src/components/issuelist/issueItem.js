@@ -37,7 +37,7 @@ const IssueItem = (props) => {
 
   return (
     <IssueItemContainer>
-      <input type="checkbox"/>
+      <input type="checkbox" checked={props.article.checked} onChange={props.onClickCheckbox}/>
       {isOpenLogo}
       <div>
         <TitleContainer>

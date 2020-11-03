@@ -1,33 +1,44 @@
 import React from "react";
 
-import { useIssues, useIssueLabels } from './issueHook.js';
+import { useIssues, useIssueLabels, useIsSelectedList } from './issueHook.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
 import IssueItem from './issueItem.js';
 
 const Issue = (props) => {
-  const issues = useIssues();
-  const labels = useIssueLabels();
+  const [issues, setIssues] = useIssues();
+  const issueLabels = useIssueLabels();
 
   const labelMap = {};
   issues.forEach(item => {
     labelMap[item.id] = [];
   });
-  labels.forEach(item => {
+  issueLabels.forEach(item => {
     if (labelMap[item.issue_id]) {
       labelMap[item.issue_id].push(item);
     }
   });
 
-  issues.forEach((item, idx) => {issues[idx].labels = labelMap[item.id]});
-  
-  let issueComponent = issues.map((item) => <IssueItem key={item.id} article={item} labels={labelMap[item.id]}/>);
+  const toggleAllIssueSelect = () => {
+    if (issues.filter(item => item.checked).length === issues.length) {
+      setIssues(issues.map(item => ({...item, checked: false})));
+      return;
+    }
+    setIssues(issues.map(item => ({...item, checked: true})));
+  }
+
+  const toggleIssueSelect = (idx) => {
+    setIssues(issues.map((item, innerIdx) => idx === innerIdx ? {...item, checked: !item.checked} : item));
+  }
+
+  const issueComponent = issues.map((item, idx) => <IssueItem 
+    key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(idx)}/>);
 
   return (
     <>
       <TopBar />
-      <TabList />
+      <TabList issues={issues} onClickCheckbox={() => toggleAllIssueSelect()}/>
       <div>
         {issueComponent}
       </div>
