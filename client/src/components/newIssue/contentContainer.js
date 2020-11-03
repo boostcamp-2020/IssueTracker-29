@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 const ContentContainer = styled.div`
     display: flex;
@@ -77,10 +78,6 @@ const Content = (props) => {
     const submitClickEvent = (e) => {
         // alert(title + content);
     };
-
-    const cancelClickEvent = (e) => {
-
-    };
     
     return (
         <ContentContainer>
@@ -92,7 +89,9 @@ const Content = (props) => {
             </ContentWrap>
             <div>Attach files by selecting here</div>
             <ButtonContainer>
-                <CancelButton onClick={cancelClickEvent}>Cancel</CancelButton>
+                <Link to="/issue">
+                    <CancelButton>Cancel</CancelButton>
+                </Link>
                 <SubmitButton onClick={submitClickEvent}>Submit new issue</SubmitButton>
             </ButtonContainer>
         </ContentContainer>
