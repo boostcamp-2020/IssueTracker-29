@@ -49,6 +49,7 @@ const Content = (props) => {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [charaterCount, setCharaterCount] = useState(0);
 
     const changeTitleData = (e) => {
         setTitle(e.target.value);
@@ -56,6 +57,7 @@ const Content = (props) => {
 
     const changeContentData = (e) => {
         setContent(e.target.value);
+        setCharaterCount(content.length);
     };
 
     const submitClickEvent = (e) => {
@@ -72,7 +74,7 @@ const Content = (props) => {
             <div>Write</div>
             <ContentWrap>
                 <ContentTextarea placeholder="Leave a comment" onChange={changeContentData} />
-                <TextCountSpan>characters</TextCountSpan>
+                <TextCountSpan>{charaterCount} characters</TextCountSpan>
             </ContentWrap>
             <div>Attach files by selecting here</div>
             <ButtonContainer>
