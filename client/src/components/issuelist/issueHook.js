@@ -48,4 +48,19 @@ const useLabels = () => {
   return labels;
 }
 
-export { useIssues, useIssueLabels, useLabels };
+const putMilestonesInState = async (setMilestones) => {
+  const milestones = await sendGetRequest('/milestone');
+  setMilestones(milestones);
+};
+
+const useMilestones = () => {
+  const [milestones, setMilestones] = useState([]);
+
+  useEffect(() => {
+    putMilestonesInState(setMilestones);
+  }, []);
+
+  return milestones;
+}
+
+export { useIssues, useIssueLabels, useLabels, useMilestones };

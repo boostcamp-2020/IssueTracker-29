@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useIssues, useIssueLabels, useLabels } from './issueHook.js';
+import { useIssues, useIssueLabels, useLabels, useMilestones } from './issueHook.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
@@ -10,6 +10,7 @@ const Issue = (props) => {
   const [issues, setIssues] = useIssues();
   const issueLabels = useIssueLabels();
   const labels = useLabels();
+  const milestones = useMilestones();
 
   const labelMap = {};
   issues.forEach(item => {
@@ -38,7 +39,7 @@ const Issue = (props) => {
 
   return (
     <>
-      <TopBar />
+      <TopBar label_num={labels.length} milestone_num={milestones.length} />
       <TabList issues={issues} onClickCheckbox={() => toggleAllIssueSelect()}/>
       <div>
         {issueComponent}
