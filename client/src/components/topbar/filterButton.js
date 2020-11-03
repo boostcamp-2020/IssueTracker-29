@@ -14,7 +14,7 @@ const FilterButton = (props) => {
   ]);
 
   return (
-    <div onClick={null}>
+    <div>
       <input type="button" value="Filters ▼" onClick={() => setOnModal(!onModal)} />
       <Modal onModal={onModal} title={title} items={option} />
     </div>

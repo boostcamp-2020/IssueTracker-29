@@ -36,7 +36,7 @@ const TopBar = (props) => {
     return (
         <TopBarConatiner>
             <FilterButton />
-            <SearchIssueContainer placeholder="is:open is:issue"/>
+            <SearchIssueContainer placeholder="Search all issues"/>
             <LabelButton>Labels</LabelButton>
             <MilestoneButton>Milestones</MilestoneButton>
             <Link to="/issue/create">
