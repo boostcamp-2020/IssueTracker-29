@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', issueMiddleware.readAllIssues);
 router.post('/', issueMiddleware.createIssue);
+router.get('/label', labelMiddleware.readEveryIssueLabel);
+
 router.get('/:issueid', issueMiddleware.readIssueByID);
 router.put('/:issueid', issueMiddleware.updateIssue);
 router.delete('/:issueid', issueMiddleware.deleteIssue);
