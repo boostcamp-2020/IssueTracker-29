@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
-import { sendGetRequest } from '../common/api';
+import { useOption } from './tabListHook';
 
 const TabContainer = styled.div`
   display: flex;
@@ -22,22 +22,16 @@ const tabList = (props) => {
   return(
     <TabContainer>
       <AuthorTab>Author ▼</AuthorTab>
-      <div>Label ▼</div>
-      <div>Milestones ▼</div>
-      <div>Assignee ▼</div>
+      <LabelTab>Label ▼</LabelTab>
+      <MilestonesTab>Milestones ▼</MilestonesTab>
+      <AssigneeTab>Assignee ▼</AssigneeTab>
     </TabContainer>
   )
 };
 
 const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const [option, setOption] = useState([]);
-
-  // read all user
-  useEffect(async () => {
-    const data = await sendGetRequest('/user/all');
-    setOption(data.map(v => v.username));
-  }, [])
+  const option = useOption('/user/all', 'username');
 
   return (
     <div>
@@ -48,15 +42,39 @@ const AuthorTab = (props) => {
 };
 
 const LabelTab = (props) => {
-  // read all label
+  const [onModal, setOnModal] = useState(false);
+  const option = useOption('/label', 'name', 'Unlabeled');
+
+  return (
+    <div>
+      <input type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
+      <Modal onModal={onModal} title="Filter by label" items={option} />
+    </div>
+  );
 };
 
 const MilestonesTab = (props) => {
-  // read all milestone
+  const [onModal, setOnModal] = useState(false);
+  const option = useOption('/milestone/all', 'title', 'Issues with no milestone');
+
+  return (
+    <div>
+      <input type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
+      <Modal onModal={onModal} title="Filter by milestone" items={option} />
+    </div>
+  );
 };
 
 const AssigneeTab = (props) => {
-  // read all assignee
+  const [onModal, setOnModal] = useState(false);
+  const option = useOption('/user/all', 'username', 'Assigned to nobody');
+
+  return (
+    <div>
+      <input type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
+      <Modal onModal={onModal} title="Filter by who's assigned" items={option} />
+    </div>
+  );
 };
 
 export default tabList;
