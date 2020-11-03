@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useIssues } from '../issue/api.js';
+import { useIssues } from '../issuelist/api.js';
 import styled from 'styled-components';
 
 const IssueHeadContainer = styled.div`
