@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useIssues } from '../issuelist/issueHook.js';
+import { useIssues } from './issueDetailHook.js';
 import styled from 'styled-components';
 
 const IssueHeadContainer = styled.div`
@@ -19,9 +19,16 @@ const CancelTitleButton = styled.button``;
 
 const EditContentsButton = styled.button``;
 
+const IssueBody = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  border: 1px solid #d1d5da;
+`;
+
 const IssueBodyContainer = styled.div`
   border: 1px solid #d1d5da;
-  width: 60%;
+  width: 70%;
 `;
 
 const IssueContentsTopBar = styled.div`
@@ -35,6 +42,27 @@ const IssueContents = styled.div`
 
 const CloseIssueButton = styled.button``;
 const CommentIssueButton = styled.button``;
+
+const IssueSideBar = styled.div`
+  width: 30%;
+  height: 200px;
+  backgrond-color: black;
+`;
+
+const assignessContainer = styled.div`
+  height: 50px;
+  border: 1px solid #d1d5da;
+`;
+
+const LabelsContainer = styled.div`
+  height: 50px;
+  border: 1px solid #d1d5da;
+`;
+
+const MilestoneContainer = styled.div`
+  height: 50px;
+  border: 1px solid #d1d5da;
+`;
 
 const IssueDetail = ({ match }) => {
   const [isOpen, setIsOpen] = useState(1);
@@ -57,10 +85,17 @@ const IssueDetail = ({ match }) => {
         <h3>{issue.title} #{issue.id}</h3>
         {issue.is_open === 1 ? <p>Open</p> : <p>Closed</p>}
       </IssueHeadContainer>
-      <IssueBodyContainer>
-        <IssueContentsTopBar>{issue.user_id} commented 3 days ago</IssueContentsTopBar>
-        <IssueContents>{issue.contents}</IssueContents>
-      </IssueBodyContainer>
+      <IssueBody>
+        <IssueBodyContainer>
+          <IssueContentsTopBar>{issue.user_id} commented 3 days ago</IssueContentsTopBar>
+          <IssueContents>{issue.contents}</IssueContents>
+        </IssueBodyContainer>
+        <IssueSideBar>
+        <assignessContainer>Assignees</assignessContainer>
+        <LabelsContainer>Labels</LabelsContainer>
+        <MilestoneContainer>Milestone</MilestoneContainer>
+        </IssueSideBar>
+      </IssueBody>
     </>
   );
 };
