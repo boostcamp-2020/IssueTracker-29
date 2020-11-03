@@ -56,8 +56,9 @@ const Content = (props) => {
     };
 
     const changeContentData = (e) => {
+        const {value} = e.target;
         setContent(e.target.value);
-        setCharaterCount(content.length);
+        setCharaterCount(value.length);
     };
 
     const submitClickEvent = (e) => {
