@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useIssues, useIssueLabels, useIsSelectedList } from './issueHook.js';
 
@@ -21,11 +21,11 @@ const Issue = (props) => {
   });
 
   const toggleAllIssueSelect = () => {
-    if (issues.filter(item => item.checked).length === 0) {
-      setIssues(issues.map(item => ({...item, checked: true})));
+    if (issues.filter(item => item.checked).length === issues.length) {
+      setIssues(issues.map(item => ({...item, checked: false})));
       return;
     }
-    setIssues(issues.map(item => ({...item, checked: false})));
+    setIssues(issues.map(item => ({...item, checked: true})));
   }
 
   const toggleIssueSelect = (idx) => {
