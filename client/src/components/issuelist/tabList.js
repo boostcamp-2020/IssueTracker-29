@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
-import { fetchData } from './api';
+import { sendGetRequest } from '../common/api';
 
 const TabContainer = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const AuthorTab = (props) => {
 
   // read all user
   useEffect(async () => {
-    const data = await fetchData('/user/all');
+    const data = await sendGetRequest('/user/all');
     setOption(data.map(v => v.username));
   }, [])
 
