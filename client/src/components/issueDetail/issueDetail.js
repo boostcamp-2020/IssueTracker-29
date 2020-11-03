@@ -38,8 +38,6 @@ const CommentIssueButton = styled.button``;
 
 const IssueDetail = ({ match }) => {
   const [isOpen, setIsOpen] = useState(1);
-  const [title, setTitle] = useState();
-  const [contents, setContents] = useState();
 
   const editTitle = (e) => {
     setTitle(e.target.value);
