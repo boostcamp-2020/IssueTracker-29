@@ -3,6 +3,7 @@ import React from "react";
 import { useIssues } from './api.js';
 
 import TopBar from '../topbar/topbar.js';
+import TabList from './tapList.js';
 import IssueItem from './issueItem.js';
 
 const Issue = (props) => {

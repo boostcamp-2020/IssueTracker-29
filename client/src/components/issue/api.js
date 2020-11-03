@@ -2,18 +2,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
 
-const fetchIssues = async () => {
-  let data;
-  try {
-    const res = await axios.get(BASE_API_URL + '/issue', {withCredentials: true});
-    console.log(res);
-    data = res.data.result;
-  } catch(e) {
-    console.log(e);
-    data = [];
-  }
-  
-  return data;
+const fetchData = async (url) => {
+    let data;
+    try {
+      const res = await axios.get(BASE_API_URL + url, {withCredentials: true});
+      data = res.data.result;
+    } catch(e) {
+      data = [];
+    }
+    return data;
 }
 
 const putIssues = async (setIssues) => {
@@ -31,4 +28,4 @@ const useIssues = () => {
   return issues;
 }
 
-export { useIssues };
+export { fetchData, useIssues };
