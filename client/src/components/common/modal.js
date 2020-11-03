@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const Option = styled.li`
   list-style: none;
-  background-color: white;
   &:hover {
     background-color: lightgray;
   }
@@ -14,6 +13,7 @@ const ModalContainer = styled.div`
   position: absolute;
   padding-top: .5rem;
   border: 1px solid lightgray;
+  background-color: white;
 `;
 
 const Modal = (props) => {
