@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useIssues, useIssueLabels } from './api.js';
+import { useIssues, useIssueLabels } from './issueHook.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
