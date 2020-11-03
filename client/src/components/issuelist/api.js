@@ -7,7 +7,6 @@ const fetchData = async (path) => {
     const res = await axios.get(BASE_API_URL + path, {withCredentials: true});
     return await res.data.result;
   } catch(e) {
-    console.log(e);
     return [];
   }
 }
