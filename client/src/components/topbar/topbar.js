@@ -29,14 +29,21 @@ const NewIssueButton = styled.button`
 `;
 
 const TopBar = (props) => {
-
     const [labelCount, setLabelCount] = useState();
     const [milestoneCount, setMilestoneCount] = useState();
+    const [value, setValue] = useState('is:issue is:open');
 
     return (
         <TopBarConatiner>
             <FilterButton />
-            <SearchIssueContainer placeholder="Search all issues"/>
+            <form action="/issue" method="GET">
+            <SearchIssueContainer
+              onChange={(e) => setValue(e.target.value)}
+              name='q'
+              value={value}
+              placeholder="Search all issues"/>
+              <button type="submit" hidden />
+            </form>
             <LabelButton>Labels</LabelButton>
             <MilestoneButton>Milestones</MilestoneButton>
             <Link to="/issue/create">

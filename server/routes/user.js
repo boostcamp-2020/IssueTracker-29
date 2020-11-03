@@ -9,6 +9,6 @@ router.get('/auth/github/callback', passport.authenticate('github', {
   failureRedirect: '/',
 }), tokenMiddleWare.createToken);
 
-router.get('/all', userMiddleWare.readAllUser);
+router.get('/', userMiddleWare.readAllUser);
 
 module.exports = router;
