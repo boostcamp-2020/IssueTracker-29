@@ -5,11 +5,11 @@ module.exports = {
   DELETE_COMMENT: 'delete from comment where id = ?;',
   
   CREATE_USER: 'insert into user(is_auth, username, password) values(?, ?, ?);',
-  READ_ALL_USER: 'select id, is_auth, username, password from user;',
+  READ_ALL_USER: 'select username from user;',
   READ_USER: 'select id, is_auth, username, password from user where username = ?;',
 
   CREATE_LABEL: 'insert into label(name, description, color) values(?, ?, ?);',
-  READ_LABEL: 'select name, description, color from label;',
+  READ_LABEL: 'select id, name, description, color from label;',
   UPDATE_LABEL: 'update label set name = ?, description = ?, color = ? where id = ?;',
   DELETE_LABEL: 'delete from label where id = ?;',
 
@@ -28,6 +28,7 @@ module.exports = {
 
   READ_MILESTONE: `select id, title, due_date, description, (select count(*) from milestone where is_open=1) as openCount, (select count(*) from milestone where is_open=0) as closeCount
   from milestone where is_open = ?;`,
+  READ_ALL_MILESTONE: 'select title from milestone;',
   CREATE_MILESTONE: 'insert into milestone(title, due_date, description, is_open, user_id) values(?, ?, ?, ?, ?);',
   UPDATE_MILESTONE: 'update milestone set title = ?, due_date = ?, description = ? where id = ?;',
   DELETE_MILESTONE: 'delete from milestone where id = ?;',
