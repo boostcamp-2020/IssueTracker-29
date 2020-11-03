@@ -11,8 +11,8 @@ const readAllIssues = async (req, res) => {
 };
 
 const createIssue = async (req, res) => {
-  const { title, contents, milestoneID } = req.body;
-  const result = await db(CREATE_ISSUE, [title, contents, OPEN, req.user.id, milestoneID]);
+  const { title, milestoneID } = req.body;
+  const result = await db(CREATE_ISSUE, [title, OPEN, req.user.id, milestoneID, new Date()]);
 
   return res.status(201).json({ success: true, result: result.insertId });
 };
@@ -29,7 +29,7 @@ const readIssueByID = async (req ,res) => {
 };
 
 const updateIssue = async (req, res) => {
-  const { title, contents, isOpen } = req.body;
+  const { title } = req.body;
   const { issueid: issueID } = req.params;
   
   const selectedIssue = await db(READ_ISSUE_BY_ID, [issueID]);
@@ -42,7 +42,7 @@ const updateIssue = async (req, res) => {
     return res.status(401).json({ success: false, message: '허용되지 않은 작업입니다' });
   }
   
-  await db(UPDATE_ISSUE, [title, contents, isOpen, issueID]);
+  await db(UPDATE_ISSUE, [title, issueID]);
   return res.status(200).json({ success: true });
 };
 
@@ -65,6 +65,7 @@ const deleteIssue = async (req, res) => {
 
 const toggleIssueState = async (req, res) => {
   const { isOpen } = req.body;
+  const { issueid: issueID } = req.params;
 
   let revertedState;
 
@@ -75,7 +76,7 @@ const toggleIssueState = async (req, res) => {
       revertedState = CLOSE;
   }
 
-  await db(TOGGLE_ISSUE_STATE, [revertedState]);
+  await db(TOGGLE_ISSUE_STATE, [revertedState, new Date(), issueID]);
 
   return res.status(200).json({success: true});
 };
