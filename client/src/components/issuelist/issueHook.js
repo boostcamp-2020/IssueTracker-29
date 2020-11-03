@@ -1,18 +1,8 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { BASE_API_URL } from '../../../util/config';
-
-const fetchData = async (path) => {
-  try {
-    const res = await axios.get(BASE_API_URL + path, {withCredentials: true});
-    return await res.data.result;
-  } catch(e) {
-    return [];
-  }
-}
+import { sendGetRequest } from '../common/api.js';
 
 const putIssuesInState = async (setIssues) => {
-    const issues = await fetchData('/issue');
+    const issues = await sendGetRequest('/issue');
     setIssues(issues);
 }
 
@@ -27,7 +17,7 @@ const useIssues = () => {
 }
 
 const putIssueLabelsInState = async (setLabels) => {
-  const labels = await fetchData('/issue/label');
+  const labels = await sendGetRequest('/issue/label');
   setLabels(labels);
 }
 
@@ -43,4 +33,4 @@ const useIssueLabels = () => {
 
 
 
-export { useIssues, useIssueLabels };
+export { fetchData, useIssues, useIssueLabels };

@@ -12,17 +12,26 @@ const Option = styled.li`
 
 const ModalContainer = styled.div`
   position: absolute;
+  padding-top: .5rem;
   border: 1px solid lightgray;
 `;
 
 const Modal = (props) => {
   if(!props.onModal) return ('');
 
-const optionData = props.items.map(item => <Option>{item}</Option>)
+const optionData = props.items.map(item => 
+  <Option>
+    <hr
+    style={{
+      margin: 0,
+    }}
+    />
+    {item}
+  </Option>);
 
   return (
   <ModalContainer>
-    <h4>{props.title}</h4>
+    <strong>{props.title}</strong>
     {optionData}
   </ModalContainer>
   );

@@ -5,6 +5,7 @@ import Header from './components/header/header.js';
 import Login from "./components/login/index.js";
 import Issue from "./components/issuelist/issuelist.js";
 import NewIssue from "./components/newIssue/newIssue.js";
+import IssueDetail from "./components/issueDetail/issueDetail.js";
 
 const ResetStyle = createGlobalStyle`
   body {
@@ -19,6 +20,7 @@ const App = () => {
             <>
                 <ResetStyle />
                 <Header />
+                <Route exact path="/issue/:id" component={IssueDetail} />
                 <Route exact path="/issue" component={Issue}/>
                 <Route exact path="/issue/create" component={NewIssue}/>
                 <Route exact path="/" component={Login}/>
