@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import DatePassedViewer from '../common/datePassed';
-import LabelItem from '../common/labelItem';
-import SvgCloseLogo from './svgCloseLogo';
-import SvgOpenLogo from './svgOpenLogo';
+import DatePassedViewer from '../common/datePassed.js';
+import LabelItem from '../common/labelItem.js';
+import MilestoneViewer from './milestoneViewer.js';
+import SvgCloseLogo from './svgCloseLogo.js';
+import SvgOpenLogo from './svgOpenLogo.js';
 
 const COLOR_SUCCESS = "#22863a";
 const COLOR_DANGER = "#cb2431";
@@ -46,6 +47,8 @@ const IssueItem = (props) => {
 
   const labelComponents = props.labels.map(item => <LabelItem key={item.id} label={item} />)
 
+  const milestoneViewer = (props.article.milestone_title === null) ? null : <MilestoneViewer milestone_title={props.article.milestone_title} />
+
   return (
     <IssueItemContainer>
       <input type="checkbox" checked={props.article.checked} onChange={props.onClickCheckbox}/>
@@ -58,6 +61,7 @@ const IssueItem = (props) => {
           </LabelListContainer>
         </TitleContainer>
         {issueInfoComponent}
+        {milestoneViewer}
       </div>
     </IssueItemContainer>
   )

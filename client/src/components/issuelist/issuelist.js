@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useIssues, useIssueLabels, useIsSelectedList } from './issueHook.js';
+import { useIssues, useIssueLabels, useLabels } from './issueHook.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
@@ -9,6 +9,7 @@ import IssueItem from './issueItem.js';
 const Issue = (props) => {
   const [issues, setIssues] = useIssues();
   const issueLabels = useIssueLabels();
+  const labels = useLabels();
 
   const labelMap = {};
   issues.forEach(item => {
