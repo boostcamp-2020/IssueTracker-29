@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useIssues } from './issueDetailHook.js';
+// import { useIssueDetail } from './issueDetailHook.js';
+import { useIssues } from '../issuelist/issueHook.js';
 import styled from 'styled-components';
 
 const IssueHeadContainer = styled.div`
