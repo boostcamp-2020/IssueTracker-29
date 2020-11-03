@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import Header from './components/header/header.js';
 import Login from "./components/login/index.js";
 import Issue from "./components/issue/issue.js";
-import IssueDetail from "./components/issue/issueDetail.js";
+import IssueDetail from "./components/issueDetail/issueDetail.js";
 import NewIssue from "./components/issue/newIssue/newIssue.js";
 
 const ResetStyle = createGlobalStyle`
