@@ -17,6 +17,7 @@ const ContentWrap = styled.div`
 `;
 
 const TextCountSpan = styled.span`
+    display: ${props => (props.timeCheck ? 'flex' : 'none')};
     position: absolute;
     bottom: 2px;
     right: 2px;
@@ -50,6 +51,17 @@ const Content = (props) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [charaterCount, setCharaterCount] = useState(0);
+    const [timeCheck, setTimeCheck] = useState(false);
+
+    useEffect( () => {
+        const timeout = setTimeout( () => {
+            setTimeCheck(true);
+            setTimeout( () => {
+                setTimeCheck(false);
+            }, 2000);
+        }, 2000);
+        return () => clearTimeout(timeout);
+    }, [content]);
 
     const changeTitleData = (e) => {
         setTitle(e.target.value);
@@ -57,6 +69,7 @@ const Content = (props) => {
 
     const changeContentData = (e) => {
         const {value} = e.target;
+
         setContent(e.target.value);
         setCharaterCount(value.length);
     };
@@ -75,7 +88,7 @@ const Content = (props) => {
             <div>Write</div>
             <ContentWrap>
                 <ContentTextarea placeholder="Leave a comment" onChange={changeContentData} />
-                <TextCountSpan>{charaterCount} characters</TextCountSpan>
+                <TextCountSpan timeCheck={timeCheck}>{charaterCount} characters</TextCountSpan>
             </ContentWrap>
             <div>Attach files by selecting here</div>
             <ButtonContainer>
