@@ -33,4 +33,4 @@ const useIssueLabels = () => {
 
 
 
-export { fetchData, useIssues, useIssueLabels };
+export { useIssues, useIssueLabels };
