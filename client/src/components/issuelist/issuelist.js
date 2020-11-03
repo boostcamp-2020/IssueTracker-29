@@ -8,13 +8,13 @@ import IssueItem from './issueItem.js';
 
 const Issue = (props) => {
   const [issues, setIssues] = useIssues();
-  const labels = useIssueLabels();
+  const issueLabels = useIssueLabels();
 
   const labelMap = {};
   issues.forEach(item => {
     labelMap[item.id] = [];
   });
-  labels.forEach(item => {
+  issueLabels.forEach(item => {
     if (labelMap[item.issue_id]) {
       labelMap[item.issue_id].push(item);
     }
