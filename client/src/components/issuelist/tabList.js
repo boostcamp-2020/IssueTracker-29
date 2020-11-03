@@ -19,8 +19,11 @@ const TabContainer = styled.div`
 `;
 
 const tabList = (props) => {
+  const currentSelectNum = props.issues.reduce((accu, item) => item.checked ? accu + 1: accu, 0);
   return(
     <TabContainer>
+      <input type="checkbox" onClick={props.onClickCheckbox}/>
+      <p>{currentSelectNum === 0 ? null : currentSelectNum + ' selected'} </p>
       <AuthorTab>Author ▼</AuthorTab>
       <div>Label ▼</div>
       <div>Milestones ▼</div>
