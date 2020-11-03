@@ -13,12 +13,14 @@ const Issue = (props) => {
   const labelMap = {};
   issues.forEach(item => {
     labelMap[item.id] = [];
-  })
+  });
   labels.forEach(item => {
     if (labelMap[item.issue_id]) {
       labelMap[item.issue_id].push(item);
     }
-  })
+  });
+
+  issues.forEach((item, idx) => {issues[idx].labels = labelMap[item.id]});
   
   let issueComponent = issues.map((item) => <IssueItem key={item.id} article={item} labels={labelMap[item.id]}/>);
 
