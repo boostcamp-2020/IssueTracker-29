@@ -10,8 +10,6 @@ const Issue = (props) => {
   const issues = useIssues();
   const labels = useIssueLabels();
 
-  console.log(labels);
-
   const labelMap = {};
   issues.forEach(item => {
     labelMap[item.id] = [];
