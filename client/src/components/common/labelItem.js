@@ -14,6 +14,8 @@ const LabelContainer = styled.div`
       return "#fff"
     }
 
+    const {r, g, b} = hexObj;
+
     if (r*0.299 + g*0.587 + b*0.114 > 186) {
       return "#000";
     }
