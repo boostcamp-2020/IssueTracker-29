@@ -18,7 +18,7 @@ module.exports = {
   CREATE_LABEL_IN_ISSUE: 'insert into label_issue(label_id, issue_id) values(?, ?);',
   DELETE_LABEL_IN_ISSUE: 'delete from label_issue where label_id = ? and issue_id = ?;',
 
-  READ_ALL_ISSUE: 'select id, title, contents, is_open, user_id, milestone_id from issue;',
+  READ_ALL_ISSUE: 'select issue.id, issue.title as issue_title, contents, issue.is_open, issue.user_id, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id;',
   CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
 
   READ_ISSUE_BY_ID: 'select id, title, contents, is_open, user_id, milestone_id from issue where id = ?;',
@@ -33,6 +33,7 @@ module.exports = {
   DELETE_MILESTONE: 'delete from milestone where id = ?;',
   TOGGLE_MILESTONE_STATE: 'update milestone set isOpen = ? where id = ?;',
 
+  READ_ALL_ISSUE_LABEL: 'select label_issue.id, label_issue.label_id, label_issue.issue_id, label.name, label.color from label_issue join label on label_issue.label_id = label.id;',
   READ_ISSUE_BY_MILESTONE: `select id, title, contents, user_id, (select count(*) from issue where is_open=1 AND milestone_id = ?) as openCount, (select count(*) from issue where is_open=0 AND milestone_id = ?) as closeCount
   from issue where milestoneid = ? AND is_open = 1;`,
   CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?);',
