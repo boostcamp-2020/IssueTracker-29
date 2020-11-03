@@ -1,6 +1,6 @@
 module.exports = {
-  CREATE_COMMENT: 'insert into comment(contents, issue_id, user_id) values(?, ?, ?);',
-  READ_COMMENT: 'select id, contents from comment where issue_id = ?;',
+  CREATE_COMMENT: 'insert into comment(contents, issue_id, user_id, created_at) values(?, ?, ?, ?);',
+  READ_COMMENT: 'select id, contents, created_at from comment where issue_id = ?;',
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
   DELETE_COMMENT: 'delete from comment where id = ?;',
   
@@ -18,13 +18,13 @@ module.exports = {
   CREATE_LABEL_IN_ISSUE: 'insert into label_issue(label_id, issue_id) values(?, ?);',
   DELETE_LABEL_IN_ISSUE: 'delete from label_issue where label_id = ? and issue_id = ?;',
 
-  READ_ALL_ISSUE: 'select issue.id, issue.title as issue_title, contents, issue.is_open, issue.user_id, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id;',
-  CREATE_ISSUE: 'insert into issue(title, contents, is_open, user_id, milestone_id) values(?, ?, ?, ?, ?);',
+  READ_ALL_ISSUE: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id;',
+  CREATE_ISSUE: 'insert into issue(title, is_open, user_id, milestone_id, changed_at) values(?, ?, ?, ?, ?);',
 
-  READ_ISSUE_BY_ID: 'select id, title, contents, is_open, user_id, milestone_id from issue where id = ?;',
-  UPDATE_ISSUE: 'update issue set title = ?, contents = ?, is_open = ? where id = ?;',
+  READ_ISSUE_BY_ID: 'select id, title, changed_at, is_open, user_id, milestone_id from issue where id = ?;',
+  UPDATE_ISSUE: 'update issue set title = ? where id = ?;',
   DELETE_ISSUE: 'delete from issue where id = ?;',
-  TOGGLE_ISSUE_STATE: 'update issue set isOpen = ? where id = ?;',
+  TOGGLE_ISSUE_STATE: 'update issue set isOpen = ?, changed_at = ? where id = ?;',
 
   READ_MILESTONE: `select id, title, due_date, description, (select count(*) from milestone where is_open=1) as openCount, (select count(*) from milestone where is_open=0) as closeCount
   from milestone where is_open = ?;`,
@@ -38,4 +38,8 @@ module.exports = {
   READ_ISSUE_BY_MILESTONE: `select id, title, contents, user_id, (select count(*) from issue where is_open=1 AND milestone_id = ?) as openCount, (select count(*) from issue where is_open=0 AND milestone_id = ?) as closeCount
   from issue where milestoneid = ? AND is_open = 1;`,
   CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?);',
+
+  CREATE_ASSIGNS: 'insert into assigns(user_id, issue_id) value(?,?);',
+  READ_ASSIGNS_BY_ID: 'select id, user_id, issue_id from assigns where issue_id = ?;',
+  DELETE_ASSIGNS: 'delete from assigns where id = ?;',
 }

@@ -2,6 +2,7 @@ const express = require('express');
 const issueMiddleware = require('../middlewares/issue');
 const commentMiddleware = require('../middlewares/comment');
 const labelMiddleware = require('../middlewares/label');
+const assignsMiddleware = require('../middlewares/assigns');
 
 const router = express.Router();
 
@@ -21,5 +22,7 @@ router.get('/:issueid/label/', labelMiddleware.readLabelInIssue);
 router.post('/:issueid/label/:labelid', labelMiddleware.createLabelInIssue);
 router.delete('/:issueid/label/:labelid', labelMiddleware.deleteLabelInIssue);
 
+router.get('/:issueid/assigns', assignsMiddleware.readAssignsById);
+router.post('/:issueid/assigns', assignsMiddleware.createAssigns);
 
 module.exports = router;
