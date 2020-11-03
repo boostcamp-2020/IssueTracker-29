@@ -31,7 +31,7 @@ const tabList = (props) => {
 
 const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const option = useOption('/user/all', 'username');
+  const option = useOption('/user', 'username');
 
   return (
     <div>
@@ -55,7 +55,7 @@ const LabelTab = (props) => {
 
 const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const option = useOption('/milestone/all', 'title', 'Issues with no milestone');
+  const option = useOption('/milestone', 'title', 'Issues with no milestone');
 
   return (
     <div>
@@ -67,7 +67,7 @@ const MilestonesTab = (props) => {
 
 const AssigneeTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const option = useOption('/user/all', 'username', 'Assigned to nobody');
+  const option = useOption('/user', 'username', 'Assigned to nobody');
 
   return (
     <div>
