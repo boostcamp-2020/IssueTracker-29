@@ -7,6 +7,7 @@ import { FetchedDataContext } from './context.js';
 const TabContainer = styled.div`
   display: flex;
   width: 80%;
+  height: 50px;
   margin: 0 auto;
   border: 1px solid lightgray;
   flex-direction: row;
@@ -37,10 +38,23 @@ const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username');
 
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    // TODO: value 변경 후 (append) handleSubmit 호출
+    // const newText = value.split(' ').filter(v => !v.includes('author:')).join(' ');
+    // if(!newText) return setValue(`author:${text} `);
+    // setValue(`${newText}author:${text} `);
+  };
+
   return (
     <div>
       <input type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by author" items={option} />
+      <Modal
+      onModal={onModal}
+      setOnModal={setOnModal}
+      title="Filter by author"
+      items={option}
+      onEvent={handleModalEvent} />
     </div>
   );
 };
