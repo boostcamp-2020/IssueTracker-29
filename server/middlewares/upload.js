@@ -1,19 +1,27 @@
 const multer = require('multer');
 const moment = require('moment');
 
-const upload = multer({
-    storage: multer.diskStorage({
-        destination: function(req, file, cb) {
-            cb(null, 'uploads/');  // 파일이 저장되는 경로
-        },
-        filename: function(req, file, cb) {
-            cb(null, moment().format('YYYYMMDDHHmmss') + "_" + file.originalname);
-        },
-    }),
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, moment().format('YYYYMMDDHHmmss') + "_" + file.originalname);
+    }
 });
 
-const ImageUpload = (req, res, next) => {
-    console.log(req.file);
-};
+const upload = multer({ storage: storage }).single("file");
 
-module.exports = { upload , ImageUpload };
+const ImageUpload = (req, res) => {
+    upload(req, res, function(err) {
+        if (err instanceof multer.MulterError) {
+            return res.status(403).json({ success: false });
+        } else if (err) {
+            console.log(err);
+            return res.status(403).json({ success: false });
+        }
+        return res.status(200).json({ success: true });
+    });
+}
+
+module.exports = { ImageUpload };
