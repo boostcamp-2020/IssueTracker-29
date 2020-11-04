@@ -17,7 +17,6 @@ const useIssueDetail = (id) => {
 }
 
 const getIssueLabelsById = async (setLabels, id) => {
-  // const labels = await sendGetRequest(`/issue/${id}/label`);
   const labels = await sendGetRequest('/issue/' + id + '/label');
 
   setLabels(labels);
@@ -33,4 +32,20 @@ const useIssueDetailLabels = (id) => {
   return labels;
 }
 
-export { useIssueDetail, useIssueDetailLabels };
+const getIssueCommentsById = async (setComments, id) => {
+  const comments = await sendGetRequest('/issue/' + id + '/comment');
+
+  setComments(comments);
+}
+
+const useIssueDetailComments = (id) => {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    getIssueCommentsById(setComments, id);
+  }, []);
+
+  return comments;
+}
+
+export { useIssueDetail, useIssueDetailLabels, useIssueDetailComments };

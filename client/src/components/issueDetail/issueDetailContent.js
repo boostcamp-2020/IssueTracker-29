@@ -24,7 +24,8 @@ const IssueDetailContent = (props) => {
     return (
         <>
             <IssueBodyContainer>
-                <IssueContentsTopBar>{props.username} commented 3 days ago</IssueContentsTopBar>
+                <IssueContentsTopBar>{props.username} opened this issue 3 days ago</IssueContentsTopBar>
+                {props.comments}
             </IssueBodyContainer>
         </>
     )
