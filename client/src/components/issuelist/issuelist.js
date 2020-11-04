@@ -5,6 +5,7 @@ import { useIssues, useIssueLabels, useLabels, useMilestones } from './issueHook
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
 import IssueItem from './issueItem.js';
+import { FetchedDataContext } from './context.js';
 
 const Issue = (props) => {
   const [issues, setIssues] = useIssues();
@@ -38,13 +39,17 @@ const Issue = (props) => {
     key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(idx)}/>);
 
   return (
-    <>
-      <TopBar label_num={labels.length} milestone_num={milestones.length} />
-      <TabList issues={issues} onClickCheckbox={() => toggleAllIssueSelect()}/>
+    <FetchedDataContext.Provider value={{issues, labels, milestones}}>
+      <TopBar />
+      <TabList
+        issue_num={issues.filter(item => item.checked).length}
+        labels={labels}
+        milestones={milestones}
+        onClickCheckbox={() => toggleAllIssueSelect()}/>
       <div>
         {issueComponent}
       </div>
-    </>
+    </FetchedDataContext.Provider>
   )
 }
 

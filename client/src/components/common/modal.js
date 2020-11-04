@@ -19,8 +19,8 @@ const ModalContainer = styled.div`
 const Modal = (props) => {
   if(!props.onModal) return ('');
 
-const optionData = props.items.map(item => 
-  <Option>
+const optionData = props.items.map((item, idx) => 
+  <Option key={idx}>
     <hr
     style={{
       margin: 0,
