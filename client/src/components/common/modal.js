@@ -20,14 +20,17 @@ const Modal = (props) => {
   if(!props.onModal) return ('');
 
 const optionData = props.items.map(item => 
-  <Option>
+  <div>
     <hr
-    style={{
-      margin: 0,
-    }}
+      style={{
+        margin: 0,
+      }}
     />
-    {item}
-  </Option>);
+    <Option onClick={(e) => props.onEvent(e)}>
+      {item}
+    </Option>
+  </div>
+);
 
   return (
   <ModalContainer>
