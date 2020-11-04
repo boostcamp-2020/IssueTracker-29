@@ -1,5 +1,5 @@
 const db = require('../models/connection');
-const { CREATE_MILESTONE, READ_MILESTONE, UPDATE_MILESTONE, DELETE_MILESTONE, READ_ISSUE_BY_MILESTONE, CREATE_ISSUE_BY_MILESTONE, TOGGLE_MILESTONE_STATE, READ_ALL_MILESTONE } = require('../models/query');
+const { CREATE_MILESTONE, READ_MILESTONE, UPDATE_MILESTONE, DELETE_MILESTONE, READ_ISSUE_BY_MILESTONE, CREATE_ISSUE_BY_MILESTONE, UPDATE_MILESTONE_STATE, READ_ALL_MILESTONE } = require('../models/query');
 
 const readMilestone = async (req, res) => {
     const { state: isOpen } = req.params;
@@ -48,19 +48,11 @@ const createIssueByMilestone = async (req, res) => {
     return res.status(200).json({ success: true });
 };
 
-const toggleMilestoneState = async (req, res) => {
+const updateMilestoneState = async (req, res) => {
     const { isOpen } = req.body;
     const { milestoneid: milestoneID } = req.params;
 
-    let revertedState;
-
-    if(isOpen === 0){
-        revertedState = 1;
-    } else {
-        revertedState = 0;
-    }
-
-    await db(TOGGLE_MILESTONE_STATE, [revertedState, milestoneID]);
+    await db(UPDATE_MILESTONE_STATE, [isOpen, milestoneID]);
 
     return res.status(200).json({ success: true });    
 };
@@ -70,4 +62,4 @@ const readAllMilestone = async (req, res) => {
   return res.json({ success: true, result });
 };
 
-module.exports = { readMilestone, createMilestone, updateMilestone, deleteMilestone, readIssueByMilestone, createIssueByMilestone, toggleMilestoneState, readAllMilestone };
+module.exports = { readMilestone, createMilestone, updateMilestone, deleteMilestone, readIssueByMilestone, createIssueByMilestone, updateMilestoneState, readAllMilestone };
