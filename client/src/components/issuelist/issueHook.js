@@ -4,7 +4,7 @@ import { sendGetRequest } from '../common/api.js';
 const putIssuesInState = async (setIssues) => {
     const issues = await sendGetRequest('/issue');
     setIssues(issues.map(item => ({...item, checked: false})));
-}
+};
 
 const useIssues = () => {
   const [issues, setIssues] = useState([]);
@@ -14,21 +14,53 @@ const useIssues = () => {
   }, []);
 
   return [issues, setIssues];
-}
+};
 
-const putIssueLabelsInState = async (setLabels) => {
-  const labels = await sendGetRequest('/issue/label');
-  setLabels(labels);
-}
+
+const putIssueLabelsInState = async (setIssueLabels) => {
+  const issueLabels = await sendGetRequest('/issue/label');
+  setIssueLabels(issueLabels);
+};
 
 const useIssueLabels = () => {
+  const [issueLabels, setIssueLabels] = useState([]);
+
+  useEffect(() => {
+    putIssueLabelsInState(setIssueLabels);
+  }, []);
+
+  return issueLabels;
+};
+
+
+const putLabelsInState = async (setLabels) => {
+  const labels = await sendGetRequest('/label');
+  setLabels(labels);
+};
+
+const useLabels = () => {
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
-    putIssueLabelsInState(setLabels);
+    putLabelsInState(setLabels);
   }, []);
 
   return labels;
 }
 
-export { useIssues, useIssueLabels };
+const putMilestonesInState = async (setMilestones) => {
+  const milestones = await sendGetRequest('/milestone');
+  setMilestones(milestones);
+};
+
+const useMilestones = () => {
+  const [milestones, setMilestones] = useState([]);
+
+  useEffect(() => {
+    putMilestonesInState(setMilestones);
+  }, []);
+
+  return milestones;
+}
+
+export { useIssues, useIssueLabels, useLabels, useMilestones };
