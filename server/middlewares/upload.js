@@ -17,10 +17,9 @@ const ImageUpload = (req, res) => {
         if (err instanceof multer.MulterError) {
             return res.status(403).json({ success: false });
         } else if (err) {
-            console.log(err);
             return res.status(403).json({ success: false });
         }
-        return res.status(200).json({ success: true });
+        return res.status(200).json({ success: true, url: `/img/${req.file.filename}`});
     });
 }
 

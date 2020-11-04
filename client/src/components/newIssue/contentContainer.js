@@ -97,7 +97,8 @@ const Content = (props) => {
         setSelectedImage(e.target.files[0]);
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
-        await sendPostRequest('/upload', formData); 
+        const result = await sendPostRequest('/upload', formData);
+        alert(result);
     };
 
     return (
@@ -123,11 +124,15 @@ const Content = (props) => {
 };
 
 const sendPostRequest = async (path, form) => {
-  try {
-    await axios.post(BASE_API_URL + path, form);
-  } catch (e) {
-    alert("업로드 실패");
-  }
+    try {
+        await axios.post(BASE_API_URL + path, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 export default Content;
