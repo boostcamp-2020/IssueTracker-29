@@ -104,7 +104,7 @@ const Content = (props) => {
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
         setImageFileName(e.target.files[0].name.split('.')[0]);
-        const result = await sendPostRequest('/upload', formData);
+        const result = await sendImagePostRequest('/upload', formData);
         alert("ssss");
         setImageURL(BASE_API_URL + result.url);
     };
@@ -131,7 +131,7 @@ const Content = (props) => {
     );
 };
 
-const sendPostRequest = async (path, form) => {
+const sendImagePostRequest = async (path, form) => {
     try {
         const res = await axios.post(BASE_API_URL + path, form, {
             headers: {
