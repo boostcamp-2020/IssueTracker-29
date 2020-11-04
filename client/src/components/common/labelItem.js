@@ -21,6 +21,9 @@ const LabelContainer = styled.div`
     }
     return "#fff";
   }};
+  &>p {
+    margin: 0px;
+  }
 `;
 
 const LabelItem = (props) => {

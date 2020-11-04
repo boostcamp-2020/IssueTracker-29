@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
 import { useOption } from './tabListHook';
+import { FetchedDataContext } from './context.js';
 
 const TabContainer = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const TabContainer = styled.div`
 `;
 
 const tabList = (props) => {
-  const currentSelectNum = props.issues.filter(item => item.checked).length;
+  const currentSelectNum = props.issue_num;
   return(
     <TabContainer>
       <input type="checkbox" onClick={props.onClickCheckbox}/>
@@ -60,24 +61,24 @@ const AuthorTab = (props) => {
 
 const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const option = useOption('/label', 'name', 'Unlabeled');
+  const {labels} = useContext(FetchedDataContext);
 
   return (
     <div>
       <input type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by label" items={option} />
+      <Modal onModal={onModal} title="Filter by label" items={['Unlabeled', ...labels.map(item => item.name)]} />
     </div>
   );
 };
 
 const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const option = useOption('/milestone', 'title', 'Issues with no milestone');
+  const {milestones} = useContext(FetchedDataContext);
 
   return (
     <div>
       <input type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by milestone" items={option} />
+      <Modal onModal={onModal} title="Filter by milestone" items={['Issues with no milestone', ...milestones.map(item => item.title)]} />
     </div>
   );
 };
