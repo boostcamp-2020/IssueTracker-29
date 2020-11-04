@@ -44,8 +44,8 @@ const TopBar = (props) => {
               placeholder="Search all issues"/>
               <button type="submit" hidden />
             </form>
-            <LabelButton>Labels</LabelButton>
-            <MilestoneButton>Milestones</MilestoneButton>
+            <LabelButton>Labels<div>{props.label_num}</div></LabelButton>
+            <MilestoneButton>Milestones<div>{props.milestone_num}</div></MilestoneButton>
             <Link to="/issue/create">
                 <NewIssueButton>New issue</NewIssueButton>
             </Link>
