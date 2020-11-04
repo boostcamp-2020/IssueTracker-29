@@ -3,25 +3,11 @@ import { useIssueDetail, useIssueDetailLabels } from './issueDetailHook.js';
 import styled from 'styled-components';
 import LabelItem from '../common/labelItem';
 import SvgSettingsLogo from './svgSettingsLogo.js';
+import IssueHeader from './issueDetailHeader';
+import IssueDetailContent from './issueDetailContent';
+import IssueDetailSideBar from './issueDetailSideBar';
 
 const COLOR_SETTINGS = '#959da5';
-
-const IssueHeadContainer = styled.div`
-  border-bottom: 1px solid #d1d5da;
-  margin-bottom: 20px;
-`;
-
-const EditTitleButton = styled.button`
-  float: right;
-  padding: 10px;
-  margin-right: 100px;
-`;
-
-const SaveTitleButton = styled.button``;
-
-const CancelTitleButton = styled.button``;
-
-const EditContentsButton = styled.button``;
 
 const IssueBody = styled.div`
   display: flex;
@@ -30,54 +16,8 @@ const IssueBody = styled.div`
   border: 1px solid #d1d5da;
 `;
 
-const IssueBodyContainer = styled.div`
-  border: 1px solid #d1d5da;
-  width: 70%;
-`;
-
-const IssueContentsTopBar = styled.div`
-  background-color: #d1d5da;
-  border: 1px solid #d1d5da;
-`;
-
-const IssueContents = styled.div`
-  padding: 15px;
-`;
-
-const CloseIssueButton = styled.button``;
-const CommentIssueButton = styled.button``;
-
-const IssueSideBar = styled.div`
-  width: 30%;
-  height: 200px;
-  backgrond-color: black;
-`;
-
-const AssigneesContainer = styled.div`
-  height: 50px;
-  border: 1px solid #d1d5da;
-`;
-
-const LabelsContainer = styled.div`
-  height: 50px;
-  border: 1px solid #d1d5da;
-`;
-
-const LabelListContainer = styled.div`
-  display: flex;
-`;
-
-const MilestoneContainer = styled.div`
-  height: 50px;
-  border: 1px solid #d1d5da;
-`;
-
 const IssueDetail = ({ match }) => {
   const [isOpen, setIsOpen] = useState(1);
-
-  const editTitle = (e) => {
-    setTitle(e.target.value);
-  };
 
   const { id } = match.params;
   const issue = useIssueDetail(id);
@@ -96,30 +36,10 @@ const IssueDetail = ({ match }) => {
   }
   return (
     <>
-      <IssueHeadContainer>
-        <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>
-        <h3>{issue.issue_title} #{issue.id}</h3>
-        {issue.is_open === 1 ? <p>Open</p> : <p>Closed</p>}
-      </IssueHeadContainer>
+      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} />
       <IssueBody>
-        <IssueBodyContainer>
-          <IssueContentsTopBar>{issue.username} commented 3 days ago</IssueContentsTopBar>
-        </IssueBodyContainer>
-        <IssueSideBar>
-          <AssigneesContainer>
-            <h3>Assignees</h3>
-            {svgSettingsIcon}
-          </AssigneesContainer>
-          <LabelsContainer>
-            <h3>Labels</h3>
-            {svgSettingsIcon}
-            <LabelListContainer>{labelComponent}</LabelListContainer>
-          </LabelsContainer>
-          <MilestoneContainer>
-            <h3>Milestone</h3>
-            {svgSettingsIcon}
-          </MilestoneContainer>
-        </IssueSideBar>
+        <IssueDetailContent username={issue.username} />
+        <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
       </IssueBody>
     </>
   );
