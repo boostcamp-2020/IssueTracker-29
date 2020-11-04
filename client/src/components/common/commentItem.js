@@ -1,18 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import DatePassedViewer from '../common/datePassed.js';
 
 const CommentContainer = styled.div`
-  margin: 5px;
-  padding: 2px 5px;
+  border: 1px solid #d1d5da;
+  width: 100%;
   height: 200px;
-  width: 500px;
-  border: 1px solid #959da5;
+`;
+
+const CommentHeader = styled.div`
+  background-color: #d1d5da;
+  border: 1px solid #d1d5da;
 `;
 
 const CommentItem = (props) => {
+    console.log(props);
   return (
     <CommentContainer>
-        <p>{props.comment.user_id}님이 {props.comment.created_at}에 생성한 comment</p>
+        <CommentHeader>{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} /> ago  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
         <p>{props.comment.contents}</p>
     </CommentContainer>
   )
