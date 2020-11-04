@@ -39,7 +39,7 @@ const TopBar = (props) => {
       if(!props.search) return;
       const params = props.search.split('=')[1].split('+').map((v) => decodeURIComponent(v));
       setValue(params.join(' '));
-    }, []);
+    }, [props.search]);
 
     const handleSubmit = () => {
       // TODO: 수동 submit 수행 후 하위 컴포넌트들에게 이 메소드 props로 넘겨주기
