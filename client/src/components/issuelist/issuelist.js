@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useIssues, useIssueLabels, useLabels, useMilestones } from './issueHook.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
 import IssueItem from './issueItem.js';
-import { FetchedDataContext } from './context.js';
+import { FetchedDataContext, ControlValueContext } from './context.js';
 
 const Issue = (props) => {
   const [issues, setIssues] = useIssues();
   const issueLabels = useIssueLabels();
   const labels = useLabels();
   const milestones = useMilestones();
+  const [value, setValue] = useState('is:issue is:open ');
 
   const labelMap = {};
   issues.forEach(item => {
@@ -40,15 +41,17 @@ const Issue = (props) => {
 
   return (
     <FetchedDataContext.Provider value={{issues, labels, milestones}}>
+      <ControlValueContext.Provider value={{value, setValue}}>
       <TopBar search={props.location.search} />
-      <TabList
-        issue_num={issues.filter(item => item.checked).length}
-        labels={labels}
-        milestones={milestones}
-        onClickCheckbox={() => toggleAllIssueSelect()}/>
-      <div>
-        {issueComponent}
-      </div>
+        <TabList
+          issue_num={issues.filter(item => item.checked).length}
+          labels={labels}
+          milestones={milestones}
+          onClickCheckbox={() => toggleAllIssueSelect()}/>
+        <div>
+          {issueComponent}
+        </div>
+      </ControlValueContext.Provider>
     </FetchedDataContext.Provider>
   )
 }

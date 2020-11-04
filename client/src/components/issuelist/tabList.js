@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
 import { useOption } from './tabListHook';
-import { FetchedDataContext } from './context.js';
+import { FetchedDataContext, ControlValueContext } from './context.js';
 
 const TabContainer = styled.div`
   display: flex;
@@ -37,13 +37,14 @@ const tabList = (props) => {
 const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username');
+  const { value, setValue } = useContext(ControlValueContext);
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
     // TODO: value 변경 후 (append) handleSubmit 호출
-    // const newText = value.split(' ').filter(v => !v.includes('author:')).join(' ');
-    // if(!newText) return setValue(`author:${text} `);
-    // setValue(`${newText}author:${text} `);
+    const newText = value.split(' ').filter(v => !v.includes('author:')).join(' ');
+    if(!newText) return setValue(`author:${text} `);
+    setValue(`${newText}author:${text} `);
   };
 
   return (
@@ -62,6 +63,7 @@ const AuthorTab = (props) => {
 const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const {labels} = useContext(FetchedDataContext);
+  const { value, setValue } = useContext(ControlValueContext);
 
   return (
     <div>
@@ -74,6 +76,7 @@ const LabelTab = (props) => {
 const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const {milestones} = useContext(FetchedDataContext);
+  const { value, setValue } = useContext(ControlValueContext);
 
   return (
     <div>
@@ -86,6 +89,7 @@ const MilestonesTab = (props) => {
 const AssigneeTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username', 'Assigned to nobody');
+  const { value, setValue } = useContext(ControlValueContext);
 
   return (
     <div>

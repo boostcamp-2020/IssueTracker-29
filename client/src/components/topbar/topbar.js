@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link } from "react-router-dom";
-import { FetchedDataContext } from '../issuelist/context.js';
+import { FetchedDataContext, ControlValueContext } from '../issuelist/context.js';
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -31,8 +31,8 @@ const NewIssueButton = styled.button`
 
 const TopBar = (props) => {
 
-    const {labels, milestones} = useContext(FetchedDataContext);
-    const [value, setValue] = useState('is:issue is:open');
+    const { labels, milestones } = useContext(FetchedDataContext);
+    const { value, setValue } = useContext(ControlValueContext);
 
     useEffect(() => {
       if(!props.search) return;

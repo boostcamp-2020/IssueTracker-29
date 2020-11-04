@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
 import filterCondition from '../common/filterCondition';
+import { ControlValueContext } from '../issuelist/context';
 
 const FilterButton = (props) => {
   const [onModal, setOnModal] = useState(false);
@@ -13,11 +14,12 @@ const FilterButton = (props) => {
     'Everything mentioning you',
     'Closed issues',
   ]);
+  const { value, setValue } = useContext(ControlValueContext);
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
     // TODO: value 변경 후 (change) handleSubmit 호출
-    // props.setValue(filterCondition[text]);
+    setValue(filterCondition[text]);
   };
 
   return (
