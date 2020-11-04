@@ -13,7 +13,7 @@ module.exports = {
   UPDATE_LABEL: 'update label set name = ?, description = ?, color = ? where id = ?;',
   DELETE_LABEL: 'delete from label where id = ?;',
 
-  READ_LABEL_IN_ISSUE: 'select id, label_id, issue_id from label_issue where issue_id = ?;',
+  READ_LABEL_IN_ISSUE: 'select label_issue.id, label_issue.label_id, label_issue.issue_id, label.name, label.color from (label_issue join issue on label_issue.issue_id = issue.id) left outer join label on label_issue.label_id = label.id where label_issue.issue_id = ?;',
   CHECK_DUPLICATE_LABEL_IN_ISSUE: 'select id from label_issue where label_id = ? and issue_id = ?;',
   CREATE_LABEL_IN_ISSUE: 'insert into label_issue(label_id, issue_id) values(?, ?);',
   DELETE_LABEL_IN_ISSUE: 'delete from label_issue where label_id = ? and issue_id = ?;',
@@ -21,7 +21,7 @@ module.exports = {
   READ_ALL_ISSUE: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id;',
   CREATE_ISSUE: 'insert into issue(title, is_open, user_id, milestone_id, changed_at) values(?, ?, ?, ?, ?);',
 
-  READ_ISSUE_BY_ID: 'select id, title, changed_at, is_open, user_id, milestone_id from issue where id = ?;',
+  READ_ISSUE_BY_ID: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id where issue.id = ?',
   UPDATE_ISSUE: 'update issue set title = ? where id = ?;',
   DELETE_ISSUE: 'delete from issue where id = ?;',
   TOGGLE_ISSUE_STATE: 'update issue set isOpen = ?, changed_at = ? where id = ?;',

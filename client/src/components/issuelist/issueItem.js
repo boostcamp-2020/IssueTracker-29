@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import LabelItem from '../common/labelItem';
-import SvgCloseLogo from './svgCloseLogo';
-import SvgOpenLogo from './svgOpenLogo';
+import DatePassedViewer from '../common/datePassed.js';
+import LabelItem from '../common/labelItem.js';
+import MilestoneViewer from './milestoneViewer.js';
+import SvgCloseLogo from './svgCloseLogo.js';
+import SvgOpenLogo from './svgOpenLogo.js';
 
 const COLOR_SUCCESS = "#22863a";
 const COLOR_DANGER = "#cb2431";
@@ -25,15 +27,27 @@ const LabelListContainer = styled.div`
 
 const IssueItem = (props) => {
   let isOpenLogo;
-
+  let issueInfoComponent;
   if (props.article.is_open) {
     isOpenLogo = <SvgOpenLogo color={COLOR_SUCCESS}/>
+    issueInfoComponent = (
+      <p>
+        #{props.article.id} opened <DatePassedViewer datetime={props.article.changed_at}/> ago by {props.article.username}
+      </p>
+    );
   }
   else {
     isOpenLogo = <SvgCloseLogo color={COLOR_DANGER}/>
+    issueInfoComponent = (
+      <p>
+        #{props.article.id} by {props.article.username} was closed <DatePassedViewer datetime={props.article.changed_at} /> ago
+      </p>
+    );
   }
 
   const labelComponents = props.labels.map(item => <LabelItem key={item.id} label={item} />)
+
+  const milestoneViewer = (props.article.milestone_title === null) ? null : <MilestoneViewer milestone_title={props.article.milestone_title} />
 
   return (
     <IssueItemContainer>
@@ -46,7 +60,8 @@ const IssueItem = (props) => {
             {labelComponents}
           </LabelListContainer>
         </TitleContainer>
-        <p>#{props.article.id} by {props.article.username}</p>
+        {issueInfoComponent}
+        {milestoneViewer}
       </div>
     </IssueItemContainer>
   )
