@@ -7,6 +7,8 @@ import IssueHeader from './issueDetailHeader';
 import IssueDetailContent from './issueDetailContent';
 import IssueDetailSideBar from './issueDetailSideBar';
 import CommentItem from '../common/commentItem';
+import IssueDetailCommentInput from './issueDetailCommentInput';
+
 
 const COLOR_SETTINGS = '#959da5';
 
@@ -18,7 +20,7 @@ const IssueBody = styled.div`
 `;
 
 const IssueDetail = ({ match }) => {
-  const [isOpen, setIsOpen] = useState(1);
+  // const [isOpen, setIsOpen] = useState(1);
 
   const { id } = match.params;
   const issue = useIssueDetail(id);
@@ -37,20 +39,20 @@ const IssueDetail = ({ match }) => {
   issueComments.forEach(item => {
     comments.push(item);
   })
-  console.log(issueComments);
-  console.log(comments);
-  const commentComponent = comments.map(item => <CommentItem key={item.id} comment={item} />)
+
+  const commentComponent = comments.map(item => <CommentItem key={item.id} comment={item} issue_user_id={issue.user_id} />)
 
   if (!issue) {
     return <div>존재하지 않는 유저입니다.</div>
   }
   return (
     <>
-      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} />
+      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} commentsNum={comments.length}/>
       <IssueBody>
-        <IssueDetailContent username={issue.username} comments={commentComponent} />
+        <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
       </IssueBody>
+      <IssueDetailCommentInput />
     </>
   );
 };
