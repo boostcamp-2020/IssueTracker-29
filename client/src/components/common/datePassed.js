@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
@@ -32,9 +32,12 @@ const calculateTime = (milisecondTime) => {
 };
 
 const DatePassedViewer = (props) => {
-  const miliSecondPassed = new Date() - new Date(props.datetime);
+  const [datetime, setDateTime] = useState(new Date() - new Date(props.datetime));
+  useEffect(() => {
+    setDateTime(new Date() - new Date(props.datetime));
+  }, [props.datetime]);
 
-  const [time, unit] = calculateTime(miliSecondPassed);
+  const [time, unit] = calculateTime(datetime);
 
   return (<span>{`${time} ${unit}`}</span>)
 };
