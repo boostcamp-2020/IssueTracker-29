@@ -13,6 +13,6 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'no-console': 'warn',
-    'class-methods-use-this': ' warn',
+    'class-methods-use-this': 'warn',
   },
 };
