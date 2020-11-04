@@ -20,6 +20,7 @@ module.exports = {
   },// resolve: 웹팩이 해석할 확장자를 지정. 
   resolve: { extensions: ["*", ".js", ".jsx"] },// output: 번들링 된 결과물을 어디다 둘 것인지에 대한 설정이 가능.
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, "dist/"),
     filename: "bundle.js"
   },// webpack-dev-server의 옵션을 설정
