@@ -33,11 +33,11 @@ const App = () => {
                   <Route exact path="/issue/:id" component={IssueDetail} />
                   <Route exact path="/issue" component={Issue}/>
                 </Switch>
+                <Route exact path='/label' component={Label}/>
+                <Route exact path="/" component={Login}/>
               </MilestoneContext.Provider>
             </LabelContext.Provider>
           </IssueContext.Provider>
-        <Route exact path='/label' component={Label}/>
-        <Route exact path="/" component={Login}/>
     </div>
   );
 }
