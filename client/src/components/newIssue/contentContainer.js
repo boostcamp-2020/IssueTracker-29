@@ -66,7 +66,8 @@ const Content = (props) => {
     const [content, setContent] = useState("");
     const [charaterCount, setCharaterCount] = useState(0);
     const [timeCheck, setTimeCheck] = useState(false);
-    const [selectedImage, setSelectedImage] = useState("");
+    const [imageURL, setImageURL] = useState("");
+    const [imageFileName, setImageFileName] = useState("");
 
     useEffect( () => {
         const timeout = setTimeout( () => {
@@ -77,6 +78,12 @@ const Content = (props) => {
         }, 2000);
         return () => clearTimeout(timeout);
     }, [content]);
+
+    useEffect( () => {
+        if(imageURL && imageFileName) {
+            setContent(content + convertMarkDownImage(imageFileName, imageURL));
+        }
+    }, [imageURL]);
 
     const changeTitleData = (e) => {
         setTitle(e.target.value);
@@ -94,11 +101,12 @@ const Content = (props) => {
     };
     
     const handleImageFile = async (e) => {
-        setSelectedImage(e.target.files[0]);
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
+        setImageFileName(e.target.files[0].name.split('.')[0]);
         const result = await sendPostRequest('/upload', formData);
-        alert(result);
+        alert("ssss");
+        setImageURL(BASE_API_URL + result.url);
     };
 
     return (
@@ -106,12 +114,12 @@ const Content = (props) => {
             <TitleInput placeholder="Title" onChange={changeTitleData}/>
             <div>Write</div>
             <ContentWrap>
-                <ContentTextarea placeholder="Leave a comment" onChange={changeContentData} />
+                <ContentTextarea placeholder="Leave a comment" value={content} onChange={changeContentData} />
                 <TextCountSpan timeCheck={timeCheck}>{charaterCount} characters</TextCountSpan>
             </ContentWrap>
             
             <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
-            <ImageFileBoxInput type="file" id="file" onChange={handleImageFile}></ImageFileBoxInput>
+            <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
             
             <ButtonContainer>
                 <Link to="/issue">
@@ -125,14 +133,19 @@ const Content = (props) => {
 
 const sendPostRequest = async (path, form) => {
     try {
-        await axios.post(BASE_API_URL + path, form, {
+        const res = await axios.post(BASE_API_URL + path, form, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
             }
         });
+        return res.data;
     } catch (e) {
-        console.log(e);
+        return [];
     }
 };
+
+function convertMarkDownImage(imageFileName, imageURL) {
+    return `![${imageFileName}](${imageURL})`;
+}
 
 export default Content;
