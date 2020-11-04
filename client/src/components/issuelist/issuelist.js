@@ -39,7 +39,7 @@ const Issue = (props) => {
 
   return (
     <>
-      <TopBar label_num={labels.length} milestone_num={milestones.length} />
+      <TopBar label_num={labels.length} milestone_num={milestones.length} search={props.location.search} />
       <TabList issues={issues} onClickCheckbox={() => toggleAllIssueSelect()}/>
       <div>
         {issueComponent}

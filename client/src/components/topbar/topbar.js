@@ -31,7 +31,16 @@ const NewIssueButton = styled.button`
 const TopBar = (props) => {
     const [labelCount, setLabelCount] = useState();
     const [milestoneCount, setMilestoneCount] = useState();
-    const [value, setValue] = useState('is:issue is:open');
+
+    useEffect(() => {
+      if(!props.search) return;
+      const params = props.search.split('=')[1].split('+').map((v) => decodeURIComponent(v));
+      setValue(params.join(' '));
+    }, []);
+
+    const handleSubmit = () => {
+      // TODO: 수동 submit 수행 후 하위 컴포넌트들에게 이 메소드 props로 넘겨주기
+    };
 
     return (
         <TopBarConatiner>
