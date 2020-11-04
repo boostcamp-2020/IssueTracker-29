@@ -105,7 +105,6 @@ const Content = (props) => {
         formData.append('file', e.target.files[0]);
         setImageFileName(e.target.files[0].name.split('.')[0]);
         const result = await sendImagePostRequest('/upload', formData);
-        alert("ssss");
         setImageURL(BASE_API_URL + result.url);
     };
 
