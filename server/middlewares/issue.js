@@ -1,5 +1,5 @@
 const db = require('../models/connection');
-const { CREATE_ISSUE, READ_ISSUE_BY_ID, UPDATE_ISSUE, DELETE_ISSUE, READ_ALL_ISSUE, TOGGLE_ISSUE_STATE } = require('../models/query');
+const { CREATE_ISSUE, READ_ISSUE_BY_ID, UPDATE_ISSUE_STATE, UPDATE_ISSUE, DELETE_ISSUE, READ_ALL_ISSUE } = require('../models/query');
 
 const OPEN = 1;
 const CLOSE = 0;
@@ -16,6 +16,13 @@ const createIssue = async (req, res) => {
 
   return res.status(201).json({ success: true, result: result.insertId });
 };
+
+const updateIssueState = async (req, res) => {
+  const { isOpen, ids } = req.body;
+  const result = await db(UPDATE_ISSUE_STATE, [isOpen, ids]);
+
+  return res.json({success: true});
+}
 
 const readIssueByID = async (req ,res) => {
   const { issueid: issueID } = req.params;
@@ -63,22 +70,4 @@ const deleteIssue = async (req, res) => {
   return res.status(200).json({success: true});
 };
 
-const toggleIssueState = async (req, res) => {
-  const { isOpen } = req.body;
-  const { issueid: issueID } = req.params;
-
-  let revertedState;
-
-  if (isOpen === CLOSE) {
-      revertedState = OPEN;
-  }
-  else {
-      revertedState = CLOSE;
-  }
-
-  await db(TOGGLE_ISSUE_STATE, [revertedState, new Date(), issueID]);
-
-  return res.status(200).json({success: true});
-};
-
-module.exports = { readAllIssues, createIssue, readIssueByID, updateIssue, deleteIssue, toggleIssueState };
+module.exports = { readAllIssues, createIssue, updateIssueState, readIssueByID, updateIssue, deleteIssue };

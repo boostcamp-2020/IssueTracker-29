@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.get('/', issueMiddleware.readAllIssues);
 router.post('/', issueMiddleware.createIssue);
+router.put('/state', issueMiddleware.updateIssueState);
 router.get('/label', labelMiddleware.readEveryIssueLabel);
 
 router.get('/:issueid', issueMiddleware.readIssueByID);
 router.put('/:issueid', issueMiddleware.updateIssue);
 router.delete('/:issueid', issueMiddleware.deleteIssue);
-router.put('/:issueid/state', issueMiddleware.toggleIssueState);
 
 router.get('/:issueid/comment', commentMiddleware.readCommentsByIssueID);
 router.post('/:issueid/comment', commentMiddleware.createComment);
