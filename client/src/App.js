@@ -21,8 +21,8 @@ const App = () => {
                 <ResetStyle />
                 <Header />
                 <Switch>
-                  <Route exact path="/issue/create" component={NewIssue}/>
                   <Route exact path="/issue/:id" component={IssueDetail} />
+                  <Route exact path="/issue/create" component={NewIssue}/>
                   <Route exact path="/issue" component={Issue}/>
                 </Switch>
                 <Route exact path="/" component={Login}/>
