@@ -40,7 +40,7 @@ const Issue = (props) => {
 
   return (
     <FetchedDataContext.Provider value={{issues, labels, milestones}}>
-      <TopBar />
+      <TopBar search={props.location.search} />
       <TabList
         issue_num={issues.filter(item => item.checked).length}
         labels={labels}
