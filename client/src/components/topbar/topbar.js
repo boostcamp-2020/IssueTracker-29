@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link } from "react-router-dom";
+import { FetchedDataContext } from '../issuelist/context.js';
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -29,9 +30,9 @@ const NewIssueButton = styled.button`
 `;
 
 const TopBar = (props) => {
-    const [labelCount, setLabelCount] = useState();
-    const [milestoneCount, setMilestoneCount] = useState();
     const [value, setValue] = useState('is:issue is:open');
+
+    const {labels, milestones} = useContext(FetchedDataContext);
 
     return (
         <TopBarConatiner>
@@ -44,8 +45,8 @@ const TopBar = (props) => {
               placeholder="Search all issues"/>
               <button type="submit" hidden />
             </form>
-            <LabelButton>Labels<div>{props.label_num}</div></LabelButton>
-            <MilestoneButton>Milestones<div>{props.milestone_num}</div></MilestoneButton>
+            <LabelButton>Labels<div>{labels.length}</div></LabelButton>
+            <MilestoneButton>Milestones<div>{milestones.length}</div></MilestoneButton>
             <Link to="/issue/create">
                 <NewIssueButton>New issue</NewIssueButton>
             </Link>

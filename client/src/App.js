@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import Header from './components/header/header.js';
 import Login from "./components/login/index.js";
 import Issue from "./components/issuelist/issuelist.js";
+import Label from './components/labellist/labellist.js';
 import NewIssue from "./components/newIssue/newIssue.js";
 import IssueDetail from "./components/issueDetail/issueDetail.js";
 
@@ -24,6 +25,7 @@ const App = () => {
                   <Route exact path="/issue/create" component={NewIssue}/>
                   <Route exact path="/issue/:id" component={IssueDetail} />
                   <Route exact path="/issue" component={Issue}/>
+                  <Route exact path='/label' component={Label}/>
                 </Switch>
                 <Route exact path="/" component={Login}/>
             </>
