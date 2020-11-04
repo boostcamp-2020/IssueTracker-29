@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link } from "react-router-dom";
@@ -33,6 +33,7 @@ const TopBar = (props) => {
 
     const { labels, milestones } = useContext(FetchedDataContext);
     const { value, setValue } = useContext(ControlValueContext);
+    const submitRef = useRef();
 
     useEffect(() => {
       if(!props.search) return;
@@ -53,7 +54,6 @@ const TopBar = (props) => {
               name='q'
               value={value}
               placeholder="Search all issues"/>
-              <button type="submit" hidden />
             </form>
             <LabelButton>Labels<div>{labels.length}</div></LabelButton>
             <MilestoneButton>Milestones<div>{milestones.length}</div></MilestoneButton>

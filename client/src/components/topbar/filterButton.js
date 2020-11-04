@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import Modal from '../common/modal';
 import filterCondition from '../common/filterCondition';
 import { ControlValueContext } from '../issuelist/context';
@@ -15,17 +15,19 @@ const FilterButton = (props) => {
     'Closed issues',
   ]);
   const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
-    // TODO: value 변경 후 (change) handleSubmit 호출
     setValue(filterCondition[text]);
+    setRedirect(true);
   };
 
   return (
     <div>
       <input type="button" value="Filters ▼" onClick={() => setOnModal(!onModal)} />
       <Modal onModal={onModal} title={title} items={option} onEvent={handleModalEvent} />
+      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
     </div>
   );
 };

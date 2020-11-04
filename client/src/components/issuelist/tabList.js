@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Modal from '../common/modal';
 import { useOption } from './tabListHook';
 import { FetchedDataContext, ControlValueContext } from './context.js';
+import { Redirect } from 'react-router-dom';
 
 const TabContainer = styled.div`
   display: flex;
@@ -38,13 +39,14 @@ const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username');
   const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
-    // TODO: value 변경 후 (append) handleSubmit 호출
-    const newText = value.split(' ').filter(v => !v.includes('author:')).join(' ');
+    const newText = value.replace(/author:\w* /, '');
     if(!newText) return setValue(`author:${text} `);
     setValue(`${newText}author:${text} `);
+    setRedirect(true);
   };
 
   return (
@@ -56,6 +58,7 @@ const AuthorTab = (props) => {
       title="Filter by author"
       items={option}
       onEvent={handleModalEvent} />
+      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
     </div>
   );
 };
@@ -64,11 +67,26 @@ const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const {labels} = useContext(FetchedDataContext);
   const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    const newText = value.replace(/label:".*" /, '');
+    if(!newText) return setValue(`label:"${text}" `);
+    if (text === 'Unlabeled') return setValue(newText);
+    setValue(`${newText}label:"${text}" `);
+    setRedirect(true);
+  };
 
   return (
     <div>
       <input type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by label" items={['Unlabeled', ...labels.map(item => item.name)]} />
+      <Modal
+      onModal={onModal}
+      title="Filter by label"
+      items={['Unlabeled', ...labels.map(item => item.name)]}
+      onEvent={handleModalEvent} />
+      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
     </div>
   );
 };
@@ -77,11 +95,26 @@ const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const {milestones} = useContext(FetchedDataContext);
   const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    const newText = value.replace(/milestone:".*" /, '');
+    if(!newText) return setValue(`milestone:"${text}" `);
+    if (text === 'Issues with no milestone') return setValue(newText);
+    setValue(`${newText}milestone:"${text}" `);
+    setRedirect(true);
+  };
 
   return (
     <div>
       <input type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by milestone" items={['Issues with no milestone', ...milestones.map(item => item.title)]} />
+      <Modal
+      onModal={onModal}
+      title="Filter by milestone"
+      items={['Issues with no milestone', ...milestones.map(item => item.title)]}
+      onEvent={handleModalEvent} />
+      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
     </div>
   );
 };
@@ -90,11 +123,26 @@ const AssigneeTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username', 'Assigned to nobody');
   const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    const newText = value.replace(/assignee:\w* /, '');
+    if(!newText) return setValue(`assignee:${text} `);
+    if (text === `Assigned to nobody`) return setValue(newText);
+    setValue(`${newText}assignee:${text} `);
+    setRedirect(true);
+  };
 
   return (
     <div>
       <input type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by who's assigned" items={option} />
+      <Modal
+      onModal={onModal}
+      title="Filter by who's assigned"
+      items={option}
+      onEvent={handleModalEvent} />
+      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
     </div>
   );
 };
