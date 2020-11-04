@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { createGlobalStyle } from 'styled-components';
 import Header from './components/header/header.js';
 import Login from "./components/login/index.js";
@@ -20,9 +20,11 @@ const App = () => {
             <>
                 <ResetStyle />
                 <Header />
-                <Route exact path="/issue/:id" component={IssueDetail} />
-                <Route exact path="/issue" component={Issue}/>
-                <Route exact path="/issue/create" component={NewIssue}/>
+                <Switch>
+                  <Route exact path="/issue/create" component={NewIssue}/>
+                  <Route exact path="/issue/:id" component={IssueDetail} />
+                  <Route exact path="/issue" component={Issue}/>
+                </Switch>
                 <Route exact path="/" component={Login}/>
             </>
         </div>
