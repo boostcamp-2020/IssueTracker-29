@@ -27,10 +27,10 @@ const tabList = (props) => {
     <TabContainer>
       <input type="checkbox" onClick={props.onClickCheckbox}/>
       <p>{currentSelectNum === 0 ? null : currentSelectNum + ' selected'} </p>
-      <AuthorTab>Author ▼</AuthorTab>
-      <LabelTab>Label ▼</LabelTab>
-      <MilestonesTab>Milestones ▼</MilestonesTab>
-      <AssigneeTab>Assignee ▼</AssigneeTab>
+      <AuthorTab />
+      <LabelTab />
+      <MilestonesTab />
+      <AssigneeTab />
     </TabContainer>
   )
 };
@@ -43,10 +43,9 @@ const AuthorTab = (props) => {
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
-    const newText = value.replace(/author:\w* /, '');
-    if(!newText) return setValue(`author:${text} `);
-    setValue(`${newText}author:${text} `);
-    setRedirect(true);
+    const newText = value.replace(/author:[\w@]* /, '');
+    if(!newText) return setRedirect(`author:${text} `);
+    setRedirect(`${newText}author:${text} `);
   };
 
   return (
@@ -58,7 +57,7 @@ const AuthorTab = (props) => {
       title="Filter by author"
       items={option}
       onEvent={handleModalEvent} />
-      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
@@ -72,10 +71,9 @@ const LabelTab = (props) => {
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
     const newText = value.replace(/label:".*" /, '');
-    if(!newText) return setValue(`label:"${text}" `);
-    if (text === 'Unlabeled') return setValue(newText);
-    setValue(`${newText}label:"${text}" `);
-    setRedirect(true);
+    if(!newText) return setRedirect(`label:"${text}" `);
+    if (text === 'Unlabeled') return setRedirect(newText);
+    setRedirect(`${newText}label:"${text}" `);
   };
 
   return (
@@ -86,7 +84,7 @@ const LabelTab = (props) => {
       title="Filter by label"
       items={['Unlabeled', ...labels.map(item => item.name)]}
       onEvent={handleModalEvent} />
-      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
@@ -100,10 +98,9 @@ const MilestonesTab = (props) => {
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
     const newText = value.replace(/milestone:".*" /, '');
-    if(!newText) return setValue(`milestone:"${text}" `);
-    if (text === 'Issues with no milestone') return setValue(newText);
-    setValue(`${newText}milestone:"${text}" `);
-    setRedirect(true);
+    if(!newText) return setRedirect(`milestone:"${text}" `);
+    if (text === 'Issues with no milestone') return setRedirect(newText);
+    setRedirect(`${newText}milestone:"${text}" `);
   };
 
   return (
@@ -114,7 +111,7 @@ const MilestonesTab = (props) => {
       title="Filter by milestone"
       items={['Issues with no milestone', ...milestones.map(item => item.title)]}
       onEvent={handleModalEvent} />
-      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
@@ -127,11 +124,10 @@ const AssigneeTab = (props) => {
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
-    const newText = value.replace(/assignee:\w* /, '');
-    if(!newText) return setValue(`assignee:${text} `);
-    if (text === `Assigned to nobody`) return setValue(newText);
-    setValue(`${newText}assignee:${text} `);
-    setRedirect(true);
+    const newText = value.replace(/assignee:[\w@]* /, '');
+    if(!newText) return setRedirect(`assignee:${text} `);
+    if (text === `Assigned to nobody`) return setRedirect(newText);
+    setRedirect(`${newText}assignee:${text} `);
   };
 
   return (
@@ -142,7 +138,7 @@ const AssigneeTab = (props) => {
       title="Filter by who's assigned"
       items={option}
       onEvent={handleModalEvent} />
-      {redirect? <Redirect to={`/issue?=${encodeURIComponent(value).replace(/%20/g, '+')}`}/> : null}
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
