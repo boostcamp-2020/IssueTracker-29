@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
 import { useOption } from './tabListHook';
-import { FetchedDataContext, IssueContext } from './context.js';
+import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
 import { sendPutRequest } from '../common/api';
 
 const OPEN = 1;
@@ -106,7 +106,7 @@ const AuthorTab = (props) => {
 
 const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const {labels} = useContext(FetchedDataContext);
+  const {labels} = useContext(LabelContext);
 
   return (
     <div>
@@ -118,7 +118,7 @@ const LabelTab = (props) => {
 
 const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const {milestones} = useContext(FetchedDataContext);
+  const {milestones} = useContext(MilestoneContext);
 
   return (
     <div>

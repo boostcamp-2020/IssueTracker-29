@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link } from "react-router-dom";
-import { FetchedDataContext } from '../issuelist/context.js';
+import { LabelContext, MilestoneContext } from '../common/context';
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -31,7 +31,8 @@ const NewIssueButton = styled.button`
 
 const TopBar = (props) => {
 
-    const {labels, milestones} = useContext(FetchedDataContext);
+    const {labels} = useContext(LabelContext);
+    const {milestones} = useContext(MilestoneContext); 
     const [value, setValue] = useState('is:issue is:open');
 
     useEffect(() => {
