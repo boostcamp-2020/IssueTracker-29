@@ -6,6 +6,9 @@
 | -------- | -------- | -------- | -------- |
 |  [고병화](https://github.com/bbbyung2)   |  [김하균](https://github.com/hagyun93)   |  [이준희](https://github.com/GodDrinkTeJAVA)   |  [하이현](https://github.com/hyh1016)   |
 
+## 데모 링크
+http://www.tutoringmachine.shop/
+
 ## Git Branch Strategy
 
 * master : 제품으로 출시될 수 있는 브랜치
