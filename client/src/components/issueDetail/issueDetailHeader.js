@@ -26,21 +26,20 @@ const CancelTitleButton = styled.button``;
 const EditContentsButton = styled.button``;
 
 const IssueHeader = (props) => {
-    const editTitle = (e) => {
-        setTitle(e.target.value);
-    };
+
+    const [isEditting, setIsEditting] = useState(false);
 
     return (
         <>
             <IssueHeadContainer>
-                <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>
-                <h3>{props.title} #{props.id}</h3>
+                {isEditting ? <div><button>Save</button><button></button></div> : <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>}
+                {isEditting ? <input>{props.issue.issue_title}</input> : <h3>{props.issue.issue_title} #{props.issue.id}</h3>}
                 <p>
                     <div>
-                        {props.is_open === ISSUE_OPEN ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
-                        {props.is_open === ISSUE_OPEN ? "Open" : "Closed"}
+                        {props.issue.is_open === ISSUE_OPEN ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
+                        {props.issue.is_open === ISSUE_OPEN ? "Open" : "Closed"}
                     </div>
-                    {props.username} opened this issue <DatePassedViewer datetime={props.changed_at} /> · {props.commentsNum} comment
+                    {props.issue.username} opened this issue <DatePassedViewer datetime={props.issue.changed_at} /> · {props.commentsNum} comment
                 </p>
             </IssueHeadContainer>
         </>

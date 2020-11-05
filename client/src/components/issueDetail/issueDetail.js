@@ -43,7 +43,7 @@ const IssueDetail = ({ match }) => {
   }
   return (
     <>
-      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} commentsNum={comments.length}/>
+      <IssueHeader issue={issue} setIssue={setIssue} commentsNum={comments.length}/>
       <IssueBody>
         <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
