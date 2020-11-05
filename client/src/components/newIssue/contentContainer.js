@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
-import { BASE_API_URL } from '../../../util/config';
+import { IMAGE_UPLOAD_BASE_API_URL, BASE_API_URL } from '../../../util/config';
 import { sendPostRequest } from '../common/api';
 
 const ContentContainer = styled.div`
@@ -110,7 +110,7 @@ const Content = (props) => {
         formData.append('file', e.target.files[0]);
         setImageFileName(e.target.files[0].name.split('.')[0]);
         const result = await sendImagePostRequest('/upload', formData);
-        setImageURL(BASE_API_URL + result.url);
+        setImageURL(IMAGE_UPLOAD_BASE_API_URL + result.url);
     };
 
     return (
