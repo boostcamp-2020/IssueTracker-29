@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import { useIssues, useIssueLabels, useLabels, useMilestones } from './issueHook.js';
+import { ControlValueContext } from '../common/context.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
 import IssueItem from './issueItem.js';
-import { FetchedDataContext, ControlValueContext } from './context.js';
 
 const Issue = (props) => {
   const [issues, setIssues] = useIssues();
@@ -53,11 +53,10 @@ const Issue = (props) => {
   };
 
   return (
-    <FetchedDataContext.Provider value={{issues, labels, milestones}}>
+    <div>
       <ControlValueContext.Provider value={{value, setValue}}>
-      <TopBar search={props.location.search} />
+        <TopBar search={props.location.search} />
         <TabList
-          issue_num={issues.filter(item => item.checked).length}
           labels={labels}
           milestones={milestones}
           onClickCheckbox={() => toggleAllIssueSelect()}/>
@@ -65,8 +64,8 @@ const Issue = (props) => {
           {issueComponent}
         </div>
       </ControlValueContext.Provider>
-    </FetchedDataContext.Provider>
-  )
+    </div>
+  );
 }
 
 export default Issue;

@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link } from "react-router-dom";
-import { FetchedDataContext, ControlValueContext } from '../issuelist/context.js';
+import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -31,9 +31,9 @@ const NewIssueButton = styled.button`
 
 const TopBar = (props) => {
 
-    const { labels, milestones } = useContext(FetchedDataContext);
+    const {labels} = useContext(LabelContext);
+    const {milestones} = useContext(MilestoneContext);
     const { value, setValue } = useContext(ControlValueContext);
-    const submitRef = useRef();
 
     useEffect(() => {
       if(!props.search) return;
