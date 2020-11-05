@@ -17,7 +17,7 @@ const Issue = (props) => {
 
   useEffect(() => {
     const condition = getFilterCondition();
-    if(!condition.length || !issues.length || !issueLabels.length) return;
+    if(!condition || !issues.length || !issueLabels.length) return;
     let result = [...issues];
     condition.forEach((v) => {
       result = result.filter(item => setIssuesByFilterCondition(v).includes(item));
