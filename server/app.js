@@ -34,6 +34,12 @@ app.use((req, res, next) => {
 app.use(passport.initialize());
 passportConfig();
 
+// 테스트용 -> 로그인 구현시 삭제해야됩니다!!
+app.use('/api', (req, res, next) => {
+  req.user = {id: 1};
+  next();
+});
+
 app.use('/api', indexRouter);
 
 // catch 404 and forward to error handler

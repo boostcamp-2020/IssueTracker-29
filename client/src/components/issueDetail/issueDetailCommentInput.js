@@ -121,11 +121,12 @@ const IssueDetailCommentInput = (props) => {
     return (
         <>
             <ContentWrap>
-                <IssueCommentInput placeholder="Leave a comment" value={content} onChange={onChange} />
-                <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
+              <IssueCommentInput placeholder="Leave a comment" value={content} onChange={onChange} />
+              <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
             </ContentWrap>
             <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
             <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
+            
             <ButtonContainer>
                 <CloseIssueButton onClick={toggleIssueState}>{(props.issue.is_open === ISSUE_OPEN) ? "Close issue" : "Reopen issue"}</CloseIssueButton>
                 <CommentIssueButton>Comment</CommentIssueButton>
