@@ -6,9 +6,7 @@ import { ControlValueContext } from '../common/context.js';
 import { Redirect } from 'react-router-dom';
 import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
 import { sendPutRequest } from '../common/api';
-
-const OPEN = 1;
-const CLOSE = 0;
+import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
 
 const OPEN_STRING = "Open";
 const CLOSE_STRING = "Close";
@@ -65,7 +63,7 @@ const MarkAsTab = (props) => {
   const { issues, setIssues } = useContext(IssueContext);
 
   const sendIssueStateUpdate = async (e) => {
-    const isOpen = (e.target.innerHTML === OPEN_STRING) ? 1 : 0;
+    const isOpen = (e.target.innerHTML === OPEN_STRING) ? ISSUE_OPEN : ISSUE_CLOSE;
     const checkedIds = issues.filter(item => item.checked).map(item => item.id);
     const result = await sendPutRequest("/issue/state", {isOpen: isOpen, ids: checkedIds}, {success: false});
     if (result.success) {

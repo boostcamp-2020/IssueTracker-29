@@ -1,37 +1,74 @@
-// import React, { useState } from 'react';
-// import styled from 'styled-components';
-// import { useIssues } from '../issuelist/issueHook.js';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import SvgCloseLogo from '../issuelist/svgCloseLogo';
+import SvgOpenLogo from '../issuelist/svgOpenLogo.js';
+import DatePassedViewer from '../common/datePassed.js';
+import { ISSUE_OPEN } from '../../../util/config';
+import { sendPutRequest } from '../common/api';
 
-// const IssueHeadContainer = styled.div`
-//   border-bottom: 1px solid #d1d5da;
-//   margin-bottom: 20px;
-// `;
+const COLOR_SUCCESS = "#22863a";
+const COLOR_DANGER = "#cb2431";
 
-// const EditTitleButton = styled.button`
-//   float: right;
-//   padding: 10px;
-//   margin-right: 100px;
-// `;
+const IssueHeadContainer = styled.div`
+  border-bottom: 1px solid #d1d5da;
+  margin-bottom: 20px;
+`;
 
-// const Header = ({ match }) => {
-//     const editTitle = (e) => {
-//         setTitle(e.target.value);
-//     };
+const EditTitleButton = styled.button`
+  float: right;
+  padding: 10px;
+  margin-right: 100px;
+`;
 
-//     const issues = useIssues();
-//     const { id } = match.params;
-//     console.log(id);
-//     const issue = issues[id - 1];
+const SaveTitleButton = styled.button``;
 
-//     return (
-//         <>
-//             <IssueHeadContainer>
-//                 <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>
-//                 <h3>{issue.title} #{issue.id}</h3>
-//                 {issue.is_open === 1 ? <p>Open</p> : <p>Closed</p>}
-//             </IssueHeadContainer>
-//         </>
-//     )
-// }
+const CancelTitleButton = styled.button``;
 
-// export default Header;
+const EditContentsButton = styled.button``;
+
+const IssueHeader = (props) => {
+
+    const [isEditting, setIsEditting] = useState(false);
+    const [title, setTitle] = useState(props.issue.issue_title);
+
+    useEffect(() => {setTitle(props.issue.issue_title)}, [props.issue.issue_title]);
+
+    const toggleIsEditting = () => {
+        setIsEditting(!isEditting);
+    };
+
+    const submitIssue = async () => {
+        const res = await sendPutRequest(`/issue/${props.issue.id}`, {title});
+        if (res && res.success) {
+            props.setIssue({...props.issue, issue_title: title});
+            setIsEditting(false);
+        }
+    };
+
+    const setTitleState = (e) => {
+        setTitle(e.target.value);
+    };
+
+    const cancelTitleEidt = (e) => {
+        toggleIsEditting(e);
+        setTitle(props.issue.issue_title);
+    }
+
+    return (
+        <>
+            <IssueHeadContainer>
+                {isEditting ? <div><button onClick={submitIssue}>Save</button><button onClick={cancelTitleEidt}>Cancel</button></div> : <EditTitleButton onClick={toggleIsEditting}>Edit</EditTitleButton>}
+                {isEditting ? <input value={title} onChange={setTitleState}/> : <h3>{props.issue.issue_title} #{props.issue.id}</h3>}
+                <div>
+                    <div>
+                        {props.issue.is_open === ISSUE_OPEN ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
+                        {props.issue.is_open === ISSUE_OPEN ? "Open" : "Closed"}
+                    </div>
+                    {props.issue.username} opened this issue <DatePassedViewer datetime={props.issue.changed_at} /> · {props.commentsNum} comment
+                </div>
+            </IssueHeadContainer>
+        </>
+    )
+}
+
+export default IssueHeader;
