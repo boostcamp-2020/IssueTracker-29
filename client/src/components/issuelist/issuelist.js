@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useIssues, useIssueLabels, useLabels, useMilestones } from './issueHook.js';
+import { ControlValueContext } from '../common/context.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
@@ -11,6 +12,12 @@ const Issue = (props) => {
   const issueLabels = useIssueLabels();
   const labels = useLabels();
   const milestones = useMilestones();
+  const [value, setValue] = useState('is:issue is:open ');
+  const [condition, setCondition] = useState('');
+
+  useEffect(() => {
+    setCondition(getFilterCondition());
+  }, []);
 
   const labelMap = {};
   issues.forEach(item => {
@@ -37,18 +44,28 @@ const Issue = (props) => {
   const issueComponent = issues.map((item, idx) => <IssueItem 
     key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(idx)}/>);
 
+  const getFilterCondition = () => {
+    if(!props.location.search) return;
+    const search = decodeURIComponent(props.location.search).split('=')[1].replace(/\+/g, ' ');
+    const conditionList = search.match(/\w*:(?:"[\w@ ]*"|[\w@]*)/g);
+    return conditionList;
+    // TODO: condition에 따라 rendering할 issueItem을 filtering
+  };
+
   return (
     <div>
-      <TopBar search={props.location.search} />
-      <TabList
-        labels={labels}
-        milestones={milestones}
-        onClickCheckbox={() => toggleAllIssueSelect()}/>
-      <div>
-        {issueComponent}
-      </div>
+      <ControlValueContext.Provider value={{value, setValue}}>
+        <TopBar search={props.location.search} />
+        <TabList
+          labels={labels}
+          milestones={milestones}
+          onClickCheckbox={() => toggleAllIssueSelect()}/>
+        <div>
+          {issueComponent}
+        </div>
+      </ControlValueContext.Provider>
     </div>
-  )
+  );
 }
 
 export default Issue;

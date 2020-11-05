@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link } from "react-router-dom";
-import { LabelContext, MilestoneContext } from '../common/context';
+import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
 
 const TopBarConatiner = styled.div`
     margin-top: 100px;
@@ -32,14 +32,14 @@ const NewIssueButton = styled.button`
 const TopBar = (props) => {
 
     const {labels} = useContext(LabelContext);
-    const {milestones} = useContext(MilestoneContext); 
-    const [value, setValue] = useState('is:issue is:open');
+    const {milestones} = useContext(MilestoneContext);
+    const { value, setValue } = useContext(ControlValueContext);
 
     useEffect(() => {
       if(!props.search) return;
       const params = props.search.split('=')[1].split('+').map((v) => decodeURIComponent(v));
       setValue(params.join(' '));
-    }, []);
+    }, [props.search]);
 
     const handleSubmit = () => {
       // TODO: 수동 submit 수행 후 하위 컴포넌트들에게 이 메소드 props로 넘겨주기
@@ -54,7 +54,6 @@ const TopBar = (props) => {
               name='q'
               value={value}
               placeholder="Search all issues"/>
-              <button type="submit" hidden />
             </form>
             <LabelButton>Labels<div>{labels.length}</div></LabelButton>
             <MilestoneButton>Milestones<div>{milestones.length}</div></MilestoneButton>
