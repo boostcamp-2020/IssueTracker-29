@@ -18,7 +18,7 @@ module.exports = {
       }
     ]
   },// resolve: 웹팩이 해석할 확장자를 지정. 
-  resolve: { extensions: ["*", ".js", ".jsx"] },// output: 번들링 된 결과물을 어디다 둘 것인지에 대한 설정이 가능.
+  resolve: { extensions: ["*", ".js", ".jsx"], fallback: { "path": require.resolve("path-browserify") } },// output: 번들링 된 결과물을 어디다 둘 것인지에 대한 설정이 가능.
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, "dist/"),
@@ -32,11 +32,14 @@ module.exports = {
     historyApiFallback: true
   },
   plugins: [
-	new webpack.HotModuleReplacementPlugin(),
-	new HtmlWebpackPlugin({
-	// 번들링된 JS를 주입하고 결과물을 옮길 대상이 되는 파일을 지정
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+	    // 번들링된 JS를 주입하고 결과물을 옮길 대상이 되는 파일을 지정
       template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ]
 };
