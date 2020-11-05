@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
 import { useOption } from './tabListHook';
+import { ControlValueContext } from '../common/context.js';
+import { Redirect } from 'react-router-dom';
 import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
 import { sendPutRequest } from '../common/api';
 
@@ -42,10 +44,10 @@ const tabList = (props) => {
   } else {
     tabList = (
       <>
-        <AuthorTab>Author ▼</AuthorTab>
-        <LabelTab>Label ▼</LabelTab>
-        <MilestonesTab>Milestones ▼</MilestonesTab>
-        <AssigneeTab>Assignee ▼</AssigneeTab>
+        <AuthorTab />
+        <LabelTab />
+        <MilestonesTab />
+        <AssigneeTab />
       </>
     )
   }
@@ -82,24 +84,27 @@ const MarkAsTab = (props) => {
 const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username');
+  const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
-    // TODO: value 변경 후 (append) handleSubmit 호출
-    // const newText = value.split(' ').filter(v => !v.includes('author:')).join(' ');
-    // if(!newText) return setValue(`author:${text} `);
-    // setValue(`${newText}author:${text} `);
+    const newText = value.replace(/author:[\w@]* /, '');
+    if(!newText) return setRedirect(`author:${text} `);
+    setRedirect(`${newText}author:${text} `);
   };
 
   return (
     <div>
       <input type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
-      onModal={onModal}
-      setOnModal={setOnModal}
-      title="Filter by author"
-      items={option}
-      onEvent={handleModalEvent} />
+        onModal={onModal}
+        setOnModal={setOnModal}
+        title="Filter by author"
+        items={option}
+        onEvent={handleModalEvent}
+      />
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
@@ -107,11 +112,27 @@ const AuthorTab = (props) => {
 const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const {labels} = useContext(LabelContext);
+  const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    const newText = value.replace(/label:".*" /, '');
+    if(!newText) return setRedirect(`label:"${text}" `);
+    if (text === 'Unlabeled') return setRedirect(newText);
+    setRedirect(`${newText}label:"${text}" `);
+  };
 
   return (
     <div>
       <input type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by label" items={['Unlabeled', ...labels.map(item => item.name)]} />
+      <Modal
+        onModal={onModal}
+        title="Filter by label"
+        items={['Unlabeled', ...labels.map(item => item.name)]}
+        onEvent={handleModalEvent}
+      />
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
@@ -119,11 +140,27 @@ const LabelTab = (props) => {
 const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const {milestones} = useContext(MilestoneContext);
+  const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    const newText = value.replace(/milestone:".*" /, '');
+    if(!newText) return setRedirect(`milestone:"${text}" `);
+    if (text === 'Issues with no milestone') return setRedirect(newText);
+    setRedirect(`${newText}milestone:"${text}" `);
+  };
 
   return (
     <div>
       <input type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by milestone" items={['Issues with no milestone', ...milestones.map(item => item.title)]} />
+      <Modal
+        onModal={onModal}
+        title="Filter by milestone"
+        items={['Issues with no milestone', ...milestones.map(item => item.title)]}
+        onEvent={handleModalEvent}
+      />
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
@@ -131,11 +168,27 @@ const MilestonesTab = (props) => {
 const AssigneeTab = (props) => {
   const [onModal, setOnModal] = useState(false);
   const option = useOption('/user', 'username', 'Assigned to nobody');
+  const { value, setValue } = useContext(ControlValueContext);
+  const [redirect, setRedirect] = useState(false);
+
+  const handleModalEvent = (e) => {
+    const text = e.target.innerHTML;
+    const newText = value.replace(/assignee:[\w@]* /, '');
+    if(!newText) return setRedirect(`assignee:${text} `);
+    if (text === `Assigned to nobody`) return setRedirect(newText);
+    setRedirect(`${newText}assignee:${text} `);
+  };
 
   return (
     <div>
       <input type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Filter by who's assigned" items={option} />
+      <Modal
+        onModal={onModal}
+        title="Filter by who's assigned"
+        items={option}
+        onEvent={handleModalEvent}
+      />
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };

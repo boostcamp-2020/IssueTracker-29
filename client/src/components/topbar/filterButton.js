@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import styled from 'styled-components';
+import React, {useState, useEffect, useContext} from 'react';
+import { Redirect } from 'react-router-dom';
 import Modal from '../common/modal';
 import filterCondition from '../common/filterCondition';
 
@@ -13,17 +13,18 @@ const FilterButton = (props) => {
     'Everything mentioning you',
     'Closed issues',
   ]);
+  const [redirect, setRedirect] = useState(false);
 
   const handleModalEvent = (e) => {
     const text = e.target.innerHTML;
-    // TODO: value 변경 후 (change) handleSubmit 호출
-    // props.setValue(filterCondition[text]);
+    setRedirect(filterCondition[text]);
   };
 
   return (
     <div>
       <input type="button" value="Filters ▼" onClick={() => setOnModal(!onModal)} />
       <Modal onModal={onModal} title={title} items={option} onEvent={handleModalEvent} />
+      {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
 };
