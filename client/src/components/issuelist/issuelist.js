@@ -17,13 +17,13 @@ const Issue = (props) => {
 
   useEffect(() => {
     const condition = getFilterCondition();
-    if(!condition || !issues.length) return;
+    if(!condition.length || !issues.length || !issueLabels.length) return;
     let result = [...issues];
     condition.forEach((v) => {
       result = result.filter(item => setIssuesByFilterCondition(v).includes(item));
     });
     setFilteredIssue(result);
-  }, [props.location, issues]);
+  }, [props.location, issues, issueLabels]);
 
   const labelMap = {};
   issues.forEach(item => {
@@ -68,6 +68,9 @@ const Issue = (props) => {
           return issues.filter(item => item.username === value);
       case 'milestone':
         return issues.filter(item => `"${item.milestone_title}"` === value);
+      case 'label':
+        const filteredIssueID = issueLabels.filter(item => `"${item.name}"` === value).map(item => item.issue_id);
+        return issues.filter(item => filteredIssueID.includes(item.id));
       default:
         return [];
     }
