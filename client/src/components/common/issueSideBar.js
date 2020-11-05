@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// import tabList from '../issuelist/tabList';
 
 const IssueSideBar = styled.div`
     width: 30%;
@@ -47,6 +48,7 @@ const IssueDetailSideBar = (props) => {
     return (
         <>
             <IssueSideBar>
+                {/* <tabList /> */}
                 <AssigneesContainer>
                     <AssigneesHeader>
                         <h3>Assignees</h3>
