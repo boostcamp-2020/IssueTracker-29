@@ -98,11 +98,12 @@ const AuthorTab = (props) => {
     <div>
       <input type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
-      onModal={onModal}
-      setOnModal={setOnModal}
-      title="Filter by author"
-      items={option}
-      onEvent={handleModalEvent} />
+        onModal={onModal}
+        setOnModal={setOnModal}
+        title="Filter by author"
+        items={option}
+        onEvent={handleModalEvent}
+      />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
@@ -126,10 +127,11 @@ const LabelTab = (props) => {
     <div>
       <input type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
-      onModal={onModal}
-      title="Filter by label"
-      items={['Unlabeled', ...labels.map(item => item.name)]}
-      onEvent={handleModalEvent} />
+        onModal={onModal}
+        title="Filter by label"
+        items={['Unlabeled', ...labels.map(item => item.name)]}
+        onEvent={handleModalEvent}
+      />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
@@ -153,10 +155,11 @@ const MilestonesTab = (props) => {
     <div>
       <input type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
-      onModal={onModal}
-      title="Filter by milestone"
-      items={['Issues with no milestone', ...milestones.map(item => item.title)]}
-      onEvent={handleModalEvent} />
+        onModal={onModal}
+        title="Filter by milestone"
+        items={['Issues with no milestone', ...milestones.map(item => item.title)]}
+        onEvent={handleModalEvent}
+      />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
@@ -180,10 +183,11 @@ const AssigneeTab = (props) => {
     <div>
       <input type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
-      onModal={onModal}
-      title="Filter by who's assigned"
-      items={option}
-      onEvent={handleModalEvent} />
+        onModal={onModal}
+        title="Filter by who's assigned"
+        items={option}
+        onEvent={handleModalEvent}
+      />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
     </div>
   );
