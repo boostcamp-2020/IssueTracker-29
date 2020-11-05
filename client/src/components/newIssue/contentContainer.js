@@ -65,7 +65,7 @@ const Content = (props) => {
 
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [charaterCount, setCharaterCount] = useState(0);
+    const [characterCount, setCharacterCount] = useState(0);
     const [timeCheck, setTimeCheck] = useState(false);
     const [imageURL, setImageURL] = useState("");
     const [imageFileName, setImageFileName] = useState("");
@@ -95,7 +95,7 @@ const Content = (props) => {
     const changeContentData = (e) => {
         const {value} = e.target;
         setContent(e.target.value);
-        setCharaterCount(value.length);
+        setCharacterCount(value.length);
     };
 
     const submitClickEvent = async (e) => {
@@ -119,7 +119,7 @@ const Content = (props) => {
             <div>Write</div>
             <ContentWrap>
                 <ContentTextarea placeholder="Leave a comment" value={content} onChange={changeContentData} />
-                <TextCountSpan timeCheck={timeCheck}>{charaterCount} characters</TextCountSpan>
+                <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
             </ContentWrap>
             
             <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
