@@ -19,4 +19,13 @@ const sendPutRequest = async (path, data, onErrorValue = null) => {
   }
 }
 
-export { sendGetRequest, sendPutRequest };
+const sendPostRequest = async (path, data, onErrorValue = null) => {
+  try {
+    const res = await axios.post(BASE_API_URL + path, data, {withCredentials: true});
+    return res.data;
+  } catch(e) {
+    return onErrorValue;
+  }
+}
+
+export { sendGetRequest, sendPutRequest, sendPostRequest };

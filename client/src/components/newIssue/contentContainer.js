@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
+import { sendPostRequest } from '../common/api';
 
 const ContentContainer = styled.div`
     display: flex;
@@ -96,8 +97,9 @@ const Content = (props) => {
         setCharaterCount(value.length);
     };
 
-    const submitClickEvent = (e) => {
-        // alert(title + content);
+    const submitClickEvent = async (e) => {
+        const issueId = await sendPostRequest('/issue', {title:title});
+        await sendPostRequest(`/issue/${issueId.result}/comment`, {contents:content});
     };
     
     const handleImageFile = async (e) => {
