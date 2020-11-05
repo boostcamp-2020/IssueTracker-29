@@ -2,8 +2,10 @@ const db = require('../models/connection');
 const { CREATE_COMMENT, READ_COMMENT, UPDATE_COMMENT, DELETE_COMMENT } = require('../models/query');
 
 const createComment = async (req, res) => {
-  const { contents, issueID } = req.body;
+  const { contents } = req.body;
+  const { issueid: issueID } = req.params;
   const userID = req.user.id;
+  
   if (!issueID) {
     return res.status(403).json({ success: false, message: '없는 이슈입니다.' });
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../common/icon.js';
+import Icon from './icon.js';
 
 const SvgContainer = styled(Icon)`
   color: ${props => props.color};
