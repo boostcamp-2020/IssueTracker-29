@@ -1,13 +1,22 @@
 import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
 
-const sendGetRequest = async (path) => {
+const sendGetRequest = async (path, onErrorValue = []) => {
   try {
     const res = await axios.get(BASE_API_URL + path, {withCredentials: true});
     return res.data.result;
   } catch(e) {
-    return [];
+    return onErrorValue;
   }
 }
 
-export { sendGetRequest };
+const sendPutRequest = async (path, data, onErrorValue = null) => {
+  try {
+    const res = await axios.put(BASE_API_URL + path, data, {withCredentials: true});
+    return res.data;
+  } catch(e) {
+    return onErrorValue;
+  }
+}
+
+export { sendGetRequest, sendPutRequest };
