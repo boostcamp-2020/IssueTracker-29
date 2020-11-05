@@ -29,12 +29,6 @@ const IssueHeader = (props) => {
         setTitle(e.target.value);
     };
 
-    const [comments, setComments] = useState(props.comments);
-    useEffect(() => {
-        setComments(props.comments);
-    }, [props.comments])
-
-    const commentsNum = props.comments.length;
     return (
         <>
             <IssueHeadContainer>
@@ -42,7 +36,7 @@ const IssueHeader = (props) => {
                 <h3>{props.title} #{props.id}</h3>
                 <p>
                 {props.is_open === 1 ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
-                {props.username} opened this issue <DatePassedViewer datetime={props.changed_at} /> · {commentsNum} comment
+                {props.username} opened this issue <DatePassedViewer datetime={props.changed_at} /> · {props.commentsNum} comment
                 </p>
             </IssueHeadContainer>
         </>

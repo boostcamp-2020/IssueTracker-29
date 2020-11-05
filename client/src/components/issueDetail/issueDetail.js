@@ -35,10 +35,7 @@ const IssueDetail = ({ match }) => {
   const labelComponent = labels.map(item => <LabelItem key={item.id} label={item} />)
 
   const issueComments = useIssueDetailComments(id);
-  const comments = [];
-  issueComments.forEach(item => {
-    comments.push(item);
-  })
+  const comments = [...issueComments];
 
   const commentComponent = comments.map(item => <CommentItem key={item.id} comment={item} issue_user_id={issue.user_id} />)
 
@@ -47,7 +44,7 @@ const IssueDetail = ({ match }) => {
   }
   return (
     <>
-      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} comments={comments}/>
+      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} commentsNum={comments.length}/>
       <IssueBody>
         <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
