@@ -7,7 +7,7 @@ const Index = (props) => {
         props.history.push("/" + queryString);
     }
 
-    return (<Link to={`/?q=${encodeURIComponent(queryString)}`}><div>Hello</div></Link>);
+    return (<Link to={`/issue?q=${encodeURIComponent(queryString)}`}><div>Hello</div></Link>);
 }
 
 export default Index;
