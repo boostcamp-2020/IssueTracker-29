@@ -9,15 +9,21 @@ import IssueItem from './issueItem.js';
 
 const Issue = (props) => {
   const [issues, setIssues] = useIssues();
+  const [filteredIssue, setFilteredIssue] = useState(null);
   const issueLabels = useIssueLabels();
   const labels = useLabels();
   const milestones = useMilestones();
   const [value, setValue] = useState('is:issue is:open ');
-  const [condition, setCondition] = useState('');
 
   useEffect(() => {
-    setCondition(getFilterCondition());
-  }, []);
+    const condition = getFilterCondition();
+    if(!condition.length || !issues.length || !issueLabels.length) return;
+    let result = [...issues];
+    condition.forEach((v) => {
+      result = result.filter(item => setIssuesByFilterCondition(v).includes(item));
+    });
+    setFilteredIssue(result);
+  }, [props.location, issues, issueLabels]);
 
   const labelMap = {};
   issues.forEach(item => {
@@ -41,16 +47,34 @@ const Issue = (props) => {
     setIssues(issues.map((item, innerIdx) => idx === innerIdx ? {...item, checked: !item.checked} : item));
   }
 
-  const issueComponent = issues.map((item, idx) => <IssueItem 
+  const issueComponent = ((!filteredIssue)? issues : filteredIssue).map((item, idx) => <IssueItem 
     key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(idx)}/>);
 
   const getFilterCondition = () => {
     if(!props.location.search) return;
     const search = decodeURIComponent(props.location.search).split('=')[1].replace(/\+/g, ' ');
-    const conditionList = search.match(/\w*:(?:"[\w@ ]*"|[\w@]*)/g);
+    const conditionList = search.match(/\w*:(?:(?:".*")|(?:[\w@]*))/g);
     return conditionList;
-    // TODO: condition에 따라 rendering할 issueItem을 filtering
   };
+
+  const setIssuesByFilterCondition = (condition) => {
+    const [key, value] = condition.split(':');
+    switch(key) {
+      case 'is':
+        if (value === 'issue') return [...issues];
+        return issues.filter(item => (value === 'open')? item.is_open : !item.is_open);
+      case 'author':
+        if(value !== '@me') // user 식별 미구현
+          return issues.filter(item => item.username === value);
+      case 'milestone':
+        return issues.filter(item => `"${item.milestone_title}"` === value);
+      case 'label':
+        const filteredIssueID = issueLabels.filter(item => `"${item.name}"` === value).map(item => item.issue_id);
+        return issues.filter(item => filteredIssueID.includes(item.id));
+      default:
+        return [];
+    }
+  }
 
   return (
     <div>
