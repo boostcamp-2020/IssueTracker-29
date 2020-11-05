@@ -23,7 +23,7 @@ const IssueDetail = ({ match }) => {
   // const [isOpen, setIsOpen] = useState(1);
 
   const { id } = match.params;
-  const issue = useIssueDetail(id);
+  const [issue, setIssue] = useIssueDetail(id);
 
   const issueLabels = useIssueDetailLabels(id);
   const labels = [];
@@ -34,8 +34,7 @@ const IssueDetail = ({ match }) => {
   const svgSettingsIcon = <SvgSettingsLogo color={COLOR_SETTINGS}/>
   const labelComponent = labels.map(item => <LabelItem key={item.id} label={item} />)
 
-  const issueComments = useIssueDetailComments(id);
-  const comments = [...issueComments];
+  const [comments, setComments] = useIssueDetailComments(id);
 
   const commentComponent = comments.map(item => <CommentItem key={item.id} comment={item} issue_user_id={issue.user_id} />)
 
