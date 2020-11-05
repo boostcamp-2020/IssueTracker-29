@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+// import ReactMarkdown from 'react-markdown';
 import DatePassedViewer from '../common/datePassed.js';
 
 const CommentContainer = styled.div`
@@ -17,6 +18,7 @@ const CommentItem = (props) => {
   return (
     <CommentContainer>
         <CommentHeader>{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} />  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
+        {/* <ReactMarkdown source={props.comment.contents} /> */}
         <p>{props.comment.contents}</p>
     </CommentContainer>
   )
