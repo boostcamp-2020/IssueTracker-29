@@ -2,7 +2,14 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
 import { useOption } from './tabListHook';
-import { FetchedDataContext } from './context.js';
+import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
+import { sendPutRequest } from '../common/api';
+
+const OPEN = 1;
+const CLOSE = 0;
+
+const OPEN_STRING = "Open";
+const CLOSE_STRING = "Close";
 
 const TabContainer = styled.div`
   display: flex;
@@ -21,18 +28,56 @@ const TabContainer = styled.div`
 `;
 
 const tabList = (props) => {
-  const currentSelectNum = props.issue_num;
+  const { issues } = useContext(IssueContext);
+
+  const currentSelectNum = issues.filter(item => item.checked).length;
+  let tabList;
+  if (currentSelectNum !== 0) {
+    tabList = (
+      <>
+        <p>{currentSelectNum} selected</p>
+        <MarkAsTab>Mark as ▼</MarkAsTab>
+      </>
+    )
+  } else {
+    tabList = (
+      <>
+        <AuthorTab>Author ▼</AuthorTab>
+        <LabelTab>Label ▼</LabelTab>
+        <MilestonesTab>Milestones ▼</MilestonesTab>
+        <AssigneeTab>Assignee ▼</AssigneeTab>
+      </>
+    )
+  }
+
   return(
     <TabContainer>
       <input type="checkbox" onClick={props.onClickCheckbox}/>
-      <p>{currentSelectNum === 0 ? null : currentSelectNum + ' selected'} </p>
-      <AuthorTab>Author ▼</AuthorTab>
-      <LabelTab>Label ▼</LabelTab>
-      <MilestonesTab>Milestones ▼</MilestonesTab>
-      <AssigneeTab>Assignee ▼</AssigneeTab>
+      {tabList}
     </TabContainer>
   )
 };
+
+const MarkAsTab = (props) => {
+  const [onModal, setOnModal] = useState(false);
+  const { issues, setIssues } = useContext(IssueContext);
+
+  const sendIssueStateUpdate = async (e) => {
+    const isOpen = (e.target.innerHTML === OPEN_STRING) ? 1 : 0;
+    const checkedIds = issues.filter(item => item.checked).map(item => item.id);
+    const result = await sendPutRequest("/issue/state", {isOpen: isOpen, ids: checkedIds}, {success: false});
+    if (result.success) {
+      setIssues(issues.map(item => (item.checked) ? {...item, is_open: isOpen, changed_at: new Date().toISOString()} : item));
+    }
+  }
+
+  return (
+    <div>
+      <input type="button" value="Mark as ▼" onClick={() => setOnModal(!onModal)} />
+      <Modal onModal={onModal} title="Actions" items={[OPEN_STRING, CLOSE_STRING]} onEvent={sendIssueStateUpdate} />
+    </div>
+  );
+}
 
 const AuthorTab = (props) => {
   const [onModal, setOnModal] = useState(false);
@@ -61,7 +106,7 @@ const AuthorTab = (props) => {
 
 const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const {labels} = useContext(FetchedDataContext);
+  const {labels} = useContext(LabelContext);
 
   return (
     <div>
@@ -73,7 +118,7 @@ const LabelTab = (props) => {
 
 const MilestonesTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const {milestones} = useContext(FetchedDataContext);
+  const {milestones} = useContext(MilestoneContext);
 
   return (
     <div>

@@ -19,7 +19,7 @@ const createIssue = async (req, res) => {
 
 const updateIssueState = async (req, res) => {
   const { isOpen, ids } = req.body;
-  const result = await db(UPDATE_ISSUE_STATE, [isOpen, ids]);
+  const result = await db(UPDATE_ISSUE_STATE, [isOpen, new Date(), ids]);
 
   return res.json({success: true});
 }

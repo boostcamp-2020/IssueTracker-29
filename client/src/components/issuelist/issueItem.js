@@ -32,7 +32,7 @@ const IssueItem = (props) => {
     isOpenLogo = <SvgOpenLogo color={COLOR_SUCCESS}/>
     issueInfoComponent = (
       <p>
-        #{props.article.id} opened <DatePassedViewer datetime={props.article.changed_at}/> ago by {props.article.username}
+        #{props.article.id} opened <DatePassedViewer datetime={props.article.changed_at}/> by {props.article.username}
       </p>
     );
   }
@@ -40,7 +40,7 @@ const IssueItem = (props) => {
     isOpenLogo = <SvgCloseLogo color={COLOR_DANGER}/>
     issueInfoComponent = (
       <p>
-        #{props.article.id} by {props.article.username} was closed <DatePassedViewer datetime={props.article.changed_at} /> ago
+        #{props.article.id} by {props.article.username} was closed <DatePassedViewer datetime={props.article.changed_at} />
       </p>
     );
   }

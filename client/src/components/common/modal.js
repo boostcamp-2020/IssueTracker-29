@@ -20,13 +20,13 @@ const Modal = (props) => {
   if(!props.onModal) return ('');
 
 const optionData = props.items.map((item, idx) =>
-  <div>
+  <div key={idx} >
     <hr
     style={{
       margin: 0,
     }}
     />
-    <Option key={idx} onClick={(e) => props.onEvent(e)}>
+    <Option onClick={(e) => props.onEvent(e)}>
     {item}
     </Option>
   </div>

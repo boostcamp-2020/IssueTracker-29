@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { sendGetRequest } from '../common/api.js';
+import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
 
 const putIssuesInState = async (setIssues) => {
     const issues = await sendGetRequest('/issue');
@@ -7,7 +8,7 @@ const putIssuesInState = async (setIssues) => {
 };
 
 const useIssues = () => {
-  const [issues, setIssues] = useState([]);
+  const {issues, setIssues} = useContext(IssueContext);
 
   useEffect(() => {
     putIssuesInState(setIssues);
@@ -39,7 +40,7 @@ const putLabelsInState = async (setLabels) => {
 };
 
 const useLabels = () => {
-  const [labels, setLabels] = useState([]);
+  const {labels, setLabels} = useContext(LabelContext);
 
   useEffect(() => {
     putLabelsInState(setLabels);
@@ -54,7 +55,7 @@ const putMilestonesInState = async (setMilestones) => {
 };
 
 const useMilestones = () => {
-  const [milestones, setMilestones] = useState([]);
+  const {milestones, setMilestones} = useContext(MilestoneContext);
 
   useEffect(() => {
     putMilestonesInState(setMilestones);
