@@ -8,7 +8,7 @@ import IssueDetailContent from './issueDetailContent';
 import IssueDetailSideBar from './issueDetailSideBar';
 import CommentItem from '../common/commentItem';
 import IssueDetailCommentInput from './issueDetailCommentInput';
-
+// import ReactMarkdown from 'react-markdown';
 
 const COLOR_SETTINGS = '#959da5';
 
@@ -38,11 +38,31 @@ const IssueDetail = ({ match }) => {
 
   const commentComponent = comments.map(item => <CommentItem key={item.id} comment={item} issue_user_id={issue.user_id} />)
 
+  const source = `
+    # 제목 1
+    ### 테이블
+    |제목|내용|
+    |---|---|
+    |리액트|마크다운|
+
+    \`\`\`
+    코드블럭
+    \`\`\`
+
+    **굵게**  
+    *기울이기* 
+
+    > 인용문  
+
+    글자 \`강조\` 하기
+  `;
+
   if (!issue) {
     return <div>존재하지 않는 유저입니다.</div>
   }
   return (
     <>
+      {/* <ReactMarkdown source={source}/> */}
       <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} commentsNum={comments.length}/>
       <IssueBody>
         <IssueDetailContent comments={commentComponent} id={issue.id} />
