@@ -8,7 +8,16 @@ const sendGetRequest = async (path, onErrorValue = []) => {
   } catch(e) {
     return onErrorValue;
   }
-}
+};
+
+const sendPostRequest = async (path, data, onErrorValue = null) => {
+  try {
+    const res = await axios.get(BASE_API_URL + path, {withCredentials: true});
+    return res.data;
+  } catch(e) {
+    return onErrorValue;
+  }
+};
 
 const sendPutRequest = async (path, data, onErrorValue = null) => {
   try {
@@ -17,6 +26,6 @@ const sendPutRequest = async (path, data, onErrorValue = null) => {
   } catch(e) {
     return onErrorValue;
   }
-}
+};
 
-export { sendGetRequest, sendPutRequest };
+export { sendGetRequest, sendPostRequest, sendPutRequest };

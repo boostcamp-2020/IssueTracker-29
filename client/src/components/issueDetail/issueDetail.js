@@ -23,7 +23,7 @@ const IssueDetail = ({ match }) => {
   // const [isOpen, setIsOpen] = useState(1);
 
   const { id } = match.params;
-  const issue = useIssueDetail(id);
+  const [issue, setIssue] = useIssueDetail(id);
 
   const issueLabels = useIssueDetailLabels(id);
   const labels = [];
@@ -34,22 +34,21 @@ const IssueDetail = ({ match }) => {
   const svgSettingsIcon = <SvgSettingsLogo color={COLOR_SETTINGS}/>
   const labelComponent = labels.map(item => <LabelItem key={item.id} label={item} />)
 
-  const issueComments = useIssueDetailComments(id);
-  const comments = [...issueComments];
+  const [issueComments, setIssueComments] = useIssueDetailComments(id);
 
-  const commentComponent = comments.map(item => <CommentItem key={item.id} comment={item} issue_user_id={issue.user_id} />)
+  const commentComponent = issueComments.map(item => <CommentItem key={item.id} comment={item} issue_user_id={issue.user_id} />)
 
   if (!issue) {
     return <div>존재하지 않는 유저입니다.</div>
   }
   return (
     <>
-      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} commentsNum={comments.length}/>
+      <IssueHeader title={issue.issue_title} id={issue.id} is_open={issue.is_open} username={issue.username} changed_at={issue.changed_at} commentsNum={issueComments.length}/>
       <IssueBody>
         <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
       </IssueBody>
-      <IssueDetailCommentInput />
+      <IssueDetailCommentInput issue={issue} setIssue={setIssue} comment={issueComments} setComment={setIssueComments}/>
     </>
   );
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SvgCloseLogo from '../issuelist/svgCloseLogo';
 import SvgOpenLogo from '../issuelist/svgOpenLogo.js';
 import DatePassedViewer from '../common/datePassed.js';
+import { ISSUE_OPEN } from '../../../util/config';
 
 const COLOR_SUCCESS = "#22863a";
 const COLOR_DANGER = "#cb2431";
@@ -35,8 +36,11 @@ const IssueHeader = (props) => {
                 <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>
                 <h3>{props.title} #{props.id}</h3>
                 <p>
-                {props.is_open === 1 ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
-                {props.username} opened this issue <DatePassedViewer datetime={props.changed_at} /> · {props.commentsNum} comment
+                    <div>
+                        {props.is_open === ISSUE_OPEN ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
+                        {props.is_open === ISSUE_OPEN ? "Open" : "Closed"}
+                    </div>
+                    {props.username} opened this issue <DatePassedViewer datetime={props.changed_at} /> · {props.commentsNum} comment
                 </p>
             </IssueHeadContainer>
         </>
