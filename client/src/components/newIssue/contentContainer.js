@@ -94,7 +94,6 @@ const Content = (props) => {
 
     const changeContentData = (e) => {
         const {value} = e.target;
-
         setContent(e.target.value);
         setCharaterCount(value.length);
     };
@@ -116,7 +115,6 @@ const Content = (props) => {
 
     return (
         <ContentContainer>
-            {(!redirect)? null : <Redirect to={`/issue/${issueId}`}/>}
             <TitleInput placeholder="Title" onChange={changeTitleData}/>
             <div>Write</div>
             <ContentWrap>
@@ -133,6 +131,7 @@ const Content = (props) => {
                 </Link>
                 <SubmitButton onClick={submitClickEvent}>Submit new issue</SubmitButton>
             </ButtonContainer>
+            {(!redirect)? null : <Redirect to={`/issue/${issueId}`}/>}
         </ContentContainer>
     );
 };
