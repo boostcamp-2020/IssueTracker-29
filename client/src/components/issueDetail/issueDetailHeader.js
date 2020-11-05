@@ -1,37 +1,46 @@
-// import React, { useState } from 'react';
-// import styled from 'styled-components';
-// import { useIssues } from '../issuelist/issueHook.js';
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import SvgCloseLogo from '../issuelist/svgCloseLogo';
+import SvgOpenLogo from '../issuelist/svgOpenLogo.js';
+import DatePassedViewer from '../common/datePassed.js';
 
-// const IssueHeadContainer = styled.div`
-//   border-bottom: 1px solid #d1d5da;
-//   margin-bottom: 20px;
-// `;
+const COLOR_SUCCESS = "#22863a";
+const COLOR_DANGER = "#cb2431";
 
-// const EditTitleButton = styled.button`
-//   float: right;
-//   padding: 10px;
-//   margin-right: 100px;
-// `;
+const IssueHeadContainer = styled.div`
+  border-bottom: 1px solid #d1d5da;
+  margin-bottom: 20px;
+`;
 
-// const Header = ({ match }) => {
-//     const editTitle = (e) => {
-//         setTitle(e.target.value);
-//     };
+const EditTitleButton = styled.button`
+  float: right;
+  padding: 10px;
+  margin-right: 100px;
+`;
 
-//     const issues = useIssues();
-//     const { id } = match.params;
-//     console.log(id);
-//     const issue = issues[id - 1];
+const SaveTitleButton = styled.button``;
 
-//     return (
-//         <>
-//             <IssueHeadContainer>
-//                 <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>
-//                 <h3>{issue.title} #{issue.id}</h3>
-//                 {issue.is_open === 1 ? <p>Open</p> : <p>Closed</p>}
-//             </IssueHeadContainer>
-//         </>
-//     )
-// }
+const CancelTitleButton = styled.button``;
 
-// export default Header;
+const EditContentsButton = styled.button``;
+
+const IssueHeader = (props) => {
+    const editTitle = (e) => {
+        setTitle(e.target.value);
+    };
+
+    return (
+        <>
+            <IssueHeadContainer>
+                <EditTitleButton onClick={editTitle}>Edit</EditTitleButton>
+                <h3>{props.title} #{props.id}</h3>
+                <p>
+                {props.is_open === 1 ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
+                {props.username} opened this issue <DatePassedViewer datetime={props.changed_at} /> · {props.commentsNum} comment
+                </p>
+            </IssueHeadContainer>
+        </>
+    )
+}
+
+export default IssueHeader;

@@ -1,6 +1,6 @@
 module.exports = {
   CREATE_COMMENT: 'insert into comment(contents, issue_id, user_id, created_at) values(?, ?, ?, ?);',
-  READ_COMMENT: 'select id, contents, created_at from comment where issue_id = ?;',
+  READ_COMMENT: 'select comment.id, comment.contents, comment.created_at, comment.user_id, comment.issue_id, user.username from comment inner join user on comment.user_id = user.id where issue_id = ?;',
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
   DELETE_COMMENT: 'delete from comment where id = ?;',
   
