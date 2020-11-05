@@ -48,7 +48,7 @@ const IssueDetail = ({ match }) => {
         <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
       </IssueBody>
-      <IssueDetailCommentInput />
+      <IssueDetailCommentInput issue={issue} setIssue={setIssue} comment={comments} setComment={setComments}/>
     </>
   );
 };

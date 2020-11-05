@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
+import { sendPutRequest } from '../common/api';
+
 
 const IssueCommentInput = styled.textarea`
     margin-top: 50px;
@@ -95,23 +98,38 @@ const IssueDetailCommentInput = (props) => {
         setImageURL(BASE_API_URL + result.url);
     };
 
-
     const submitClickEvent = (e) => {
         // alert(title + content);
     };
+    
+    const toggleIssueState = async () => {
+        if (props.issue.is_open === ISSUE_OPEN) {
+            const res = await sendPutRequest("/issue/state", {isOpen: ISSUE_CLOSE, ids: [props.issue.id]});
+            if (res.success) {
+                props.setIssue({...props.issue, is_open: ISSUE_CLOSE});
+            }
+            return;
+        }
+
+        const res = await sendPutRequest("/issue/state", {isOpen: ISSUE_OPEN, ids: [props.issue.id]});
+        if (res.success) {
+            props.setIssue({...props.issue, is_open: ISSUE_OPEN});
+        }
+        return;
+    }
+
     return (
         <>
-        <ContentWrap>
-            <IssueCommentInput placeholder="Leave a comment" value={content} onChange={onChange} />
-            <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
-        </ContentWrap>
-        <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
-        <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
-            
-        <ButtonContainer>
-            <CloseIssueButton>Close issue</CloseIssueButton>
-            <CommentIssueButton>Comment</CommentIssueButton>
-        </ButtonContainer>
+            <ContentWrap>
+                <IssueCommentInput placeholder="Leave a comment" value={content} onChange={onChange} />
+                <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
+            </ContentWrap>
+            <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
+            <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
+            <ButtonContainer>
+                <CloseIssueButton onClick={toggleIssueState}>{(props.issue.is_open === ISSUE_OPEN) ? "Close issue" : "Reopen issue"}</CloseIssueButton>
+                <CommentIssueButton>Comment</CommentIssueButton>
+            </ButtonContainer>
         </>
     )
 }
