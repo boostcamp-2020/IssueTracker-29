@@ -12,7 +12,7 @@ const sendGetRequest = async (path, onErrorValue = []) => {
 
 const sendPostRequest = async (path, data, onErrorValue = null) => {
   try {
-    const res = await axios.get(BASE_API_URL + path, {withCredentials: true});
+    const res = await axios.post(BASE_API_URL + path, data, {withCredentials: true});
     return res.data;
   } catch(e) {
     return onErrorValue;
