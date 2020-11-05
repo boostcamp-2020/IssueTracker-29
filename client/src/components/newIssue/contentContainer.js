@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
 import { sendPostRequest } from '../common/api';
@@ -69,6 +69,8 @@ const Content = (props) => {
     const [timeCheck, setTimeCheck] = useState(false);
     const [imageURL, setImageURL] = useState("");
     const [imageFileName, setImageFileName] = useState("");
+    const [issueId, setIssueId] = useState(-1);
+    const [redirect, setRedirect] = useState(false);
 
     useEffect( () => {
         const timeout = setTimeout( () => {
@@ -98,8 +100,10 @@ const Content = (props) => {
     };
 
     const submitClickEvent = async (e) => {
-        const issueId = await sendPostRequest('/issue', {title:title});
-        await sendPostRequest(`/issue/${issueId.result}/comment`, {contents:content});
+        const resultIssueId = await sendPostRequest('/issue', {title:title});
+        setIssueId(resultIssueId.result);
+        await sendPostRequest(`/issue/${resultIssueId.result}/comment`, {contents:content});
+        setRedirect(true);
     };
     
     const handleImageFile = async (e) => {
@@ -112,6 +116,7 @@ const Content = (props) => {
 
     return (
         <ContentContainer>
+            {(!redirect)? null : <Redirect to={`/issue/${issueId}`}/>}
             <TitleInput placeholder="Title" onChange={changeTitleData}/>
             <div>Write</div>
             <ContentWrap>
