@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useIssueDetail, useIssueDetailLabels, useIssueDetailComments } from './issueDetailHook.js';
 import styled from 'styled-components';
 import LabelItem from '../common/labelItem';
-import SvgSettingsLogo from './svgSettingsLogo.js';
+import SvgSettingsLogo from '../common/svgSettingsLogo.js';
 import IssueHeader from './issueDetailHeader';
 import IssueDetailContent from './issueDetailContent';
-import IssueDetailSideBar from './issueDetailSideBar';
+import IssueSideBar from '../common/issueSideBar';
 import CommentItem from '../common/commentItem';
 import IssueDetailCommentInput from './issueDetailCommentInput';
 
@@ -46,7 +46,7 @@ const IssueDetail = ({ match }) => {
       <IssueHeader issue={issue} setIssue={setIssue} commentsNum={comments.length}/>
       <IssueBody>
         <IssueDetailContent comments={commentComponent} id={issue.id} />
-        <IssueDetailSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
+        <IssueSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
       </IssueBody>
       <IssueDetailCommentInput issue={issue} setIssue={setIssue} comment={comments} setComment={setComments}/>
     </>
