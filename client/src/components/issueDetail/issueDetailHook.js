@@ -13,7 +13,7 @@ const useIssueDetail = (id) => {
     getIssueById(setIssue, id);
   }, []);
 
-  return issue;
+  return [issue, setIssue];
 }
 
 const getIssueLabelsById = async (setLabels, id) => {
@@ -45,7 +45,7 @@ const useIssueDetailComments = (id) => {
     getIssueCommentsById(setComments, id);
   }, []);
 
-  return comments;
+  return [comments, setComments];
 }
 
 export { useIssueDetail, useIssueDetailLabels, useIssueDetailComments };
