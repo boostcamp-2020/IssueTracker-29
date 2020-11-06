@@ -1,4 +1,6 @@
-const BASE_API_URL = "http://www.tutoringmachine.shop/api";
+// production server based
+//const BASE_API_URL = "http://www.tutoringmachine.shop/api";
+const BASE_API_URL = "http://localhost:3000/api";
 const ISSUE_OPEN = 1;
 const ISSUE_CLOSE = 0;
 
