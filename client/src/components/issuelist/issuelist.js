@@ -43,12 +43,12 @@ const Issue = (props) => {
     setIssues(issues.map(item => ({...item, checked: true})));
   }
 
-  const toggleIssueSelect = (idx) => {
-    setIssues(issues.map((item, innerIdx) => idx === innerIdx ? {...item, checked: !item.checked} : item));
+  const toggleIssueSelect = (id) => {
+    setIssues(issues.map((item) => item.id === id ? {...item, checked: !item.checked} : item));
   }
 
-  const issueComponent = ((!filteredIssue)? issues : filteredIssue).map((item, idx) => <IssueItem 
-    key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(idx)}/>);
+  const issueComponent = ((!filteredIssue)? issues : filteredIssue).map((item) => <IssueItem 
+    key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(item.id)}/>);
 
   const getFilterCondition = () => {
     if(!props.location.search) return;
