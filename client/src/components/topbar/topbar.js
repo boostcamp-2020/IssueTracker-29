@@ -29,6 +29,14 @@ const NewIssueButton = styled.button`
     }
 `;
 
+const ResetButton = styled.input`
+    display: block;
+    margin: .5rem auto;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+`;
+
 const TopBar = (props) => {
 
     const {labels} = useContext(LabelContext);
@@ -40,6 +48,7 @@ const TopBar = (props) => {
       if(!props.search) return;
       const params = props.search.split('=')[1].split('+').map((v) => decodeURIComponent(v));
       setValue(params.join(' '));
+      setRedirect(false);
     }, [props.search]);
 
     const submitEvent = (e) => {
@@ -47,7 +56,12 @@ const TopBar = (props) => {
       setRedirect(value);
     };
 
+    const resetFilter = () => {
+      setRedirect('is:issue is:open ');
+    }
+
     return (
+      <>
         <TopBarConatiner>
             <FilterButton />
             <form onSubmit={submitEvent}>
@@ -64,7 +78,16 @@ const TopBar = (props) => {
             </Link>
             {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
         </TopBarConatiner>
+        {(value === 'is:issue is:open ' || value === '')?
+        null :
+        <ResetButton
+        type="button"
+        value="❎ clear current search query, filters, and sorts"
+        onClick={resetFilter} />}
+      </>
     )
 }
 
 export default TopBar;
+
+// <ResetButton onClick={resetFilter} value="clear"/>
