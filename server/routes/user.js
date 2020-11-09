@@ -12,7 +12,10 @@ router.get(
   passport.authenticate('github', {
     failureRedirect: '/',
   }),
-  tokenMiddleWare.createToken
+  tokenMiddleWare.createToken,
+  (req, res) => {
+    res.redirect('/issue');
+  }
 );
 
 router.get('/', userMiddleWare.readAllUser);
