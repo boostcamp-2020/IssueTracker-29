@@ -5,12 +5,7 @@ const userMiddleWare = require('../middlewares/user');
 
 const router = express.Router();
 
-router.get(
-  '/auth/github',
-  passport.authenticate('github', {
-    scope: ['user:email'],
-  })
-);
+router.get('/auth/github', passport.authenticate('github'));
 
 router.get(
   '/auth/github/callback',
