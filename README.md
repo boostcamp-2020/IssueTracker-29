@@ -15,6 +15,7 @@
    [![GitHub Closed PR](https://img.shields.io/github/issues-pr-closed-raw/boostcamp-2020/IssueTracker-29?color=red)](https://github.com/boostcamp-2020/IssueTracker-29/issues)
 
 </div>
+
 ### Git Branch Strategy
 
 * master : 제품으로 출시될 수 있는 브랜치
