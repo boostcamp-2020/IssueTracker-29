@@ -26,15 +26,14 @@ app.use(
   })
 );
 
-
 app.use(passport.initialize());
 passportConfig();
 
 // HACK: 현재 OAuth가 적용되지 않아 강제로 user를 넣어주는 middleware. 이후 OAuth가 이식되면 뺄 것.
-app.use((req, res, next) => {
-  req.user = {id: 1};
-  next();
-})
+// app.use((req, res, next) => {
+//   req.user = {id: 1};
+//   next();
+// })
 
 app.use('/', indexRouter);
 
