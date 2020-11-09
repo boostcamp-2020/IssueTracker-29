@@ -1,10 +1,12 @@
 const createError = require('http-errors');
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const passport = require('passport');
+const config = require('./config')[process.env.NODE_ENV || 'development'];
 const passportConfig = require('./middlewares/auth/passport');
 
 const app = express();
@@ -26,7 +28,20 @@ app.use(
   })
 );
 
+app.use(
+  session({
+    secret: config.secretKey,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+    },
+  })
+);
+
 app.use(passport.initialize());
+app.use(passport.session());
 passportConfig();
 
 // HACK: 현재 OAuth가 적용되지 않아 강제로 user를 넣어주는 middleware. 이후 OAuth가 이식되면 뺄 것.
