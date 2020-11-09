@@ -2,13 +2,13 @@
 
 <div align="center">
    
-![JavaScript](https://img.shields.io/badge/javascript-ES6+-yellow?logo=javascript)
-![React](https://img.shields.io/badge/react-17.0.1cf?logo=react)
+![Javascript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![react](https://img.shields.io/badge/React-17.0.1cf?logo=react)
 ![NodeJS](https://img.shields.io/badge/node.js-v14.5.0-green?logo=node.js)
-![Express](https://img.shields.io/badge/express-4.16.1-skyblue?logo=Node.js)
+![express](https://img.shields.io/badge/Express-4.16.1-skyblue?logo=Node.js)
 ![Babel](https://img.shields.io/badge/@babel/core-7.12.3-yellow?logo=babel) 
 ![Webpack](https://img.shields.io/badge/Webpack-5.3.1-blue?logo=Webpack) 
-![MySQL](https://img.shields.io/badge/mysql-v5.7.32-blue?logo=mysql)
+![MySQL](https://img.shields.io/badge/MySQL-v5.7.32-blue?logo=mysql)
 
 [![GitHub Open Issues](https://img.shields.io/github/issues-raw/boostcamp-2020/IssueTracker-29?color=green)](https://github.com/boostcamp-2020/IssueTracker-29/issues)
 [![GitHub Closed Issues](https://img.shields.io/github/issues-closed-raw/boostcamp-2020/IssueTracker-29?color=red)](https://github.com/boostcamp-2020/IssueTracker-29/issues)
