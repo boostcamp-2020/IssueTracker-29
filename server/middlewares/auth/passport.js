@@ -14,7 +14,7 @@ module.exports = () => {
   });
 
   const githubCallback = async (accessToken, refreshToken, profile, done) => {
-    let user = await db(READ_USER, [profile.username]);
+    let [user] = await db(READ_USER, [profile.username]);
     if (!user || !user.length) {
       await db(CREATE_USER, [true, profile.username, profile.photos[0].value]);
       [user] = await db(READ_USER, [profile.username]);
