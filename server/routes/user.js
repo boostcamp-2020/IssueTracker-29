@@ -1,13 +1,22 @@
 const express = require('express');
+const passport = require('passport');
 const tokenMiddleWare = require('../middlewares/auth/token');
 const userMiddleWare = require('../middlewares/user');
-const passport = require('passport');
 
 const router = express.Router();
 
-router.get('/auth/github/callback', passport.authenticate('github', {
-  failureRedirect: '/',
-}), tokenMiddleWare.createToken);
+router.get('/auth/github', passport.authenticate('github'));
+
+router.get(
+  '/auth/github/callback',
+  passport.authenticate('github', {
+    failureRedirect: '/',
+  }),
+  tokenMiddleWare.createToken,
+  (req, res) => {
+    res.redirect('/issue');
+  }
+);
 
 router.get('/', userMiddleWare.readAllUser);
 

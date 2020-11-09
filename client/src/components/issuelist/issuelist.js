@@ -51,7 +51,7 @@ const Issue = (props) => {
     key={item.id} article={item} labels={labelMap[item.id]} onClickCheckbox={() => toggleIssueSelect(item.id)}/>);
 
   const getFilterCondition = () => {
-    if(!props.location.search) return;
+    if(!props.location.search) return ['is:open'];
     const search = decodeURIComponent(props.location.search).split('=')[1].replace(/\+/g, ' ');
     const conditionList = search.match(/\w*:(?:(?:".*")|(?:[\w@]*))/g);
     return conditionList;

@@ -1,7 +1,7 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
 
 const TopBarConatiner = styled.div`
@@ -29,26 +29,42 @@ const NewIssueButton = styled.button`
     }
 `;
 
+const ResetButton = styled.input`
+    display: block;
+    margin: .5rem auto;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+`;
+
 const TopBar = (props) => {
 
     const {labels} = useContext(LabelContext);
     const {milestones} = useContext(MilestoneContext);
+    const [redirect, setRedirect] = useState(false);
     const { value, setValue } = useContext(ControlValueContext);
 
     useEffect(() => {
       if(!props.search) return;
       const params = props.search.split('=')[1].split('+').map((v) => decodeURIComponent(v));
       setValue(params.join(' '));
+      setRedirect(false);
     }, [props.search]);
 
-    const handleSubmit = () => {
-      // TODO: 수동 submit 수행 후 하위 컴포넌트들에게 이 메소드 props로 넘겨주기
+    const submitEvent = (e) => {
+      e.preventDefault();
+      setRedirect(value);
     };
 
+    const resetFilter = () => {
+      setRedirect('is:issue is:open ');
+    }
+
     return (
+      <>
         <TopBarConatiner>
             <FilterButton />
-            <form action="/issue" method="GET">
+            <form onSubmit={submitEvent}>
             <SearchIssueContainer
               onChange={(e) => setValue(e.target.value)}
               name='q'
@@ -60,8 +76,18 @@ const TopBar = (props) => {
             <Link to="/issue/create">
                 <NewIssueButton>New issue</NewIssueButton>
             </Link>
+            {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
         </TopBarConatiner>
+        {(value === 'is:issue is:open ' || value === '')?
+        null :
+        <ResetButton
+        type="button"
+        value="❎ clear current search query, filters, and sorts"
+        onClick={resetFilter} />}
+      </>
     )
 }
 
 export default TopBar;
+
+// <ResetButton onClick={resetFilter} value="clear"/>

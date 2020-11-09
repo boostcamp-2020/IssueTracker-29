@@ -9,13 +9,17 @@ module.exports = () => {
     return done(null, user);
   });
 
+  passport.deserializeUser((user, done) => {
+    return done(null, user);
+  });
+
   const githubCallback = async (accessToken, refreshToken, profile, done) => {
-    let user = await db(READ_USER, [profile.username]);
-    if(!user) {
-      await db(CREATE_USER, [true, profile.username, null]);
-      user = await db(READ_USER, [profile.username]);
+    let [user] = await db(READ_USER, [profile.username]);
+    if (!user) {
+      await db(CREATE_USER, [true, profile.username, profile.photos[0].value]);
+      [user] = await db(READ_USER, [profile.username]);
     }
-    return done(null, user[0]);
+    return done(null, user);
   };
 
   passport.use(new GitHubStrategy({

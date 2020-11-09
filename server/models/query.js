@@ -4,9 +4,9 @@ module.exports = {
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
   DELETE_COMMENT: 'delete from comment where id = ?;',
   
-  CREATE_USER: 'insert into user(is_auth, username, password) values(?, ?, ?);',
-  READ_ALL_USER: 'select username from user;',
-  READ_USER: 'select id, is_auth, username, password from user where username = ?;',
+  CREATE_USER: 'insert into user(is_auth, username, profile) values(?, ?, ?);',
+  READ_ALL_USER: 'select username, profile from user;',
+  READ_USER: 'select id, is_auth, username, password, profile from user where username = ?;',
 
   CREATE_LABEL: 'insert into label(name, description, color) values(?, ?, ?);',
   READ_LABEL: 'select id, name, description, color from label;',
