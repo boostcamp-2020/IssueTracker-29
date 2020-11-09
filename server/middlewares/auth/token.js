@@ -20,10 +20,11 @@ const vertifyToken = async (req, res, next) => {
 
   if(!decoded) return res.status(404).json({ success: false, message: '잘못된 접근입니다.' });
 
-  const user = await db(READ_USER, decoded.id);
+  const [user] = await db(READ_USER, [decoded.username]);
 
   if(!user) return res.status(404).json({ success: false, message: '잘못된 접근입니다.' });
 
+  req.user = user;
   return next();
 };
 
