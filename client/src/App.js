@@ -9,8 +9,9 @@ import NewIssue from "./components/newIssue/newIssue.js";
 import IssueDetail from "./components/issueDetail/issueDetail.js";
 import { IssueContext, LabelContext, LabelReducerContext, MilestoneContext } from "./components/common/context.js";
 import asyncLabelWrapper from './wrapper/label';
-
 import { reducer as labelReducer} from './reducer/label';
+import MilestoneList from "./components/milestone/milestoneList.js";
+import NewMilestone from "./components/newMilestone/newMilestone.js";
 
 const ResetStyle = createGlobalStyle`
   body {
@@ -42,6 +43,10 @@ const App = () => {
                   </Switch>
                   <Route exact path='/label' component={Label}/>
                   <Route exact path="/" component={Login}/>
+                  <Switch>
+                    <Route exact path="/milestone/create" component={NewMilestone}/>
+                    <Route exact path="/milestone" component={MilestoneList}/>
+                  </Switch>
                 </MilestoneContext.Provider>
               </LabelReducerContext.Provider>
             </LabelContext.Provider>
