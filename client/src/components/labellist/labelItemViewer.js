@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TOGGLE_ISEDIT } from '../../reducer/label';
-import { LabelContext } from '../common/context';
+import { LabelReducerContext } from '../common/context';
 import LabelItem from '../common/labelItem';
 
 const LabelItemViewer = (props) => {
-  const {labelState, labelDispatch} = useContext(LabelContext);
+  const {labelDispatch} = useContext(LabelReducerContext);
 
   return (
     <div>
       <LabelItem label={props.label}/>
       <p>{props.label.description}</p>
-      <button onClick={() => labelDispatch({type: TOGGLE_ISEDIT})}>Edit</button>
+      <button onClick={() => labelDispatch({type: TOGGLE_ISEDIT, payload: {id: props.label.id}})}>Edit</button>
       <button onClick={null}>Delete</button>
     </div>
   )

@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { EDIT_LABEL, TOGGLE_ISEDIT } from '../../reducer/label';
-import { LabelContext } from '../common/context';
+import { LabelReducerContext } from '../common/context';
 import LabelItem from '../common/labelItem';
 
 const LabelEdit = (props) => {
-  const {labelDispatch} = useContext(LabelContext);
+  const {labelDispatch} = useContext(LabelReducerContext);
 
   const [name, setName] = useState(props.label.name);
   const [description, setDescription] = useState(props.label.description);
@@ -19,7 +19,7 @@ const LabelEdit = (props) => {
       return;
     }
 
-    labelDispatch({type: EDIT_LABEL, id: props.label.id, name, description, color});
+    labelDispatch({type: EDIT_LABEL, payload: {id: props.label.id, name, description, color}});
   }
 
   return (
@@ -39,7 +39,7 @@ const LabelEdit = (props) => {
       <button>Random</button>
       <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
       <button onClick={() => labelDispatch({type: TOGGLE_ISEDIT, id: props.label.id})}>Cancel</button>
-      <button onClick={() => {submitLabel()}}>Create label</button>
+      <button onClick={() => {submitLabel()}}>Edit label</button>
     </div>
   );
 }

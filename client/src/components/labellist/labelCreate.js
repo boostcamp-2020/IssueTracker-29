@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { POST_LABEL } from '../../reducer/label';
-import { LabelContext } from '../common/context';
+import { LabelReducerContext } from '../common/context';
 import LabelItem from '../common/labelItem';
 
 const getRandomColor = () => {
@@ -12,7 +12,7 @@ const LabelCreate = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState(getRandomColor());
-  const {labelDispatch} = useContext(LabelContext);
+  const {labelDispatch} = useContext(LabelReducerContext);
 
   const submitLabel = () => {
     if (name === "") {
@@ -22,7 +22,8 @@ const LabelCreate = (props) => {
     if (!color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
       return;
     }
-    labelDispatch({type: POST_LABEL, name, description, color});
+    labelDispatch({type: POST_LABEL, payload: {name, description, color}});
+    props.setIsCreating(false);
   }
 
   return (
@@ -42,7 +43,7 @@ const LabelCreate = (props) => {
       <button>Random</button>
       <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
       <button onClick={() => props.setIsCreating(false)}>Cancel</button>
-      <button onClick={() => {submitLabel()}}>Create label</button>
+      <button onClick={() => {submitLabel();}}>Create label</button>
     </div>
   )
 }

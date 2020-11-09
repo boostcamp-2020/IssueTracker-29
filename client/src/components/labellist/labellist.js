@@ -10,8 +10,7 @@ const LabelListContainer = styled.div`
 `;
 
 const LabelList = (props) => {
-  const [labelState, labelDispatch] = useLabels();
-  console.log(labelState);
+  const [labelState] = useLabels();
   const [isCreating, setIsCreating] = useState(false);
 
   const createLabel = isCreating ? <LabelCreate setIsCreating={setIsCreating} /> : null;
