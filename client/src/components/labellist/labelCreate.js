@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { POST_LABEL } from '../../reducer/label';
+import { LabelContext } from '../common/context';
+import LabelItem from '../common/labelItem';
 
 const getRandomColor = () => {
   return "#" + Math.floor(Math.random()*16777215).toString(16);
 }
 
-const LabelPreviewContainer = styled.div`
-  background-color: ${(props) => props.color};
-`;
-
 const LabelCreate = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState(getRandomColor());
+  const {labelDispatch} = useContext(LabelContext);
+
+  const submitLabel = () => {
+    if (name === "") {
+      return;
+    }
+
+    if (!color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
+      return;
+    }
+    labelDispatch({type: POST_LABEL, name, description, color});
+  }
 
   return (
     <div>
-      <LabelPreviewContainer color={color}>Label Preview</LabelPreviewContainer>
+      <LabelItem label={{name: "Label preview", description, color}}>Label Preview</LabelItem>
       <label>
         Label name
         <input onChange={(e) => {setName(e.target.value)}}/>

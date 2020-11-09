@@ -1,20 +1,16 @@
 import {useState, useEffect, useContext} from 'react';
+import { FETCH_LABEL } from '../../reducer/label';
 import { sendGetRequest } from '../common/api';
-import { LabelContext } from '../common/context';
-
-const putLabelsInState = async (setLabels) => {
-  const labels = await sendGetRequest('/label');
-  setLabels(labels.map(item => ({...item, isEditting: false}) ));
-}
+import { LabelReducerContext } from '../common/context';
 
 const useLabels = () => {
-  const {labels, setLabels} = useContext(LabelContext);
+  const {labelState, labelDispatch} = useContext(LabelReducerContext);
 
   useEffect(() => {
-    putLabelsInState(setLabels);
+    labelDispatch({type: FETCH_LABEL});
   }, []);
 
-  return [labels, setLabels];
+  return [labelState, labelDispatch];
 }
 
-export {useLabels};
+export { useLabels };
