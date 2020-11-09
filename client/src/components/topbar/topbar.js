@@ -1,7 +1,7 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
 
 const TopBarConatiner = styled.div`
@@ -33,6 +33,7 @@ const TopBar = (props) => {
 
     const {labels} = useContext(LabelContext);
     const {milestones} = useContext(MilestoneContext);
+    const [redirect, setRedirect] = useState(false);
     const { value, setValue } = useContext(ControlValueContext);
 
     useEffect(() => {
@@ -41,14 +42,15 @@ const TopBar = (props) => {
       setValue(params.join(' '));
     }, [props.search]);
 
-    const handleSubmit = () => {
-      // TODO: 수동 submit 수행 후 하위 컴포넌트들에게 이 메소드 props로 넘겨주기
+    const submitEvent = (e) => {
+      e.preventDefault();
+      setRedirect(value);
     };
 
     return (
         <TopBarConatiner>
             <FilterButton />
-            <form action="/issue" method="GET">
+            <form onSubmit={submitEvent}>
             <SearchIssueContainer
               onChange={(e) => setValue(e.target.value)}
               name='q'
@@ -60,6 +62,7 @@ const TopBar = (props) => {
             <Link to="/issue/create">
                 <NewIssueButton>New issue</NewIssueButton>
             </Link>
+            {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
         </TopBarConatiner>
     )
 }
