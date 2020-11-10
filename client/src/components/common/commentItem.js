@@ -22,38 +22,39 @@ const EditCommentButton = styled.button`
 `;
 
 const CommentItem = (props) => {
-
   const [isEditing, setIsEditing] = useState(false);
-  const [content, setContent] = useState(props.comment.contents);
+  const [commentContents, setCommentContents] = useState(props.comment.contents);
 
-  useEffect(() => {setContent(props.comment.contents)}, [props.comment.contents]);
+  useEffect(() => {setCommentContents(props.comment.contents)}, [props.comment.contents]);
 
   const toggleIsEditing = () => {
       setIsEditing(!isEditing);
   };
 
-  const submitComment = async () => {
-      const res = await sendPutRequest(`/comment/${props.comment_id}`, {contents: content, issueID: props.issue.id});
+  const editComment = async () => {
+      const res = await sendPutRequest(`/comment/${props.comment_id}`, {contents: commentContents, issueID: props.issue.id});
       if (res && res.success) {
-          props.setComments({...props.comment, contents: content});
+          const nextComments = props.comments.map(comment => comment.id === props.comment_id ? { ...comment, contents: commentContents } : comment);
+          props.setComments(nextComments);
           setIsEditing(false);
       }
   };
 
   const setContentState = (e) => {
-    setContent(e.target.value);
+    const { value } = e.target;
+    setCommentContents(value);
   };
 
   const cancelContentEdit = (e) => {
       toggleIsEditing(e);
-      setContent(props.comment.contents);
+      setCommentContents(props.comment.contents);
   }
 
   return (
     <CommentContainer>
         <CommentHeader>{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} />  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
-        {isEditing ? <div><button onClick={submitComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
-        {isEditing ? <textarea value={props.comment.contents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}
+        {isEditing ? <div><button onClick={editComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
+        {isEditing ? <textarea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}
     </CommentContainer>
   )
 }

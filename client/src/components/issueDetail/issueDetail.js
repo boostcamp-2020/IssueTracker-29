@@ -33,13 +33,7 @@ const IssueDetail = ({ match }) => {
   const labelComponent = labels.map(item => <LabelItem key={item.id} label={item} />)
 
   const [comments, setComments] = useIssueDetailComments(id);
-  console.log(comments)
-  const commentComponent = comments.map(item => {
-    const [comment, setComment] = item;
-    // <CommentItem key={item.id} comment_id={item.id} issue={issue} comment={item} comments={comments} setComments={setComments} issue_user_id={issue.user_id} />
-    <CommentItem key={item.id} comment_id={item.id} issue={issue} comment={comment} setComment={setComment} issue_user_id={issue.user_id} />
-
-})
+  const commentComponent = comments.map(item => <CommentItem key={item.id} comment_id={item.id} issue={issue} comment={item} comments={comments} setComments={setComments} issue_user_id={issue.user_id} />)
 
   if (!issue) {
     return <div>존재하지 않는 유저입니다.</div>
@@ -51,7 +45,7 @@ const IssueDetail = ({ match }) => {
         <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} />
       </IssueBody>
-      <IssueDetailCommentInput issue={issue} setIssue={setIssue} comment={comments} setComment={setComments}/>
+      <IssueDetailCommentInput issue={issue} setIssue={setIssue} comments={comments} setComments={setComments}/>
     </>
   );
 };
