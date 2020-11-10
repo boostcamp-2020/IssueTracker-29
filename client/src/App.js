@@ -22,7 +22,6 @@ const ResetStyle = createGlobalStyle`
 
 const App = () => {
   const [issues, setIssues] = useState([]);
-  const [labels, setLabels] = useState([]);
   const [milestones, setMilestones] = useState([]);
 
   const [labelState, labelDispatch] = useReducer(labelReducer, {labels: []});
