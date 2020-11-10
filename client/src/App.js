@@ -39,7 +39,6 @@ const App = () => {
 
   const putUserInState = async () => {
     const res = await sendGetRequest('/user/me', null);
-    console.log(res);
     if (res !== null) {
       return setUser(res);
     }
