@@ -35,6 +35,19 @@ const sendDeleteRequest = async (path, onErrorValue = null) => {
   } catch(e) {
     return onErrorValue;
   }
-}
+};
 
-export { sendGetRequest, sendPostRequest, sendPutRequest, sendDeleteRequest };
+const sendImagePostRequest = async (path, form) => {
+  try {
+      const res = await axios.post(BASE_API_URL + path, form, {
+          headers: {
+              'Content-Type': 'multipart/form-data',
+          }
+      });
+      return res.data;
+  } catch (e) {
+      return [];
+  }
+};
+
+export { sendGetRequest, sendPostRequest, sendPutRequest, sendDeleteRequest, sendImagePostRequest };

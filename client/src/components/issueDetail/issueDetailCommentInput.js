@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
-import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
-import { sendPutRequest, sendPostRequest } from '../common/api';
+import { sendPutRequest, sendPostRequest, sendImagePostRequest } from '../common/api';
 
 
 const IssueCommentInput = styled.textarea`
@@ -44,19 +43,6 @@ const ImageFileBoxInput = styled.input`
 const CloseIssueButton = styled.button``;
 
 const CommentIssueButton = styled.button``;
-
-const sendImagePostRequest = async (path, form) => {
-    try {
-        const res = await axios.post(BASE_API_URL + path, form, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        });
-        return res.data;
-    } catch (e) {
-        return [];
-    }
-};
 
 function convertMarkDownImage(imageFileName, imageURL) {
     return `![${imageFileName}](${imageURL})`;
