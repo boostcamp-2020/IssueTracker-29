@@ -7,7 +7,7 @@ import Issue from "./components/issuelist/issuelist.js";
 import Label from './components/labellist/labellist.js';
 import NewIssue from "./components/newIssue/newIssue.js";
 import IssueDetail from "./components/issueDetail/issueDetail.js";
-import { IssueContext, LabelContext, LabelReducerContext, MilestoneContext } from "./components/common/context.js";
+import { IssueContext, LabelContext, MilestoneContext } from "./components/common/context.js";
 import asyncLabelWrapper from './wrapper/label';
 import { reducer as labelReducer} from './reducer/label';
 import MilestoneList from "./components/milestone/milestoneList.js";
@@ -33,22 +33,20 @@ const App = () => {
         <ResetStyle />
         <Header />
           <IssueContext.Provider value={{issues, setIssues}}>
-            <LabelContext.Provider value={{labels, setLabels}}>
-              <LabelReducerContext.Provider value={{labelState, labelDispatch: asyncLabelDispatch}}>
-                <MilestoneContext.Provider value={{milestones, setMilestones}}>
-                  <Switch>
-                    <Route exact path="/issue/create" component={NewIssue}/>
-                    <Route exact path="/issue/:id" component={IssueDetail} />
-                    <Route exact path="/issue" component={Issue}/>
-                  </Switch>
-                  <Route exact path='/label' component={Label}/>
-                  <Route exact path="/" component={Login}/>
-                  <Switch>
-                    <Route exact path="/milestone/create" component={NewMilestone}/>
-                    <Route exact path="/milestone" component={MilestoneList}/>
-                  </Switch>
-                </MilestoneContext.Provider>
-              </LabelReducerContext.Provider>
+            <LabelContext.Provider value={{labelState, labelDispatch: asyncLabelDispatch}}>
+              <MilestoneContext.Provider value={{milestones, setMilestones}}>
+                <Switch>
+                  <Route exact path="/issue/create" component={NewIssue}/>
+                  <Route exact path="/issue/:id" component={IssueDetail} />
+                  <Route exact path="/issue" component={Issue}/>
+                </Switch>
+                <Route exact path='/label' component={Label}/>
+                <Route exact path="/" component={Login}/>
+                <Switch>
+                  <Route exact path="/milestone/create" component={NewMilestone}/>
+                  <Route exact path="/milestone" component={MilestoneList}/>
+                </Switch>
+              </MilestoneContext.Provider>
             </LabelContext.Provider>
           </IssueContext.Provider>
     </div>
