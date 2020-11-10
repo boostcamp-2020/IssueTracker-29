@@ -64,7 +64,7 @@ const IssueHeader = (props) => {
                         {props.issue.is_open === ISSUE_OPEN ? <SvgOpenLogo color={COLOR_SUCCESS}/> : <SvgCloseLogo color={COLOR_DANGER}/>}
                         {props.issue.is_open === ISSUE_OPEN ? "Open" : "Closed"}
                     </div>
-                    {props.issue.username} opened this issue <DatePassedViewer datetime={props.issue.changed_at} /> · {props.commentsNum} comment
+                    {props.issue.username} opened this issue <DatePassedViewer datetime={props.issue.created_at} /> · {props.commentsNum} comment
                 </div>
             </IssueHeadContainer>
         </>
