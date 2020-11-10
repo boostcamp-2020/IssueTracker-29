@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
-import { sendPutRequest } from '../common/api';
+import { Redirect } from "react-router-dom";
+import axios from 'axios';
+import { BASE_API_URL } from '../../../util/config';
+import { sendPutRequest, sendPostRequest } from '../common/api';
 
 
 const IssueCommentInput = styled.textarea`
@@ -61,11 +64,12 @@ function convertMarkDownImage(imageFileName, imageURL) {
 }
 
 const IssueDetailCommentInput = (props) => {
-    const [content, setContent] = useState("");
+    const [commentContent, setCommentContent] = useState("");
     const [characterCount, setCharacterCount] = useState(0);
     const [timeCheck, setTimeCheck] = useState(false);
     const [imageURL, setImageURL] = useState("");
     const [imageFileName, setImageFileName] = useState("");
+    const [redirect, setRedirect] = useState(false);
 
     useEffect( () => {
         const timeout = setTimeout( () => {
@@ -75,18 +79,18 @@ const IssueDetailCommentInput = (props) => {
             }, 2000);
         }, 2000);
         return () => clearTimeout(timeout);
-    }, [content]);
+    }, [commentContent]);
 
     useEffect( () => {
         if(imageURL && imageFileName) {
-            setContent(content + convertMarkDownImage(imageFileName, imageURL));
+            setCommentContent(commentContent + convertMarkDownImage(imageFileName, imageURL));
         }
     }, [imageURL]);
 
     const onChange = (e) => {
         const {value} = e.target;
 
-        setContent(e.target.value);
+        setCommentContent(e.target.value);
         setCharacterCount(value.length);
     };
 
@@ -98,8 +102,9 @@ const IssueDetailCommentInput = (props) => {
         setImageURL(BASE_API_URL + result.url);
     };
 
-    const submitClickEvent = (e) => {
-        // alert(title + content);
+    const submitClickEvent = async (e) => {
+        await sendPostRequest(`/issue/${props.issue.id}/comment`, {contents:commentContent});
+        setRedirect(true);
     };
     
     const toggleIssueState = async () => {
@@ -121,7 +126,7 @@ const IssueDetailCommentInput = (props) => {
     return (
         <>
             <ContentWrap>
-              <IssueCommentInput placeholder="Leave a comment" value={content} onChange={onChange} />
+              <IssueCommentInput placeholder="Leave a comment" value={commentContent} onChange={onChange} />
               <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
             </ContentWrap>
             <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
@@ -129,8 +134,9 @@ const IssueDetailCommentInput = (props) => {
             
             <ButtonContainer>
                 <CloseIssueButton onClick={toggleIssueState}>{(props.issue.is_open === ISSUE_OPEN) ? "Close issue" : "Reopen issue"}</CloseIssueButton>
-                <CommentIssueButton>Comment</CommentIssueButton>
+                <CommentIssueButton onClick={submitClickEvent}>Comment</CommentIssueButton>
             </ButtonContainer>
+            {/* {(!redirect)? null : <Redirect to={`/issue/${props.issue.id}`}/>} */}
         </>
     )
 }
