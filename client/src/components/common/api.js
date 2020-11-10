@@ -28,4 +28,13 @@ const sendPutRequest = async (path, data, onErrorValue = null) => {
   }
 };
 
-export { sendGetRequest, sendPostRequest, sendPutRequest };
+const sendDeleteRequest = async (path, onErrorValue = null) => {
+  try {
+    const res = await axios.delete(BASE_API_URL + path, {withCredentials: true});
+    return res.data;
+  } catch(e) {
+    return onErrorValue;
+  }
+}
+
+export { sendGetRequest, sendPostRequest, sendPutRequest, sendDeleteRequest };

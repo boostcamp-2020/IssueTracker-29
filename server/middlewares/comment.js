@@ -9,8 +9,8 @@ const createComment = async (req, res) => {
   if (!issueID) {
     return res.status(403).json({ success: false, message: '없는 이슈입니다.' });
   }
-  await db(CREATE_COMMENT, [contents, issueID, userID, new Date()]);
-  return res.status(200).json({ success: true });
+  const result = await db(CREATE_COMMENT, [contents, issueID, userID, new Date()]);
+  return res.status(200).json({ success: true, result: result.insertId });
 };
 
 const readCommentsByIssueID = async (req, res) => {

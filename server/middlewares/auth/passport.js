@@ -9,9 +9,13 @@ module.exports = () => {
     return done(null, user);
   });
 
+  passport.deserializeUser((user, done) => {
+    return done(null, user);
+  });
+
   const githubCallback = async (accessToken, refreshToken, profile, done) => {
-    let user = await db(READ_USER, [profile.username]);
-    if (!user || !user.length) {
+    let [user] = await db(READ_USER, [profile.username]);
+    if (!user) {
       await db(CREATE_USER, [true, profile.username, profile.photos[0].value]);
       [user] = await db(READ_USER, [profile.username]);
     }

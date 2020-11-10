@@ -12,7 +12,7 @@ const readAllIssues = async (req, res) => {
 
 const createIssue = async (req, res) => {
   const { title, milestoneID } = req.body;
-  const result = await db(CREATE_ISSUE, [title, OPEN, req.user.id, milestoneID, new Date()]);
+  const result = await db(CREATE_ISSUE, [title, OPEN, req.user.id, milestoneID, new Date(), new Date()]);
 
   return res.status(201).json({ success: true, result: result.insertId });
 };

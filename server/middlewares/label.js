@@ -3,8 +3,8 @@ const { CREATE_LABEL, READ_LABEL, UPDATE_LABEL, DELETE_LABEL, READ_ALL_ISSUE_LAB
 
 const createLabel = async (req, res) => {
     const { name, description, color } = req.body;
-    await db(CREATE_LABEL, [name, description, color]);
-    return res.json({ success: true });
+    const result = await db(CREATE_LABEL, [name, description, color]);
+    return res.json({ success: true, result: result.insertId });
 };
 
 const readLabel = async (req, res) => {
