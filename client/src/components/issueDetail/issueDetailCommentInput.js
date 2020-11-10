@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
-import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
 import { sendPutRequest, sendPostRequest } from '../common/api';
@@ -69,7 +68,6 @@ const IssueDetailCommentInput = (props) => {
     const [timeCheck, setTimeCheck] = useState(false);
     const [imageURL, setImageURL] = useState("");
     const [imageFileName, setImageFileName] = useState("");
-    const [redirect, setRedirect] = useState(false);
 
     useEffect( () => {
         const timeout = setTimeout( () => {
@@ -88,7 +86,7 @@ const IssueDetailCommentInput = (props) => {
     }, [imageURL]);
 
     const onChange = (e) => {
-        const {value} = e.target;
+        const { value } = e.target;
 
         setCommentContent(e.target.value);
         setCharacterCount(value.length);
@@ -103,15 +101,19 @@ const IssueDetailCommentInput = (props) => {
     };
 
     const submitClickEvent = async (e) => {
-        await sendPostRequest(`/issue/${props.issue.id}/comment`, {contents:commentContent});
-        setRedirect(true);
+        const newComment = {contents:commentContent, issueID:props.issue.id, userID: 1, created_at: new Date()};
+        const res = await sendPostRequest(`/issue/${props.issue.id}/comment`, newComment);
+        if (res && res.success) {
+            props.setComments(props.comments.concat(newComment));
+        }
+        setCommentContent("");
     };
     
     const toggleIssueState = async () => {
         if (props.issue.is_open === ISSUE_OPEN) {
             const res = await sendPutRequest("/issue/state", {isOpen: ISSUE_CLOSE, ids: [props.issue.id]});
             if (res.success) {
-                props.setIssue({...props.issue, is_open: ISSUE_CLOSE});
+                props.setIssue({...props.comments, is_open: ISSUE_CLOSE});
             }
             return;
         }
@@ -136,7 +138,6 @@ const IssueDetailCommentInput = (props) => {
                 <CloseIssueButton onClick={toggleIssueState}>{(props.issue.is_open === ISSUE_OPEN) ? "Close issue" : "Reopen issue"}</CloseIssueButton>
                 <CommentIssueButton onClick={submitClickEvent}>Comment</CommentIssueButton>
             </ButtonContainer>
-            {/* {(!redirect)? null : <Redirect to={`/issue/${props.issue.id}`}/>} */}
         </>
     )
 }
