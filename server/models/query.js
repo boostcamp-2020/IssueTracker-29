@@ -22,7 +22,7 @@ module.exports = {
   CREATE_ISSUE: 'insert into issue(title, is_open, user_id, milestone_id, changed_at, created_at) values(?, ?, ?, ?, ?, ?);',
   UPDATE_ISSUE_STATE: 'update issue set is_open = ?, changed_at = ? where id in (?);',
 
-  READ_ISSUE_BY_ID: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id where issue.id = ?',
+  READ_ISSUE_BY_ID: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, created_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id where issue.id = ?',
   UPDATE_ISSUE: 'update issue set title = ? where id = ?;',
   DELETE_ISSUE: 'delete from issue where id = ?;',
 

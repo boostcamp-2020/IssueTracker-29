@@ -11,9 +11,9 @@ const readMilestone = async (req, res) => {
 const createMilestone = async (req, res) => {
     const { title, dueDate, description } = req.body;
     const userID = req.user.id;
-    await db(CREATE_MILESTONE, [title, dueDate, description, 1, userID]);
+    const result = await db(CREATE_MILESTONE, [title, dueDate, description, 1, userID]);
 
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true, result: result.insertId });
 };
 
 const updateMilestone = async (req, res) => {
