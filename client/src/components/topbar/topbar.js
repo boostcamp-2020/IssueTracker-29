@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link, Redirect } from "react-router-dom";
 import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
-import { BORDER_COLOR, COUNTER_BACKGROUND, FOCUS_BORDER_COLOR, PRIMARY_COLOR } from '../common/color';
+import { BORDER_COLOR, COUNTER_BACKGROUND, PRIMARY_COLOR } from '../common/color';
 import LabelIcon from '../common/icon/svgLabelIcon';
 import MilestoneIcon from '../common/icon/svgMilestoneIcon';
+import StyledInput from '../common/style/input';
 
 const TopBarConatiner = styled.div`
   margin-top: 100px;
@@ -27,17 +28,9 @@ const SearchFormContainer = styled.form`
   flex: 1 1 auto;
 `;
 
-const SearchIssueContainer = styled.input`
+const SearchIssueContainer = styled(StyledInput)`
   flex: 1 1 auto;
   padding: 5px 12px;
-  border: 1px solid ${BORDER_COLOR};
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  
-  &:focus {
-    border: 1px solid ${FOCUS_BORDER_COLOR};
-    box-shadow: 0 0 0 3px ${FOCUS_BORDER_COLOR + "55"}
-  }
 `;
 
 const TopbarLink = styled(Link)`
@@ -46,6 +39,8 @@ const TopbarLink = styled(Link)`
 
 const LabelMilestoneLink = styled(TopbarLink)`
   display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #00000000;
   color: ${PRIMARY_COLOR};
   border: 1px solid ${BORDER_COLOR};
@@ -64,6 +59,7 @@ const LabelMilestoneNav = styled.nav`
 const LabelLink = styled(LabelMilestoneLink)`
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
+
 `;
 
 const MilestoneLink = styled(LabelMilestoneLink)`

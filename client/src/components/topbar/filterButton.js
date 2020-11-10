@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import Modal from '../common/modal';
 import filterCondition from '../common/filterCondition';
 import styled from 'styled-components';
-import { BORDER_COLOR, PRIMARY_COLOR } from '../common/color';
+import { BORDER_COLOR, PRIMARY_COLOR, TOPBAR_SEARCH_BACKGROUND } from '../common/color';
 
 const ButtonDiv = styled.div`
   flex: 0 0 auto;
@@ -12,7 +12,7 @@ const ButtonDiv = styled.div`
 const ButtonInput = styled.input`
   padding: 5px 16px;
 
-  background-color: #fafbfc;
+  background-color: ${TOPBAR_SEARCH_BACKGROUND};
   color: ${PRIMARY_COLOR};
   border: 1px solid ${BORDER_COLOR};
 
