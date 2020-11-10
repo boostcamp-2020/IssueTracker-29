@@ -11,7 +11,7 @@ const Issue = (props) => {
   const [issues, setIssues] = useIssues();
   const [filteredIssue, setFilteredIssue] = useState(null);
   const issueLabels = useIssueLabels();
-  const labels = useLabels();
+  const { labels } = useLabels();
   const milestones = useMilestones();
   const [value, setValue] = useState('is:issue is:open ');
 
