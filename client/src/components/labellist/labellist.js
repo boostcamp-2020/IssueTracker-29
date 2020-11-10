@@ -5,6 +5,7 @@ import LabelEdit from './labelEdit.js';
 
 import { useLabels } from './labelHook.js';
 import LabelItemViewer from './labelItemViewer.js';
+import LabelMilestoneTab from '../topbar/labelMilestoneTab';
 
 const LabelListContainer = styled.div`
 `;
@@ -18,9 +19,7 @@ const LabelList = (props) => {
 
   return (
     <div>
-      <div>Labels</div>
-      <button>Milestones</button>
-      <button onClick={() => {setIsCreating(!isCreating)}}>New labels</button>
+      <LabelMilestoneTab selected='label' onCreateEvent={() => {setIsCreating(!isCreating)}} />
       {createLabel}
       <LabelListContainer>
         {labelItems}
