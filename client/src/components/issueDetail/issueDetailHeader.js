@@ -20,12 +20,6 @@ const EditTitleButton = styled.button`
   margin-right: 100px;
 `;
 
-const SaveTitleButton = styled.button``;
-
-const CancelTitleButton = styled.button``;
-
-const EditContentsButton = styled.button``;
-
 const IssueHeader = (props) => {
 
     const [isEditting, setIsEditting] = useState(false);

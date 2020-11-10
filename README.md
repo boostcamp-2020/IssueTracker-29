@@ -1,4 +1,7 @@
 # 📌 Issue Tracker in Team 29
+## TEAM 하이고(HIGH GO)
+
+<p align="center"><img src="https://user-images.githubusercontent.com/59721541/98637376-b0d2a600-236b-11eb-95c0-2bcff9740df3.png" width="300"></p>
 
 <div align="center">
    

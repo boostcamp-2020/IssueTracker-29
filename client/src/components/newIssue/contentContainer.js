@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 import { Link, Redirect } from "react-router-dom";
-import axios from 'axios';
 import { BASE_API_URL } from '../../../util/config';
-import { sendPostRequest } from '../common/api';
+import { sendPostRequest, sendImagePostRequest } from '../common/api';
 
 const ContentContainer = styled.div`
     display: flex;
@@ -134,19 +133,6 @@ const Content = (props) => {
             {(!redirect)? null : <Redirect to={`/issue/${issueId}`}/>}
         </ContentContainer>
     );
-};
-
-const sendImagePostRequest = async (path, form) => {
-    try {
-        const res = await axios.post(BASE_API_URL + path, form, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        });
-        return res.data;
-    } catch (e) {
-        return [];
-    }
 };
 
 function convertMarkDownImage(imageFileName, imageURL) {

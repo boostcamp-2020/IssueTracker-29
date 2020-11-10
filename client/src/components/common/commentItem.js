@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import DatePassedViewer from '../common/datePassed.js';
+import { sendPutRequest } from '../common/api';
 
 const CommentContainer = styled.div`
   border: 1px solid #d1d5da;
@@ -14,11 +15,46 @@ const CommentHeader = styled.div`
   border: 1px solid #d1d5da;
 `;
 
+const EditCommentButton = styled.button`
+  float: right;
+  padding: 10px;
+  margin-right: 100px;
+`;
+
 const CommentItem = (props) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [commentContents, setCommentContents] = useState(props.comment.contents);
+
+  useEffect(() => {setCommentContents(props.comment.contents)}, [props.comment.contents]);
+
+  const toggleIsEditing = () => {
+      setIsEditing(!isEditing);
+  };
+
+  const editComment = async () => {
+      const res = await sendPutRequest(`/comment/${props.comment_id}`, {contents: commentContents, issueID: props.issue.id});
+      if (res && res.success) {
+          const nextComments = props.comments.map(comment => comment.id === props.comment_id ? { ...comment, contents: commentContents } : comment);
+          props.setComments(nextComments);
+          setIsEditing(false);
+      }
+  };
+
+  const setContentState = (e) => {
+    const { value } = e.target;
+    setCommentContents(value);
+  };
+
+  const cancelContentEdit = (e) => {
+      toggleIsEditing(e);
+      setCommentContents(props.comment.contents);
+  }
+
   return (
     <CommentContainer>
         <CommentHeader>{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} />  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
-        <ReactMarkdown source={props.comment.contents} />
+        {isEditing ? <div><button onClick={editComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
+        {isEditing ? <textarea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}
     </CommentContainer>
   )
 }
