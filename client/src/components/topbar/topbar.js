@@ -71,8 +71,8 @@ const TopBar = (props) => {
               value={value}
               placeholder="Search all issues"/>
             </form>
-            <LabelButton>Labels<div>{labels.length}</div></LabelButton>
-            <MilestoneButton>Milestones<div>{milestones.length}</div></MilestoneButton>
+            <Link to='/label'><LabelButton>Labels<div>{labels.length}</div></LabelButton></Link>
+            <Link to='milestone'><MilestoneButton>Milestones<div>{milestones.length}</div></MilestoneButton></Link>
             <Link to="/issue/create">
                 <NewIssueButton>New issue</NewIssueButton>
             </Link>
