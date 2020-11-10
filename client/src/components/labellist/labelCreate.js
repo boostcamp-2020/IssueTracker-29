@@ -4,6 +4,7 @@ import { getRandomColor } from '../../../util/util';
 import { POST_LABEL } from '../../reducer/label';
 import { LabelContext } from '../common/context';
 import LabelItem from '../common/labelItem';
+import LabelItemContainer from './itemContainer';
 
 const LabelCreate = (props) => {
   const [name, setName] = useState("");
@@ -24,7 +25,7 @@ const LabelCreate = (props) => {
   }
 
   return (
-    <div>
+    <LabelItemContainer>
       <LabelItem label={{name: "Label preview", description, color}}>Label Preview</LabelItem>
       <label>
         Label name
@@ -41,7 +42,7 @@ const LabelCreate = (props) => {
       <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
       <button onClick={() => props.setIsCreating(false)}>Cancel</button>
       <button onClick={() => {submitLabel();}}>Create label</button>
-    </div>
+    </LabelItemContainer>
   )
 }
 
