@@ -5,7 +5,10 @@ const MilestoneItem = (props) => {
     <div>
       <div>
         <h2>{props.milestone.title}</h2>
-        <p>{props.milestone.due_date === null ? 'No due date' : `Due by ${props.milestone.due_date}`}</p>
+        <p>{props.milestone.due_date === null ?
+          'No due date' :
+          `Due by ${new Date(props.milestone.due_date).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}
+        </p>
         <p>{props.milestone.description}</p>
       </div>
       <div>
