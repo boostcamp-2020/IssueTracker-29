@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import DatePassedViewer from '../common/datePassed.js';
 import { sendPutRequest } from '../common/api';
+import { UserContext } from './context';
 
 const CommentContainer = styled.div`
   border: 1px solid #d1d5da;
@@ -50,11 +51,13 @@ const CommentItem = (props) => {
       setCommentContents(props.comment.contents);
   }
 
+  const user = useContext(UserContext);
+  console.log(user)
   return (
     <CommentContainer>
         <CommentHeader>{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} />  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
-        {isEditing ? <div><button onClick={editComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
-        {isEditing ? <textarea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}
+        {user.id === props.comment.user_id ? <p>{isEditing ? <div><button onClick={editComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
+        {isEditing ? <textarea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}</p> : <p><ReactMarkdown source={props.comment.contents} /></p>}
     </CommentContainer>
   )
 }
