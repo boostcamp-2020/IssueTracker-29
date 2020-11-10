@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
+import { FETCH_LABEL } from '../../reducer/label.js';
 import { sendGetRequest } from '../common/api.js';
 import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
 
@@ -33,20 +34,14 @@ const useIssueLabels = () => {
   return issueLabels;
 };
 
-
-const putLabelsInState = async (setLabels) => {
-  const labels = await sendGetRequest('/label');
-  setLabels(labels);
-};
-
 const useLabels = () => {
-  const {labels, setLabels} = useContext(LabelContext);
+  const {labelState, labelDispatch} = useContext(LabelContext);
 
   useEffect(() => {
-    putLabelsInState(setLabels);
+    labelDispatch({type: FETCH_LABEL});
   }, []);
 
-  return labels;
+  return labelState;
 }
 
 const putMilestonesInState = async (setMilestones) => {

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { POST_LABEL } from '../../reducer/label';
-import { LabelReducerContext } from '../common/context';
+import { LabelContext } from '../common/context';
 import LabelItem from '../common/labelItem';
 
 const getRandomColor = () => {
@@ -12,7 +12,7 @@ const LabelCreate = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState(getRandomColor());
-  const {labelDispatch} = useContext(LabelReducerContext);
+  const {labelDispatch} = useContext(LabelContext);
 
   const submitLabel = () => {
     if (name === "") {

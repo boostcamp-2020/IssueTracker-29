@@ -109,7 +109,7 @@ const AuthorTab = (props) => {
 
 const LabelTab = (props) => {
   const [onModal, setOnModal] = useState(false);
-  const {labels} = useContext(LabelContext);
+  const {labelState} = useContext(LabelContext);
   const { value, setValue } = useContext(ControlValueContext);
   const [redirect, setRedirect] = useState(false);
 
@@ -127,7 +127,7 @@ const LabelTab = (props) => {
       <Modal
         onModal={onModal}
         title="Filter by label"
-        items={['Unlabeled', ...labels.map(item => item.name)]}
+        items={['Unlabeled', ...labelState.labels.map(item => item.name)]}
         onEvent={handleModalEvent}
       />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}

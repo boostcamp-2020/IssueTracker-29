@@ -39,7 +39,7 @@ const ResetButton = styled.input`
 
 const TopBar = (props) => {
 
-    const {labels} = useContext(LabelContext);
+    const { labelState } = useContext(LabelContext);
     const {milestones} = useContext(MilestoneContext);
     const [redirect, setRedirect] = useState(false);
     const { value, setValue } = useContext(ControlValueContext);
@@ -71,7 +71,7 @@ const TopBar = (props) => {
               value={value}
               placeholder="Search all issues"/>
             </form>
-            <Link to='/label'><LabelButton>Labels<div>{labels.length}</div></LabelButton></Link>
+            <Link to='/label'><LabelButton>Labels<div>{labelState.labels.length}</div></LabelButton></Link>
             <Link to='milestone'><MilestoneButton>Milestones<div>{milestones.length}</div></MilestoneButton></Link>
             <Link to="/issue/create">
                 <NewIssueButton>New issue</NewIssueButton>
