@@ -13,7 +13,6 @@ import { reducer as labelReducer} from './reducer/label';
 import MilestoneList from "./components/milestone/milestoneList.js";
 import NewMilestone from "./components/newMilestone/newMilestone.js";
 import { sendGetRequest } from "./components/common/api.js";
-import { BASE_API_URL } from "../util/config.js";
 
 const ResetStyle = createGlobalStyle`
   body {
