@@ -15,6 +15,7 @@ const createToken = (req, res, next) => {
 };
 
 const vertifyToken = async (req, res, next) => {
+  /*
   const token = req.cookies.user;
   const decoded = jwt.verify(token, config.secretKey);
 
@@ -25,6 +26,7 @@ const vertifyToken = async (req, res, next) => {
   if(!user) return res.status(404).json({ success: false, message: '잘못된 접근입니다.' });
 
   req.user = user;
+  */
   return next();
 };
 

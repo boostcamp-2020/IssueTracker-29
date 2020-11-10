@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { EDIT_LABEL, TOGGLE_ISEDIT } from '../../reducer/label';
-import { LabelReducerContext } from '../common/context';
+import { LabelContext } from '../common/context';
 import LabelItem from '../common/labelItem';
 
 const LabelEdit = (props) => {
-  const {labelDispatch} = useContext(LabelReducerContext);
+  const {labelDispatch} = useContext(LabelContext);
 
   const [name, setName] = useState(props.label.name);
   const [description, setDescription] = useState(props.label.description);

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { TOGGLE_ISEDIT } from '../../reducer/label';
-import { LabelReducerContext } from '../common/context';
+import { LabelContext } from '../common/context';
 import LabelItem from '../common/labelItem';
 
 const LabelItemViewer = (props) => {
-  const {labelDispatch} = useContext(LabelReducerContext);
+  const {labelDispatch} = useContext(LabelContext);
 
   return (
     <div>

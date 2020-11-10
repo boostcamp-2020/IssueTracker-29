@@ -1,11 +1,11 @@
 import {useEffect, useContext} from 'react';
 import { FETCH_LABEL } from '../../reducer/label';
-import { LabelReducerContext } from '../common/context';
+import { LabelContext } from '../common/context';
 
 
 
 const useLabels = () => {
-  const {labelState, labelDispatch} = useContext(LabelReducerContext);
+  const {labelState, labelDispatch} = useContext(LabelContext);
 
   useEffect(() => {
     labelDispatch({type: FETCH_LABEL});
