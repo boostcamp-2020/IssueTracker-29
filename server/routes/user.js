@@ -20,4 +20,6 @@ router.get(
 
 router.get('/', userMiddleWare.readAllUser);
 
+router.get('/me', userMiddleWare.readIsLogIn);
+
 module.exports = router;

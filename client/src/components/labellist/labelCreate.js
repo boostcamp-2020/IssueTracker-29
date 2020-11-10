@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { getRandomColor } from '../../../util/util';
 import { POST_LABEL } from '../../reducer/label';
 import { LabelContext } from '../common/context';
 import LabelItem from '../common/labelItem';
-
-const getRandomColor = () => {
-  return "#" + Math.floor(Math.random()*16777215).toString(16);
-}
+import LabelItemContainer from './itemContainer';
 
 const LabelCreate = (props) => {
   const [name, setName] = useState("");
@@ -27,7 +25,7 @@ const LabelCreate = (props) => {
   }
 
   return (
-    <div>
+    <LabelItemContainer>
       <LabelItem label={{name: "Label preview", description, color}}>Label Preview</LabelItem>
       <label>
         Label name
@@ -40,11 +38,11 @@ const LabelCreate = (props) => {
       <label>
         Color
       </label>
-      <button>Random</button>
+      <button onClick={() => setColor(getRandomColor())}>Random</button>
       <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
       <button onClick={() => props.setIsCreating(false)}>Cancel</button>
       <button onClick={() => {submitLabel();}}>Create label</button>
-    </div>
+    </LabelItemContainer>
   )
 }
 
