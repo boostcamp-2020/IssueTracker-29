@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -16,10 +17,13 @@ const HeaderContainer = styled.div`
 const Header = (props) => {
   return (
       <>
-        <HeaderContainer>
-        <img />
-        <p>ISSUES</p>
-        </HeaderContainer>
+        <Link to="/issue">
+          <HeaderContainer>
+            <img />
+            <p>ISSUES</p>
+          </HeaderContainer>    
+        </Link>
+        
     </>
   );
 };
