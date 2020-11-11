@@ -7,23 +7,36 @@ import { Redirect } from 'react-router-dom';
 import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
 import { sendPutRequest } from '../common/api';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
+import TabBar from '../common/style/tabbar';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../common/color';
 
 const OPEN_STRING = "Open";
 const CLOSE_STRING = "Close";
 
-const TabContainer = styled.div`
-  display: flex;
-  height: 50px;
-  margin: 0 auto;
-  border: 1px solid lightgray;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  background-color: rgb(239, 239, 239);
+const TabContainer = styled(TabBar)`
+`;
 
-  & > div {
-    margin: 0 1rem;
+const CheckboxContainer = styled.div`
+  display: flex;
+`;
+
+const ButtonListContainer = styled.div`
+  display: flex;
+
+`;
+
+const TabButton = styled.input`
+  color: ${SECONDARY_COLOR};
+  border: none;
+  background-color: #0000;
+
+  &:hover {
+    color: ${PRIMARY_COLOR};
   }
+`;
+
+const SelectedTabNumberContainer = styled.p`
+  margin: 0px auto;
 `;
 
 const tabList = (props) => {
@@ -33,25 +46,25 @@ const tabList = (props) => {
   let tabList;
   if (currentSelectNum !== 0) {
     tabList = (
-      <>
-        <p>{currentSelectNum} selected</p>
-        <MarkAsTab>Mark as ▼</MarkAsTab>
-      </>
+      <MarkAsTab>Mark as ▼</MarkAsTab>
     )
   } else {
     tabList = (
-      <>
+      <ButtonListContainer>
         <AuthorTab />
         <LabelTab />
         <MilestonesTab />
         <AssigneeTab />
-      </>
+      </ButtonListContainer>
     )
   }
 
   return(
     <TabContainer>
-      <input type="checkbox" onClick={props.onClickCheckbox}/>
+      <CheckboxContainer>
+        <input type="checkbox" onClick={props.onClickCheckbox}/>
+        <SelectedTabNumberContainer>{currentSelectNum !== 0 ? `${currentSelectNum} selected` : null}</SelectedTabNumberContainer>
+      </CheckboxContainer>
       {tabList}
     </TabContainer>
   )
@@ -72,7 +85,7 @@ const MarkAsTab = (props) => {
 
   return (
     <div>
-      <input type="button" value="Mark as ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton type="button" value="Mark as ▼" onClick={() => setOnModal(!onModal)} />
       <Modal onModal={onModal} title="Actions" items={[OPEN_STRING, CLOSE_STRING]} onEvent={sendIssueStateUpdate} />
     </div>
   );
@@ -93,7 +106,7 @@ const AuthorTab = (props) => {
 
   return (
     <div>
-      <input type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
         setOnModal={setOnModal}
@@ -122,7 +135,7 @@ const LabelTab = (props) => {
 
   return (
     <div>
-      <input type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
         title="Filter by label"
@@ -150,7 +163,7 @@ const MilestonesTab = (props) => {
 
   return (
     <div>
-      <input type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
         title="Filter by milestone"
@@ -178,7 +191,7 @@ const AssigneeTab = (props) => {
 
   return (
     <div>
-      <input type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
         title="Filter by who's assigned"

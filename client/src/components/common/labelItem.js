@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import { hexToRgb } from '../../../util/util.js';
 
 const LabelContainer = styled.div`
-  margin: 5px;
-  padding: 2px 5px;
+  margin-top: 3px;
+  margin-left: 5px;
+  padding: 0px 7px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 2em;
 
   background-color: ${props => props.color};
   color: ${props => {
