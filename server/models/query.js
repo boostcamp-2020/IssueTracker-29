@@ -1,11 +1,11 @@
 module.exports = {
   CREATE_COMMENT: 'insert into comment(contents, issue_id, user_id, created_at) values(?, ?, ?, ?);',
-  READ_COMMENT: 'select comment.id, comment.contents, comment.created_at, comment.user_id, comment.issue_id, user.username from comment inner join user on comment.user_id = user.id where issue_id = ?;',
+  READ_COMMENT: 'select comment.id, comment.contents, comment.created_at, comment.user_id, comment.issue_id, user.username, user.profile from comment inner join user on comment.user_id = user.id where issue_id = ?;',
   UPDATE_COMMENT: 'update comment set contents = ? where id = ?;',
   DELETE_COMMENT: 'delete from comment where id = ?;',
   
   CREATE_USER: 'insert into user(is_auth, username, profile) values(?, ?, ?);',
-  READ_ALL_USER: 'select username, profile from user;',
+  READ_ALL_USER: 'select id, username, profile from user;',
   READ_USER: 'select id, is_auth, username, password, profile from user where username = ?;',
 
   CREATE_LABEL: 'insert into label(name, description, color) values(?, ?, ?);',
