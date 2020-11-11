@@ -132,7 +132,7 @@ const TopBar = (props) => {
           </FilterSearchContainer>
           <LabelMilestoneNav>
             <LabelLink to='/label'><LabelIcon color={PRIMARY_COLOR}/> Labels<CounterDiv>{labelState.labels.length}</CounterDiv></LabelLink>
-            <MilestoneLink to='milestone'><MilestoneIcon color={PRIMARY_COLOR}/>Milestones<CounterDiv>{milestones.length}</CounterDiv></MilestoneLink>
+            <MilestoneLink to='/milestone'><MilestoneIcon color={PRIMARY_COLOR}/>Milestones<CounterDiv>{milestones.length}</CounterDiv></MilestoneLink>
           </LabelMilestoneNav>
           <NewIssueLink to="/issue/create">New issue</NewIssueLink>
           {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
