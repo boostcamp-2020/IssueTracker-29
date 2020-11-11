@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FilterButton from './filterButton';
 import { Link, Redirect } from "react-router-dom";
 import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
-import { BORDER_COLOR, COUNTER_BACKGROUND, PRIMARY_COLOR } from '../common/color';
+import { BORDER_COLOR, COUNTER_BACKGROUND, LABEL_MILESTONE_FOCUS_BACKGROUND, PRIMARY_COLOR } from '../common/color';
 import LabelIcon from '../common/icon/svgLabelIcon';
 import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 import StyledInput from '../common/style/input';
@@ -41,13 +41,13 @@ const LabelMilestoneLink = styled(TopbarLink)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #00000000;
+  background-color: #0000;
   color: ${PRIMARY_COLOR};
   border: 1px solid ${BORDER_COLOR};
   text-decoration: none;
 
   &:hover {
-    background-color: #f6f8fa;
+    background-color: ${LABEL_MILESTONE_FOCUS_BACKGROUND};
   }
 `;
 
