@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { sendGetRequest } from '../common/api';
 import { MilestoneContext } from '../common/context';
 
@@ -14,7 +14,27 @@ const useMilestones = () => {
     putMilestonesInState(setMilestones);
   }, []);
 
-  return [milestones, setMilestones];
+  return milestones;
 }
 
-export { useMilestones };
+const useDueDate = (date = null) => {
+  const [dueDate, setDueDate] = useState(date);
+  const [dateColor, setDateColor] = useState('black');
+
+  useEffect(() => {
+    verifyDate(dueDate);
+  }, [dueDate])
+
+  const verifyDate = (dueDate) => {
+    if(!dueDate) return;
+    const current = new Date();
+    if (current.getFullYear() > dueDate.getFullYear() || current.getMonth() > dueDate.getMonth() || current.getDate() > dueDate.getDate())
+      setDateColor('red');
+    else
+      setDateColor('black');
+  };
+
+  return { dueDate, setDueDate, dateColor };
+};
+
+export { useMilestones, useDueDate };
