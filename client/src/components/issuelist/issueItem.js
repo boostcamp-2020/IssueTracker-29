@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import DatePassedViewer from '../common/datePassed.js';
+import SvgCloseLogo from '../common/icon/svgCloseLogo.js';
+import SvgOpenLogo from '../common/icon/svgOpenLogo.js';
 import LabelItem from '../common/labelItem.js';
 import MilestoneViewer from './milestoneViewer.js';
-import SvgCloseLogo from './svgCloseLogo.js';
-import SvgOpenLogo from './svgOpenLogo.js';
 
 const COLOR_SUCCESS = "#22863a";
 const COLOR_DANGER = "#cb2431";

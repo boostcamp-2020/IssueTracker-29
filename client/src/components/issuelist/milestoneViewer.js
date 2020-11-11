@@ -1,11 +1,11 @@
 import React from 'react';
+import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 
-import MilestoneLogo from './milestoneLogo';
 
 const MilestoneViewer = (props) => {
   return (
     <div>
-      <MilestoneLogo />
+      <MilestoneIcon />
       <p>{props.milestone_title}</p>
     </div>
   )
