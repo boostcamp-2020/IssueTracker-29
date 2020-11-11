@@ -5,7 +5,7 @@ import MilestoneItem from './milestoneItem';
 import LabelMilestoneTab from '../topbar/labelMilestoneTab';
 
 const MilestoneList = (props) => {
-  const [milestones, setMilestones] = useMilestones();
+  const milestones = useMilestones();
 
   const milestoneItemComponent = milestones.map((item) => <MilestoneItem milestone={item}/>);
   return (
