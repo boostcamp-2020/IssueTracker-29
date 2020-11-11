@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Icon from '../icon.js';
 
 const SvgContainer = styled(Icon)`
+  margin-top: 4px;
   color: ${props => props.color};
   width: 16px;
   height: 16px;

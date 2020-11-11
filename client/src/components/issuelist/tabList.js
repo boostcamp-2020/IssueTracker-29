@@ -14,9 +14,6 @@ const OPEN_STRING = "Open";
 const CLOSE_STRING = "Close";
 
 const TabContainer = styled(TabBar)`
-  & > div {
-    margin: 0 1rem;
-  }
 `;
 
 const CheckboxContainer = styled.div`
