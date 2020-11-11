@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import SvgSettingsLogo from './svgSettingsLogo.js';
 import { useAssignees, useLabels, useMilestones } from './issueSideBarHook';
-import IssueSideBarModal from '../common/issueSideBarModal';
+import Modal from './modal';
+import useModal from './modalhook';
 import { ControlValueContext } from './context.js';
 import { Redirect } from 'react-router-dom';
 import SideBarItem from './sideBarItem.js';
@@ -55,7 +56,7 @@ const SideBarWrap = styled.div`
 `;
 
 const AssigneesModal = (props) => {
-    const [onModal, setOnModal] = useState(false);
+    const [onModal, setOnModal] = useModal('assignee');
     const assignees = useAssignees();
     const [selectedAssignees, setSelectedAssignees] = useState([]);
     const assigneesComponent = assignees.map(item => <SideBarItem key={item.id} username={item.username} profile={item.profile} selectedAssignees={selectedAssignees} setSelectedAssignees={setSelectedAssignees}/>)
@@ -64,8 +65,9 @@ const AssigneesModal = (props) => {
     return (
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
-            <IssueSideBarModal
+            <Modal
                 onModal={onModal}
+                setOnModal={setOnModal}
                 title="Assign up to 10 people to this issue"
                 items={assigneesComponent}
             />
@@ -74,7 +76,7 @@ const AssigneesModal = (props) => {
 };
 
 const LabelsModal = (props) => {
-    const [onModal, setOnModal] = useState(false);
+    const [onModal, setOnModal] = useModal('label');
     const labels = useLabels();
 
     const labelsComponent = labels.map(item => <SideBarItem key={item.id} name={item.name} description={item.description} color={item.color}/>)
@@ -82,8 +84,9 @@ const LabelsModal = (props) => {
     return (
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
-            <IssueSideBarModal
+            <Modal
                 onModal={onModal}
+                setOnModal={setOnModal}
                 title="Apply labels to this issue"
                 items={labelsComponent}
             />
@@ -92,7 +95,7 @@ const LabelsModal = (props) => {
 };
 
 const MilestonesModal = (props) => {
-    const [onModal, setOnModal] = useState(false);
+    const [onModal, setOnModal] = useModal('milestone');
     const milestones = useMilestones();
 
     const milestonesComponent = milestones.map(item => <SideBarItem key={item.id} title={item.title} />)
@@ -100,8 +103,9 @@ const MilestonesModal = (props) => {
     return (
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
-            <IssueSideBarModal
+            <Modal
                 onModal={onModal}
+                setOnModal={setOnModal}
                 title="Set milestone"
                 items={milestonesComponent}
             />
