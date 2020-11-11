@@ -14,15 +14,19 @@ const HeaderContainer = styled.div`
   background-color: black;
 `;
 
+const HeaderLinkContainer = styled(Link)`
+  text-decoration: none;
+`;
+
 const Header = (props) => {
   return (
       <>
-        <Link to="/issue">
+        <HeaderLinkContainer to="/issue">
           <HeaderContainer>
             <img />
             <p>ISSUES</p>
           </HeaderContainer>    
-        </Link>
+        </HeaderLinkContainer>
         
     </>
   );

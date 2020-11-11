@@ -13,7 +13,6 @@ const CLOSE_STRING = "Close";
 
 const TabContainer = styled.div`
   display: flex;
-  width: 80%;
   height: 50px;
   margin: 0 auto;
   border: 1px solid lightgray;
