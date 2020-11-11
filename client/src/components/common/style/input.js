@@ -3,8 +3,6 @@ import { BORDER_COLOR, FOCUS_BORDER_COLOR, TOPBAR_SEARCH_BACKGROUND } from '../c
 
 const StyledInput = styled.input`
   border: 1px solid ${BORDER_COLOR};
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
 
   background-color: ${TOPBAR_SEARCH_BACKGROUND};
 

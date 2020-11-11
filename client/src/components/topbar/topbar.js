@@ -32,6 +32,9 @@ const SearchFormContainer = styled.form`
 const SearchIssueContainer = styled(StyledInput)`
   flex: 1 1 auto;
   padding: 5px 12px;
+
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 `;
 
 const CounterDiv = styled.div`
