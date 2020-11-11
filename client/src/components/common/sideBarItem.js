@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const SideBarContainer = styled.div`
     width: 80%;
     // height: 50px;
-    border: 1px solid black;
 `;
 
 const ColorBox = styled.div`
