@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import CustomProgress from '../common/style/progress';
 
 const MilestoneItem = ({ milestone }) => {
   return (
@@ -13,10 +14,7 @@ const MilestoneItem = ({ milestone }) => {
         <p>{milestone.description}</p>
       </div>
       <div>
-        <div>{/* 여기서 flex를 주고, 각 칸의 길이를 조절해서 퍼센티지를 조정합니다 */}
-          <span></span>
-          <span></span>
-        </div>
+        <CustomProgress percentage={Math.random() * 50}/>
         <div>
           <Link to={{pathname: `/milestone/${milestone.id}`, state: {
             oldTitle: milestone.title,
