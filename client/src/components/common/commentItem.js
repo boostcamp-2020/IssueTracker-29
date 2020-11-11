@@ -22,6 +22,13 @@ const EditCommentButton = styled.button`
   margin-right: 100px;
 `;
 
+const ProfileBox = styled.img`
+  width: 20px;
+  height: 20px;
+  src: ${props => props.src};
+  border: 1px solid black;
+`;
+
 const CommentItem = (props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [commentContents, setCommentContents] = useState(props.comment.contents);
@@ -52,12 +59,12 @@ const CommentItem = (props) => {
   }
 
   const user = useContext(UserContext);
-  console.log(user)
+
   return (
     <CommentContainer>
-        <CommentHeader>{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} />  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
-        {user.id === props.comment.user_id ? <p>{isEditing ? <div><button onClick={editComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
-        {isEditing ? <textarea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}</p> : <p><ReactMarkdown source={props.comment.contents} /></p>}
+        <CommentHeader><ProfileBox src={props.comment.profile} />{props.comment.username} commented <DatePassedViewer datetime={props.comment.created_at} />  {props.issue_user_id == props.comment.user_id ? 'Owner' : null}</CommentHeader>
+        {user.id === props.comment.user_id ? <div>{isEditing ? <div><button onClick={editComment}>Update comment</button><button onClick={cancelContentEdit}>Cancel</button></div> : <EditCommentButton onClick={toggleIsEditing}>Edit</EditCommentButton>}
+        {isEditing ? <textarea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}</div> : <div><ReactMarkdown source={props.comment.contents} /></div>}
     </CommentContainer>
   )
 }
