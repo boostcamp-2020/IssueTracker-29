@@ -22,7 +22,6 @@ const ProfileBox = styled.img`
 `;
 
 const sideBarItem = (props) => {
-    console.log(props)
   return (
     <SideBarContainer>
         {props.username ?
