@@ -1,12 +1,13 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import FilterButton from './filterButton';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { LabelContext, MilestoneContext, ControlValueContext } from '../common/context';
-import { BORDER_COLOR, COUNTER_BACKGROUND, LABEL_MILESTONE_FOCUS_BACKGROUND, PRIMARY_COLOR } from '../common/color';
+import { COUNTER_BACKGROUND, PRIMARY_COLOR } from '../common/color';
 import LabelIcon from '../common/icon/svgLabelIcon';
 import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 import StyledInput from '../common/style/input';
+import { LabelLink, LabelMilestoneNav, MilestoneLink, NewItemLink } from '../common/style/toplink';
 
 const TopBarConatiner = styled.div`
   margin-top: 100px;
@@ -31,38 +32,7 @@ const SearchFormContainer = styled.form`
 const SearchIssueContainer = styled(StyledInput)`
   flex: 1 1 auto;
   padding: 5px 12px;
-`;
 
-const TopbarLink = styled(Link)`
-  padding: 5px 16px;
-`;
-
-const LabelMilestoneLink = styled(TopbarLink)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #0000;
-  color: ${PRIMARY_COLOR};
-  border: 1px solid ${BORDER_COLOR};
-  text-decoration: none;
-
-  &:hover {
-    background-color: ${LABEL_MILESTONE_FOCUS_BACKGROUND};
-  }
-`;
-
-const LabelMilestoneNav = styled.nav`
-  display: flex;
-  margin: 0px 10px;
-`;
-
-const LabelLink = styled(LabelMilestoneLink)`
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-
-`;
-
-const MilestoneLink = styled(LabelMilestoneLink)`
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
 `;
@@ -71,19 +41,6 @@ const CounterDiv = styled.div`
   padding: 0px 6px;
   background-color: ${COUNTER_BACKGROUND};
   border-radius: 5em;
-`;
-
-const NewIssueLink = styled(TopbarLink)`
-    background-color: #2EA44F;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-
-    border-radius: 6px;
-
-    &:hover {
-        background: darken(0.5, #2EA44F);
-    }
 `;
 
 const ResetButton = styled.input`
@@ -97,7 +54,7 @@ const ResetButton = styled.input`
 const TopBar = (props) => {
 
     const { labelState } = useContext(LabelContext);
-    const {milestones} = useContext(MilestoneContext);
+    const { milestones } = useContext(MilestoneContext);
     const [redirect, setRedirect] = useState(false);
     const { value, setValue } = useContext(ControlValueContext);
 
@@ -134,7 +91,7 @@ const TopBar = (props) => {
             <LabelLink to='/label'><LabelIcon color={PRIMARY_COLOR}/> Labels<CounterDiv>{labelState.labels.length}</CounterDiv></LabelLink>
             <MilestoneLink to='/milestone'><MilestoneIcon color={PRIMARY_COLOR}/>Milestones<CounterDiv>{milestones.length}</CounterDiv></MilestoneLink>
           </LabelMilestoneNav>
-          <NewIssueLink to="/issue/create">New issue</NewIssueLink>
+          <NewItemLink to="/issue/create">New issue</NewItemLink>
           {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
         </TopBarConatiner>
         {(value === 'is:issue is:open ' || value === '')?
