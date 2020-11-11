@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { BASE_API_URL } from '../../../util/config';
 
-const GithubLink = styled(Link)`
+const GithubLink = styled.a`
   width: 20%;
   display: block;
   margin: 0 auto;
@@ -12,13 +13,14 @@ const GithubLink = styled(Link)`
   text-align: center;
   text-decoration: none;
   background-color: black;
+  cursor: pointer;
 `;
 
 const Index = (props) => {
     return (
       <>
         <Link to={`/issue`}><div>바로 이슈로 (테스트용)</div></Link>
-        <GithubLink to="/api/user/auth/github">Sign in with Github</GithubLink>
+        <GithubLink href={BASE_API_URL + '/api/user/auth/github'}>Sign in with Github</GithubLink>
       </>
     );
 }

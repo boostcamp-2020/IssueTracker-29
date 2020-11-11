@@ -1,6 +1,4 @@
-// production server based
-//const BASE_API_URL = "http://www.tutoringmachine.shop/api";
-const BASE_API_URL = "http://localhost:3000";
+const BASE_API_URL = (process.env.NODE_ENV && process.env.NODE_ENV === 'development')? 'http://localhost:3000' : 'http://www.tutoringmachine.shop/api';
 const ISSUE_OPEN = 1;
 const ISSUE_CLOSE = 0;
 
