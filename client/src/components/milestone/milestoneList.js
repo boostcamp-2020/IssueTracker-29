@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useMilestones } from './milestoneHook';
+import MilestoneItem from './milestoneItem';
+import LabelMilestoneTab from '../topbar/labelMilestoneTab';
 
 const MilestoneList = (props) => {
-  const milestoneItemComponent = null;
+  const [milestones, setMilestones] = useMilestones();
+
+  const milestoneItemComponent = milestones.map((item) => <MilestoneItem milestone={item}/>);
   return (
     <div>
       <div>
-        <button>Label</button>
-        <p>Milestones</p>
-        <button>New milestone</button>
-      </div>
-      <div>
-
+        <LabelMilestoneTab selected='milestone' />
       </div>
       <div>
         {milestoneItemComponent}
