@@ -27,7 +27,6 @@ const sideBarItem = (props) => {
         {props.username ?
             <>
                 <ProfileBox src={props.profile} />
-                {/* <div>{props.profile}</div> */}
                 <div>{props.username}</div>
             </>
         : null}
