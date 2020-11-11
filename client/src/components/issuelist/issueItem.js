@@ -5,12 +5,13 @@ import DatePassedViewer from '../common/datePassed.js';
 import SvgCloseLogo from '../common/icon/svgCloseLogo.js';
 import SvgOpenLogo from '../common/icon/svgOpenLogo.js';
 import LabelItem from '../common/labelItem.js';
+import ListItem from '../common/style/listitem.js';
 import MilestoneViewer from './milestoneViewer.js';
 
 const COLOR_SUCCESS = "#22863a";
 const COLOR_DANGER = "#cb2431";
 
-const IssueItemContainer = styled.div`
+const IssueItemContainer = styled(ListItem)`
   display: flex;
   & p {
     margin: 0px;
