@@ -5,6 +5,7 @@ import { POST_LABEL } from '../../reducer/label';
 import { BORDER_COLOR, TERTIARY_BACKGROUND_COLOR } from '../common/color';
 import { LabelContext } from '../common/context';
 import BigLabelItem from './biglabelitem';
+import LabelStyleInput from './labelinput';
 
 const LabelCreateContainer = styled.div`
   margin: -1px -1px 20px;
@@ -47,17 +48,17 @@ const LabelCreate = (props) => {
       <div>
         <label>
           Label name
-          <input onChange={(e) => {setName(e.target.value)}}/>
+          <LabelStyleInput onChange={(e) => {setName(e.target.value)}}/>
         </label>
         <label>
           Description
-          <input onChange={(e) => {setDescription(e.target.value)}} />
+          <LabelStyleInput onChange={(e) => {setDescription(e.target.value)}} />
         </label>
         <label>
           Color
         </label>
         <button onClick={() => setColor(getRandomColor())}>Random</button>
-        <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
+        <LabelStyleInput onChange={(e) => {setColor(e.target.value)}} value={color}/>
         <button onClick={() => props.setIsCreating(false)}>Cancel</button>
         <button onClick={() => {submitLabel();}}>Create label</button>
       </div>
