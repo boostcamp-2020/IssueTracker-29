@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { COLOR_GRAPH_GREEN, LIGHT_GREY } from '../color';
 
 const ProgressContainer = styled.div`
@@ -9,10 +9,21 @@ const ProgressContainer = styled.div`
   overflow: hidden;
 `;
 
+const increaseGraph = (percentage) => keyframes`
+  from {
+    flex: 0 0 0;
+  }
+
+  to {
+    flex: 0 0 ${percentage}%;
+  }
+`;
+
 const DoneProgress = styled.div`
   height: 10px;
   flex: 0 0 ${props => props.percentage}%;
   background-color: ${COLOR_GRAPH_GREEN};
+  animation: ${props => increaseGraph(props.percentage)} 2s;
 `;
 
 const UndoneProgress = styled.div`
