@@ -12,10 +12,6 @@ const GithubLink = styled(Link)`
   text-align: center;
   text-decoration: none;
   background-color: black;
-
-  &:hover {
-    background-color: navy;
-  }
 `;
 
 const Index = (props) => {
