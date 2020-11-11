@@ -17,6 +17,8 @@ const LabelListContainer = styled.div`
 `;
 
 const TabTopbarDiv = styled.div`
+  margin-top: 32px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
 `;

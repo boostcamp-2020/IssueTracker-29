@@ -12,7 +12,7 @@ export const LabelMilestoneLink = styled(TopbarLink)`
   align-items: center;
   background-color: ${props => props.selected ? LINK_COLOR : "#0000"};
   color: ${props => props.selected ? "#fff" : PRIMARY_COLOR};
-  border: 1px solid ${BORDER_COLOR};
+  border: ${props => props.selected ? "none" : `1px solid ${BORDER_COLOR}`};
   text-decoration: none;
 
   &:hover {

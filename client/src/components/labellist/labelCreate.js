@@ -4,11 +4,10 @@ import { getRandomColor } from '../../../util/util';
 import { POST_LABEL } from '../../reducer/label';
 import { BORDER_COLOR, TERTIARY_BACKGROUND_COLOR } from '../common/color';
 import { LabelContext } from '../common/context';
-import LabelItem from '../common/labelItem';
-import TabBar from '../common/style/tabbar';
+import BigLabelItem from './biglabelitem';
 
 const LabelCreateContainer = styled.div`
-  margin: -1px -1px 0;
+  margin: -1px -1px 20px;
   padding: 16px;
   border: 1px solid ${BORDER_COLOR};
   background-color: ${TERTIARY_BACKGROUND_COLOR};
@@ -43,23 +42,25 @@ const LabelCreate = (props) => {
   return (
     <LabelCreateContainer>
       <SampleLabelContainer>
-        <LabelItem label={{name: "Label preview", description, color}}>Label Preview</LabelItem>
+        <BigLabelItem label={{name: "Label preview", description, color}}>Label Preview</BigLabelItem>
       </SampleLabelContainer>
-      <label>
-        Label name
-        <input onChange={(e) => {setName(e.target.value)}}/>
-      </label>
-      <label>
-        Description
-        <input onChange={(e) => {setDescription(e.target.value)}} />
-      </label>
-      <label>
-        Color
-      </label>
-      <button onClick={() => setColor(getRandomColor())}>Random</button>
-      <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
-      <button onClick={() => props.setIsCreating(false)}>Cancel</button>
-      <button onClick={() => {submitLabel();}}>Create label</button>
+      <div>
+        <label>
+          Label name
+          <input onChange={(e) => {setName(e.target.value)}}/>
+        </label>
+        <label>
+          Description
+          <input onChange={(e) => {setDescription(e.target.value)}} />
+        </label>
+        <label>
+          Color
+        </label>
+        <button onClick={() => setColor(getRandomColor())}>Random</button>
+        <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
+        <button onClick={() => props.setIsCreating(false)}>Cancel</button>
+        <button onClick={() => {submitLabel();}}>Create label</button>
+      </div>
     </LabelCreateContainer>
   )
 }

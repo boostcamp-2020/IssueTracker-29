@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { getRandomColor } from '../../../util/util';
 import { EDIT_LABEL, TOGGLE_ISEDIT } from '../../reducer/label';
 import { LabelContext } from '../common/context';
-import LabelItem from '../common/labelItem';
+import BigLabelItem from './biglabelitem';
 import LabelItemContainer from './itemContainer';
 
 const LabelEdit = (props) => {
@@ -26,7 +26,7 @@ const LabelEdit = (props) => {
 
   return (
     <LabelItemContainer>
-      <LabelItem label={{name, description, color}}>Label Preview</LabelItem>
+      <BigLabelItem label={{name, description, color}}>Label Preview</BigLabelItem>
       <label>
         Label name
         <input onChange={(e) => {setName(e.target.value)}} value={name}/>
