@@ -20,7 +20,7 @@ const Index = (props) => {
     return (
       <>
         <Link to={`/issue`}><div>바로 이슈로 (테스트용)</div></Link>
-        <GithubLink href={BASE_API_URL + '/api/user/auth/github'}>Sign in with Github</GithubLink>
+        <GithubLink href={BASE_API_URL + '/user/auth/github'}>Sign in with Github</GithubLink>
       </>
     );
 }
