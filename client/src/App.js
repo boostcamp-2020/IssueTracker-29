@@ -12,6 +12,7 @@ import asyncLabelWrapper from './wrapper/label';
 import { reducer as labelReducer} from './reducer/label';
 import MilestoneList from "./components/milestone/milestoneList.js";
 import NewMilestone from "./components/newMilestone/newMilestone.js";
+import MilestoneEditer from './components/MilestoneEditer/MilestoneEditer.js';
 import { sendGetRequest } from "./components/common/api.js";
 
 const ResetStyle = createGlobalStyle`
@@ -69,6 +70,7 @@ const App = () => {
                 <Route exact path="/" component={Login}/>
                 <Switch>
                   <Route exact path="/milestone/create" component={NewMilestone}/>
+                  <Route exact path="/milestone/:id" component={MilestoneEditer}/>
                   <Route exact path="/milestone" component={MilestoneList}/>
                 </Switch>
               </MilestoneContext.Provider>

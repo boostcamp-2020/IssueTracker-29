@@ -21,22 +21,25 @@ const CreateButton = styled.button`
   background-color: green;
 `;
 
-const LabelMilestoneTab = (props) => {
+const LabelMilestoneTab = ({selected, onCreateEvent, isEdit}) => {
   return (
     <LabelMilestoneTabContainer>
       <div>
-        <Link to='/label'><TabButton color={props.selected === 'label'? 'white' : null}>Label</TabButton></Link>
-        <Link to='/milestone'><TabButton color={props.selected === 'milestone'? 'white' : null}>Milestone</TabButton></Link>
+        <Link to='/label'><TabButton color={selected === 'label'? 'white' : null}>Label</TabButton></Link>
+        <Link to='/milestone'><TabButton color={selected === 'milestone'? 'white' : null}>Milestone</TabButton></Link>
       </div>
       <div>
         {
-          props.selected === 'label'?
-            <CreateButton onClick={props.onCreateEvent}>
-              New {props.selected}
+          selected === 'label'?
+            <CreateButton onClick={onCreateEvent}>
+              New {selected}
             </CreateButton>
             :
+            isEdit?
+            null
+            :
             <Link to='/milestone/create'>
-              <CreateButton>New {props.selected}</CreateButton>
+              <CreateButton>New {selected}</CreateButton>
             </Link>
         }
       </div>
