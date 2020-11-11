@@ -18,7 +18,7 @@ const DoneProgress = styled.div`
 const UndoneProgress = styled.div`
   height: 10px;
   flex: 0 0 ${props => props.percentage}%;
-`
+`;
 
 const CustomProgress = (props) => {
   return (
