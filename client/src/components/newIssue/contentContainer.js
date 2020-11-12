@@ -121,7 +121,7 @@ const Content = (props) => {
                 <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
             </ContentWrap>
             
-            <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
+            <ImageFileBoxLabel htmlFor="file">Attach files by selecting here</ImageFileBoxLabel>
             <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
             
             <ButtonContainer>

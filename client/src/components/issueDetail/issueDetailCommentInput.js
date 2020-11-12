@@ -117,7 +117,7 @@ const IssueDetailCommentInput = (props) => {
               <IssueCommentInput placeholder="Leave a comment" value={commentContent} onChange={onChange} />
               <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
             </ContentWrap>
-            <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
+            <ImageFileBoxLabel htmlFor="file">Attach files by selecting here</ImageFileBoxLabel>
             <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
             
             <ButtonContainer>
