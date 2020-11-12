@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
 import { BASE_API_URL } from '../../../util/config';
-import { sendPutRequest, sendPostRequest, sendImagePostRequest } from '../common/api';
+import { sendPutRequest, sendPostRequest, sendImagePostRequest, sendGetRequest } from '../common/api';
 
 
 const IssueCommentInput = styled.textarea`
@@ -89,8 +89,10 @@ const IssueDetailCommentInput = (props) => {
     const submitClickEvent = async (e) => {
         const newComment = {contents:commentContent, issueID:props.issue.id, userID: 1, created_at: new Date()};
         const res = await sendPostRequest(`/issue/${props.issue.id}/comment`, newComment);
+        const data = await sendGetRequest(`/issue/${props.issue.id}/comment`)
+
         if (res && res.success) {
-            props.setComments(props.comments.concat(newComment));
+            props.setComments(data);
         }
         setCommentContent("");
     };
