@@ -4,9 +4,9 @@ import { hexToRgb } from '../../../../util/util';
 const LabelContainer = styled.div`
   margin-top: 3px;
   margin-left: 5px;
-  padding: 0px 7px;
+  padding: 3px 8px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 2em;
 
   background-color: ${props => props.color};

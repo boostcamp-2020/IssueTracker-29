@@ -14,7 +14,7 @@ const createToken = (req, res, next) => {
   return next();
 };
 
-const vertifyToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   /*
   const token = req.cookies.user;
   const decoded = jwt.verify(token, config.secretKey);
@@ -30,4 +30,4 @@ const vertifyToken = async (req, res, next) => {
   return next();
 };
 
-module.exports = { createToken, vertifyToken };
+module.exports = { createToken, verifyToken };

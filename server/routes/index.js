@@ -13,7 +13,7 @@ const tokenRouter = require('../middlewares/auth/token');
 
 router.use('/user', userRouter);
 // HELP: 이후 팀원들끼리 어떤 동작에 권한 인증을 도입할지 의논
-router.use('/', tokenRouter.vertifyToken);
+router.use('/', tokenRouter.verifyToken);
 router.use('/milestone', milestoneRouter);
 router.use('/issue', issueRouter);
 router.use('/comment', commentRouter);
