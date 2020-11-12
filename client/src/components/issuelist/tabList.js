@@ -31,6 +31,8 @@ const TabButton = styled.input`
   outline:none;
   background-color: #0000;
 
+  cursor: pointer;
+
   &:hover {
     color: ${PRIMARY_COLOR};
   }

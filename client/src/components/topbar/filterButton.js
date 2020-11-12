@@ -21,6 +21,8 @@ const ButtonInput = styled.input`
   border-bottom-left-radius: 6px;
   outline:none;
 
+  cursor: pointer;
+
   &:hover {
     background-color: #f3f4f6;
   }
