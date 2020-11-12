@@ -9,12 +9,10 @@ import LabelItem from '../common/labelItem.js';
 import ListItem from '../common/style/listitem.js';
 import MilestoneViewer from './milestoneViewer.js';
 
-const COLOR_SUCCESS = "#22863a";
-const COLOR_DANGER = "#cb2431";
+import { COLOR_SUCCESS, COLOR_DANGER } from '../common/color.js';
 
 const IssueItemContainer = styled(ListItem)`
   display: flex;
-  padding: 8px 16px;
   align-items: flex-start;
 
   &:hover {

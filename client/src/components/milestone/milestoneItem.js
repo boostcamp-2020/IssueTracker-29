@@ -1,9 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import ListItem from '../common/style/listitem';
+import CustomProgress from '../common/style/progress';
+
+const MilestoneItemContainer = styled(ListItem)`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const MilestoneItem = ({ milestone }) => {
   return (
-    <div>
+    <MilestoneItemContainer>
       <div>
         <h2>{milestone.title}</h2>
         <p>{milestone.due_date === null ?
@@ -13,10 +21,7 @@ const MilestoneItem = ({ milestone }) => {
         <p>{milestone.description}</p>
       </div>
       <div>
-        <div>{/* 여기서 flex를 주고, 각 칸의 길이를 조절해서 퍼센티지를 조정합니다 */}
-          <span></span>
-          <span></span>
-        </div>
+        <CustomProgress percentage={Math.random() * 50}/>
         <div>
           <Link to={{pathname: `/milestone/${milestone.id}`, state: {
             oldTitle: milestone.title,
@@ -29,7 +34,7 @@ const MilestoneItem = ({ milestone }) => {
           <span>Delete</span>
         </div>
       </div>
-    </div>
+    </MilestoneItemContainer>
   )
 }
 
