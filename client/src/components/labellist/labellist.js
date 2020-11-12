@@ -5,9 +5,21 @@ import LabelEdit from './labelEdit.js';
 
 import { useLabels } from './labelHook.js';
 import LabelItemViewer from './labelItemViewer.js';
-import LabelMilestoneTab from '../topbar/labelMilestoneTab';
+import { LabelLink, LabelMilestoneNav, MilestoneLink } from '../common/style/toplink.js';
+import { PRIMARY_COLOR } from '../common/color.js';
+import LabelIcon from '../common/icon/svgLabelIcon.js';
+import MilestoneIcon from '../common/icon/svgMilestoneIcon.js';
+import TabBar from '../common/style/tabbar.js';
+import { OkButton } from '../common/style/button.js';
 
 const LabelListContainer = styled.div`
+`;
+
+const TabTopbarDiv = styled.div`
+  margin-top: 32px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const LabelList = (props) => {
@@ -19,8 +31,17 @@ const LabelList = (props) => {
 
   return (
     <div>
-      <LabelMilestoneTab selected='label' onCreateEvent={() => {setIsCreating(!isCreating)}} />
+      <TabTopbarDiv>
+        <LabelMilestoneNav>
+          <LabelLink to='/label' selected><LabelIcon color="#fff"/> Labels</LabelLink>
+          <MilestoneLink to='/milestone'><MilestoneIcon color={PRIMARY_COLOR}/>Milestones</MilestoneLink>
+        </LabelMilestoneNav>
+        <OkButton onClick={() => setIsCreating(!isCreating)}>New label</OkButton>
+      </TabTopbarDiv>
       {createLabel}
+      <TabBar>
+        {labelState.labels.length} labels
+      </TabBar>
       <LabelListContainer>
         {labelItems}
       </LabelListContainer>

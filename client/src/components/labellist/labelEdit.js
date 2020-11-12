@@ -2,8 +2,9 @@ import React, { useContext, useState } from 'react';
 import { getRandomColor } from '../../../util/util';
 import { EDIT_LABEL, TOGGLE_ISEDIT } from '../../reducer/label';
 import { LabelContext } from '../common/context';
-import LabelItem from '../common/labelItem';
+import BigLabelItem from './biglabelitem';
 import LabelItemContainer from './itemContainer';
+import LabelStyleInput from './labelinput';
 
 const LabelEdit = (props) => {
   const {labelDispatch} = useContext(LabelContext);
@@ -26,20 +27,20 @@ const LabelEdit = (props) => {
 
   return (
     <LabelItemContainer>
-      <LabelItem label={{name, description, color}}>Label Preview</LabelItem>
+      <BigLabelItem label={{name, description, color}}>Label Preview</BigLabelItem>
       <label>
         Label name
-        <input onChange={(e) => {setName(e.target.value)}} value={name}/>
+        <LabelStyleInput onChange={(e) => {setName(e.target.value)}} value={name}/>
       </label>
       <label>
         Description
-        <input onChange={(e) => {setDescription(e.target.value)}} value={description}/>
+        <LabelStyleInput onChange={(e) => {setDescription(e.target.value)}} value={description}/>
       </label>
       <label>
         Color
       </label>
       <button onClick={() => setColor(getRandomColor())}>Random</button>
-      <input onChange={(e) => {setColor(e.target.value)}} value={color}/>
+      <LabelStyleInput onChange={(e) => {setColor(e.target.value)}} value={color}/>
       <button onClick={() => labelDispatch({type: TOGGLE_ISEDIT, payload: {id: props.label.id}})}>Cancel</button>
       <button onClick={() => {submitLabel()}}>Edit label</button>
     </LabelItemContainer>

@@ -19,6 +19,10 @@ const TopBarConatiner = styled.div`
   font-size: 14px;
 `;
 
+const IssueLabelMilestoneNav = styled(LabelMilestoneNav)`
+  margin: 0px 10px;
+`;
+
 const FilterSearchContainer = styled.div`
   flex: 1 1 auto;
   display: flex;
@@ -87,10 +91,10 @@ const TopBar = (props) => {
                 placeholder="Search all issues"/>
             </SearchFormContainer>
           </FilterSearchContainer>
-          <LabelMilestoneNav>
+          <IssueLabelMilestoneNav>
             <LabelLink to='/label'><LabelIcon color={PRIMARY_COLOR}/> Labels<CounterDiv>{labelState.labels.length}</CounterDiv></LabelLink>
             <MilestoneLink to='/milestone'><MilestoneIcon color={PRIMARY_COLOR}/>Milestones<CounterDiv>{milestones.length}</CounterDiv></MilestoneLink>
-          </LabelMilestoneNav>
+          </IssueLabelMilestoneNav>
           <NewItemLink to="/issue/create">New issue</NewItemLink>
           {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
         </TopBarConatiner>
