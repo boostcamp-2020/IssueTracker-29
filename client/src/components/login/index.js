@@ -5,6 +5,10 @@ import { BASE_API_URL } from '../../../util/config';
 import GithubLogo from '../common/icon/svgGithubIcon';
 
 const GithubLink = styled.a`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: space-around;
   width: 15%;
@@ -20,7 +24,6 @@ const GithubLink = styled.a`
 const Index = (props) => {
     return (
       <>
-        <Link to={`/issue`}><div>바로 이슈로 (테스트용)</div></Link>
         <GithubLink href={BASE_API_URL + '/user/auth/github'}>
           <span>Sign in with Github</span>
           <GithubLogo color="black" />
