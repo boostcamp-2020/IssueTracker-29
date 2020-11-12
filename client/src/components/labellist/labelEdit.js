@@ -5,6 +5,7 @@ import { LabelContext } from '../common/context';
 import BigLabelItem from './biglabelitem';
 import LabelItemContainer from './itemContainer';
 import LabelStyleInput from './labelinput';
+import { CommonButton, OkButton } from '../common/style/button';
 
 const LabelEdit = (props) => {
   const {labelDispatch} = useContext(LabelContext);
@@ -39,10 +40,10 @@ const LabelEdit = (props) => {
       <label>
         Color
       </label>
-      <button onClick={() => setColor(getRandomColor())}>Random</button>
+      <CommonButton onClick={() => setColor(getRandomColor())}>Random</CommonButton>
       <LabelStyleInput onChange={(e) => {setColor(e.target.value)}} value={color}/>
-      <button onClick={() => labelDispatch({type: TOGGLE_ISEDIT, payload: {id: props.label.id}})}>Cancel</button>
-      <button onClick={() => {submitLabel()}}>Edit label</button>
+      <CommonButton onClick={() => labelDispatch({type: TOGGLE_ISEDIT, payload: {id: props.label.id}})}>Cancel</CommonButton>
+      <OkButton onClick={() => {submitLabel()}}>Save changes</OkButton>
     </LabelItemContainer>
   );
 }

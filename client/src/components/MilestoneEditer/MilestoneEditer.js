@@ -7,6 +7,7 @@ import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 import { LabelLink, LabelMilestoneNav, MilestoneLink } from '../common/style/toplink';
 import { useDueDate } from '../milestone/milestoneHook';
 import MilestoneInputForm from '../newMilestone/milestoneInputForm';
+import { ButtonContainer, OkButton, CommonButton } from '../common/style/button';
 
 const MilestoneEditer = ({ match, location }) => {
   const { oldTitle, oldDueDate, oldDescription, isOpen } = location.state;
@@ -46,11 +47,11 @@ const MilestoneEditer = ({ match, location }) => {
         setDescription={setDescription}
         dateColor={dateColor}
       />
-      <div>
-        <button onClick={() => {setRedirect(true)}}>Cancel</button>
-        <button onClick={editMilestoneState}>{isOpen? 'Close' : 'Open'} milestone</button>
-        <button onClick={editMilestone}>Save changes</button>
-      </div>
+      <ButtonContainer>
+        <CommonButton onClick={() => {setRedirect(true)}}>Cancel</CommonButton>
+        <CommonButton onClick={editMilestoneState}>{isOpen? 'Close' : 'Open'} milestone</CommonButton>
+        <OkButton onClick={editMilestone}>Save changes</OkButton>
+      </ButtonContainer>
       {redirect? <Redirect to='/milestone' /> : null}
     </div>
   );

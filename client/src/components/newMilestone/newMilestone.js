@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { sendPostRequest } from '../common/api';
 import { useDueDate } from '../milestone/milestoneHook';
 import MilestoneInputForm from './milestoneInputForm';
+import { ButtonContainer, OkButton } from '../common/style/button';
 
 const NewMilestone = (props) => {
   const [title, setTitle] = useState('');
@@ -25,9 +26,9 @@ const NewMilestone = (props) => {
       </div>
       <hr />
       <MilestoneInputForm setTitle={setTitle} setDueDate={setDueDate} setDescription={setDescription} dateColor={dateColor} />
-      <div>
-        <button onClick={createMilestone}>Create milestone</button>
-      </div>
+      <ButtonContainer>
+        <OkButton onClick={createMilestone}>Create milestone</OkButton>
+      </ButtonContainer>
       {redirect? <Redirect to='/milestone' /> : null}
     </div>
   )

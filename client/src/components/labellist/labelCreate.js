@@ -6,6 +6,7 @@ import { BORDER_COLOR, TERTIARY_BACKGROUND_COLOR } from '../common/color';
 import { LabelContext } from '../common/context';
 import BigLabelItem from './biglabelitem';
 import LabelStyleInput from './labelinput';
+import { CommonButton, OkButton } from '../common/style/button';
 
 const LabelCreateContainer = styled.div`
   margin: -1px -1px 20px;
@@ -57,10 +58,10 @@ const LabelCreate = (props) => {
         <label>
           Color
         </label>
-        <button onClick={() => setColor(getRandomColor())}>Random</button>
+        <CommonButton onClick={() => setColor(getRandomColor())}>Random</CommonButton>
         <LabelStyleInput onChange={(e) => {setColor(e.target.value)}} value={color}/>
-        <button onClick={() => props.setIsCreating(false)}>Cancel</button>
-        <button onClick={() => {submitLabel();}}>Create label</button>
+        <CommonButton onClick={() => props.setIsCreating(false)}>Cancel</CommonButton>
+        <OkButton onClick={() => {submitLabel();}}>Create label</OkButton>
       </div>
     </LabelCreateContainer>
   )
