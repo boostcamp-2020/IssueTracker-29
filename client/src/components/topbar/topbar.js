@@ -109,5 +109,3 @@ const TopBar = (props) => {
 }
 
 export default TopBar;
-
-// <ResetButton onClick={resetFilter} value="clear"/>

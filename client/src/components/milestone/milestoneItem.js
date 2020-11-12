@@ -10,6 +10,12 @@ const MilestoneItemContainer = styled(ListItem)`
   justify-content: space-between;
 `;
 
+const OptionContainer = styled.div`
+  & > * {
+    margin: .5rem;
+  }
+`;
+
 const DeleteButtonContainer = styled(TextButton)`
   color: red;
 `;
@@ -28,17 +34,17 @@ const MilestoneItem = (props) => {
       </div>
       <div>
         <CustomProgress percentage={Math.random() * 50}/>
-        <div>
+        <OptionContainer>
           <Link to={{pathname: `/milestone/${milestone.id}`, state: {
             oldTitle: milestone.title,
             oldDueDate: new Date(milestone.due_date).toISOString().slice(0, 10),
             oldDescription: milestone.description,
             isOpen: milestone.is_open,
-          }
+            }
           }}>Edit</Link>
           <span>{milestone.is_open? 'Close' : 'Open'}</span>
           <DeleteButtonContainer onClick={() => props.onDelete()}>Delete</DeleteButtonContainer>
-        </div>
+        </OptionContainer>
       </div>
     </MilestoneItemContainer>
   )

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { useIssues, useIssueLabels, useLabels, useMilestones } from './issueHook.js';
-import { ControlValueContext } from '../common/context.js';
+import { ControlValueContext, UserContext } from '../common/context.js';
 
 import TopBar from '../topbar/topbar.js';
 import TabList from './tabList.js';
 import IssueItem from './issueItem.js';
 
 const Issue = (props) => {
+  const user = useContext(UserContext);
   const [issues, setIssues] = useIssues();
   const [filteredIssue, setFilteredIssue] = useState(null);
   const issueLabels = useIssueLabels();
@@ -64,8 +65,8 @@ const Issue = (props) => {
         if (value === 'issue') return [...issues];
         return issues.filter(item => (value === 'open')? item.is_open : !item.is_open);
       case 'author':
-        if(value !== '@me') // user 식별 미구현
-          return issues.filter(item => item.username === value);
+        if(value === '@me') return issues.filter(item => item.user_id === user.id);
+        return issues.filter(item => item.username === value);
       case 'milestone':
         return issues.filter(item => `"${item.milestone_title}"` === value);
       case 'label':

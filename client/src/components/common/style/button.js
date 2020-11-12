@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { BORDER_COLOR } from '../color';
+import { PRIMARY_COLOR, BORDER_COLOR, TERTIARY_BACKGROUND_COLOR } from '../color';
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  padding-left: .5rem;
+`;
 
 export const TextButton = styled.button`
   text-decoration: none;
@@ -8,22 +13,42 @@ export const TextButton = styled.button`
 `;
 
 export const NormalButton = styled.button`
+padding: 5px 16px;
+text-align: center;
+text-decoration: none;
+
+border: 1px solid ${BORDER_COLOR};
+border-radius: 6px;
+`
+
+export const OkButton = styled.button`
+  margin: .2rem;
   padding: 5px 16px;
+  background-color: #2EA44F;
+  color: white;
   text-align: center;
   text-decoration: none;
-
-  border: 1px solid ${BORDER_COLOR};
+  border: none;
   border-radius: 6px;
+  cursor: pointer;
 
   &:hover {
     background: darken(0.5, #2EA44F);
   }
 `;
 
-export const OkButton = styled(NormalButton)`
-  background-color: #2EA44F;
-  color: white;
-
-  border: none;
+export const CommonButton = styled.button`
+  margin: .2rem;
+  padding: 5px 16px;
   border-radius: 6px;
+  text-align: center;
+  background-color: #0000;
+  color: ${PRIMARY_COLOR};
+  border: 1px solid ${BORDER_COLOR};
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${TERTIARY_BACKGROUND_COLOR};
+  }
 `;

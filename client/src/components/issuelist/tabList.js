@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../common/modal';
-import { useOption } from './tabListHook';
 import { ControlValueContext } from '../common/context.js';
 import { Redirect } from 'react-router-dom';
-import { IssueContext, LabelContext, MilestoneContext } from '../common/context';
+import { UsersContext, IssueContext, LabelContext, MilestoneContext } from '../common/context';
 import { sendPutRequest } from '../common/api';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
 import TabBar from '../common/style/tabbar';
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../common/color';
+import useModal from '../common/modalhook';
 
 const OPEN_STRING = "Open";
 const CLOSE_STRING = "Close";
@@ -28,7 +28,10 @@ const ButtonListContainer = styled.div`
 const TabButton = styled.input`
   color: ${SECONDARY_COLOR};
   border: none;
+  outline:none;
   background-color: #0000;
+
+  cursor: pointer;
 
   &:hover {
     color: ${PRIMARY_COLOR};
@@ -71,7 +74,7 @@ const tabList = (props) => {
 };
 
 const MarkAsTab = (props) => {
-  const [onModal, setOnModal] = useState(false);
+  const [onModal, setOnModal] = useModal('mark-as');
   const { issues, setIssues } = useContext(IssueContext);
 
   const sendIssueStateUpdate = async (e) => {
@@ -85,15 +88,15 @@ const MarkAsTab = (props) => {
 
   return (
     <div>
-      <TabButton type="button" value="Mark as ▼" onClick={() => setOnModal(!onModal)} />
-      <Modal onModal={onModal} title="Actions" items={[OPEN_STRING, CLOSE_STRING]} onEvent={sendIssueStateUpdate} />
+      <TabButton className="mark-as" type="button" value="Mark as ▼" onClick={() => setOnModal(!onModal)} />
+      <Modal onModal={onModal} setOnModal={setOnModal} title="Actions" items={[OPEN_STRING, CLOSE_STRING]} onEvent={sendIssueStateUpdate} />
     </div>
   );
 }
 
 const AuthorTab = (props) => {
-  const [onModal, setOnModal] = useState(false);
-  const option = useOption('/user', 'username');
+  const [onModal, setOnModal] = useModal('author');
+  const { users } = useContext(UsersContext);
   const { value, setValue } = useContext(ControlValueContext);
   const [redirect, setRedirect] = useState(false);
 
@@ -106,12 +109,12 @@ const AuthorTab = (props) => {
 
   return (
     <div>
-      <TabButton type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton className="author" type="button" value="Author ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
         setOnModal={setOnModal}
         title="Filter by author"
-        items={option}
+        items={users.map(item => item.username)}
         onEvent={handleModalEvent}
       />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
@@ -120,7 +123,7 @@ const AuthorTab = (props) => {
 };
 
 const LabelTab = (props) => {
-  const [onModal, setOnModal] = useState(false);
+  const [onModal, setOnModal] = useModal('label');
   const {labelState} = useContext(LabelContext);
   const { value, setValue } = useContext(ControlValueContext);
   const [redirect, setRedirect] = useState(false);
@@ -135,9 +138,10 @@ const LabelTab = (props) => {
 
   return (
     <div>
-      <TabButton type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton className="label" type="button" value="Label ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
+        setOnModal={setOnModal}
         title="Filter by label"
         items={['Unlabeled', ...labelState.labels.map(item => item.name)]}
         onEvent={handleModalEvent}
@@ -148,7 +152,7 @@ const LabelTab = (props) => {
 };
 
 const MilestonesTab = (props) => {
-  const [onModal, setOnModal] = useState(false);
+  const [onModal, setOnModal] = useModal('milestone');
   const {milestones} = useContext(MilestoneContext);
   const { value, setValue } = useContext(ControlValueContext);
   const [redirect, setRedirect] = useState(false);
@@ -163,9 +167,10 @@ const MilestonesTab = (props) => {
 
   return (
     <div>
-      <TabButton type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton className="milestone" type="button" value="Milestone ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
+        setOnModal={setOnModal}
         title="Filter by milestone"
         items={['Issues with no milestone', ...milestones.map(item => item.title)]}
         onEvent={handleModalEvent}
@@ -176,8 +181,8 @@ const MilestonesTab = (props) => {
 };
 
 const AssigneeTab = (props) => {
-  const [onModal, setOnModal] = useState(false);
-  const option = useOption('/user', 'username', 'Assigned to nobody');
+  const [onModal, setOnModal] = useModal('assignee');
+  const { users } = useContext(UsersContext);
   const { value, setValue } = useContext(ControlValueContext);
   const [redirect, setRedirect] = useState(false);
 
@@ -191,11 +196,12 @@ const AssigneeTab = (props) => {
 
   return (
     <div>
-      <TabButton type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
+      <TabButton className="assignee" type="button" value="Assignee ▼" onClick={() => setOnModal(!onModal)} />
       <Modal
         onModal={onModal}
+        setOnModal={setOnModal}
         title="Filter by who's assigned"
-        items={option}
+        items={['Assigned to nobody', ...users.map(item => item.username)]}
         onEvent={handleModalEvent}
       />
       {(!redirect)? null : <Redirect to={`/issue?=${encodeURIComponent(redirect).replace(/%20/g, '+')}`}/>}
