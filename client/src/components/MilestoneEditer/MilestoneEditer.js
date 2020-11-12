@@ -12,7 +12,7 @@ import { ButtonContainer, OkButton, CommonButton } from '../common/style/button'
 const MilestoneEditer = ({ match, location }) => {
   const { oldTitle, oldDueDate, oldDescription, isOpen } = location.state;
   const [title, setTitle] = useState(oldTitle);
-  const { dueDate, setDueDate, dateColor } = useDueDate(new Date(oldDueDate));
+  const { dueDate, setDueDate, dateColor } = useDueDate(oldDueDate);
   const [description, setDescription] = useState(oldDescription);
   const [redirect, setRedirect] = useState(false);
 
@@ -21,7 +21,7 @@ const MilestoneEditer = ({ match, location }) => {
   const editMilestone = async () => {
     if (!title.length) return alert('제목을 입력해주세요.');
     if (dateColor === 'red') return alert('유효한 날짜를 입력해주세요.');
-    await sendPutRequest(`/milestone/${id}`, { title, dueDate: dueDate.toISOString().slice(0, 10), description });
+    await sendPutRequest(`/milestone/${id}`, { title, dueDate, description });
     setRedirect(true);
   };
 

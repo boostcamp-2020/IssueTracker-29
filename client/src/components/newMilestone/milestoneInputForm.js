@@ -29,7 +29,7 @@ const MilestoneInputForm = ({ title, setTitle, dueDate, setDueDate, description,
       </div>
       <div>
         <h3>Due date (optional)</h3>
-        <DateInput type="date" value={dueDate? dueDate.toISOString().slice(0, 10) : ''} color={dateColor} onChange={(e) => setDueDate(new Date(e.target.value))} />
+        <DateInput type="date" value={dueDate} color={dateColor} onChange={(e) => setDueDate(e.target.value)} />
       </div>
       <div>
         <h3>Description (optional)</h3>

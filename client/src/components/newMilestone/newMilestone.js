@@ -7,14 +7,14 @@ import { ButtonContainer, OkButton } from '../common/style/button';
 
 const NewMilestone = (props) => {
   const [title, setTitle] = useState('');
-  const { dueDate, setDueDate, dateColor } = useDueDate('');
+  const { dueDate, setDueDate, dateColor } = useDueDate();
   const [description, setDescription] = useState('');
   const [redirect, setRedirect] = useState(false);
 
   const createMilestone = async () => {
     if (!title.length) return alert('제목을 입력해주세요.');
     if (dateColor === 'red') return alert('유효한 날짜를 입력해주세요.');
-    await sendPostRequest('/milestone', {title, dueDate: dueDate.toISOString().slice(0, 10), description});
+    await sendPostRequest('/milestone', {title, dueDate, description});
     setRedirect(true);
   };
 
