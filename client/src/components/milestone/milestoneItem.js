@@ -1,9 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { TextButton } from '../common/style/button';
+import ListItem from '../common/style/listitem';
+import CustomProgress from '../common/style/progress';
 
-const MilestoneItem = ({ milestone }) => {
+const MilestoneItemContainer = styled(ListItem)`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const OptionContainer = styled.div`
+  & > * {
+    margin: .5rem;
+  }
+`;
+
+const DeleteButtonContainer = styled(TextButton)`
+  color: red;
+`;
+
+const MilestoneItem = (props) => {
+  const milestone = props.milestone;
   return (
-    <div>
+    <MilestoneItemContainer>
       <div>
         <h2>{milestone.title}</h2>
         <p>{milestone.due_date === null ?
@@ -13,23 +33,20 @@ const MilestoneItem = ({ milestone }) => {
         <p>{milestone.description}</p>
       </div>
       <div>
-        <div>{/* 여기서 flex를 주고, 각 칸의 길이를 조절해서 퍼센티지를 조정합니다 */}
-          <span></span>
-          <span></span>
-        </div>
-        <div>
+        <CustomProgress percentage={Math.random() * 50}/>
+        <OptionContainer>
           <Link to={{pathname: `/milestone/${milestone.id}`, state: {
             oldTitle: milestone.title,
             oldDueDate: new Date(milestone.due_date).toISOString().slice(0, 10),
             oldDescription: milestone.description,
             isOpen: milestone.is_open,
-          }
+            }
           }}>Edit</Link>
           <span>{milestone.is_open? 'Close' : 'Open'}</span>
-          <span>Delete</span>
-        </div>
+          <DeleteButtonContainer onClick={() => props.onDelete()}>Delete</DeleteButtonContainer>
+        </OptionContainer>
       </div>
-    </div>
+    </MilestoneItemContainer>
   )
 }
 

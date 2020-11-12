@@ -1,13 +1,23 @@
 import React from 'react';
+import styled from 'styled-components';
+import { SECONDARY_COLOR } from '../common/color';
+import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 
-import MilestoneLogo from './milestoneLogo';
+const MilestoneContainer = styled.div`
+  display: flex;
+  margin: 0px 5px;
+`;
+
+const MilestoneTitleContainer = styled.p`
+  margin: 0px;
+`;
 
 const MilestoneViewer = (props) => {
   return (
-    <div>
-      <MilestoneLogo />
-      <p>{props.milestone_title}</p>
-    </div>
+    <MilestoneContainer>
+      <MilestoneIcon color={SECONDARY_COLOR}/>
+      <MilestoneTitleContainer>{props.milestone_title}</MilestoneTitleContainer>
+    </MilestoneContainer>
   )
 };
 

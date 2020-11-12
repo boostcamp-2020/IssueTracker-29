@@ -7,13 +7,14 @@ import Issue from "./components/issuelist/issuelist.js";
 import Label from './components/labellist/labellist.js';
 import NewIssue from "./components/newIssue/newIssue.js";
 import IssueDetail from "./components/issueDetail/issueDetail.js";
-import { IssueContext, LabelContext, MilestoneContext, UserContext } from "./components/common/context.js";
+import { IssueContext, LabelContext, MilestoneContext, UserContext, UsersContext } from "./components/common/context.js";
 import asyncLabelWrapper from './wrapper/label';
 import { reducer as labelReducer} from './reducer/label';
 import MilestoneList from "./components/milestone/milestoneList.js";
 import NewMilestone from "./components/newMilestone/newMilestone.js";
 import MilestoneEditer from './components/MilestoneEditer/MilestoneEditer.js';
 import { sendGetRequest } from "./components/common/api.js";
+import { useUsers } from './components/issuelist/issueHook';
 
 const ResetStyle = createGlobalStyle`
   body {
@@ -35,6 +36,7 @@ const App = () => {
   const [labelState, labelDispatch] = useReducer(labelReducer, {labels: []});
   const asyncLabelDispatch = asyncLabelWrapper(labelDispatch);
 
+  const [users, setUsers] = useUsers();
   const [user, setUser] = useState(true);
 
   const putUserInState = async () => {
@@ -61,11 +63,13 @@ const App = () => {
             <LabelContext.Provider value={{labelState, labelDispatch: asyncLabelDispatch}}>
               <MilestoneContext.Provider value={{milestones, setMilestones}}>
                 {redirect}
-                <Switch>
-                  <Route exact path="/issue/create" component={NewIssue}/>
-                  <Route exact path="/issue/:id" component={IssueDetail} />
-                  <Route exact path="/issue" component={Issue}/>
-                </Switch>
+                  <UsersContext.Provider value={{users, setUsers}}>
+                  <Switch>
+                    <Route exact path="/issue/create" component={NewIssue}/>
+                    <Route exact path="/issue/:id" component={IssueDetail} />
+                    <Route exact path="/issue" component={Issue}/>
+                  </Switch>
+                  </UsersContext.Provider>
                 <Route exact path='/label' component={Label}/>
                 <Route exact path="/" component={Login}/>
                 <Switch>

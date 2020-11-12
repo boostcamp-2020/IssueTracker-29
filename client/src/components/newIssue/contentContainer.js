@@ -91,14 +91,31 @@ const Content = (props) => {
 
 
 
+    const [clear, setClear] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
+
     useEffect( () => {
-        const timeout = setTimeout( () => {
-            setTimeCheck(true);
-            setTimeout( () => {
+        if (timeCheck) {
+            clearTimeout(clear)
+            setClear(setTimeout(() => {
                 setTimeCheck(false);
-            }, 2000);
+            }, 2000));
+            
+            return;
+        }
+        const timeout = (!isLoaded) ? null : setTimeout( () => {
+            setTimeCheck(true);
+            setClear(setTimeout( () => {
+                setTimeCheck(false);
+            }, 2000));
         }, 2000);
-        return () => clearTimeout(timeout);
+
+        setIsLoaded(true);
+        
+        return () => {
+            clearTimeout(timeout)
+            clearTimeout(clear);
+        };
     }, [content]);
 
     useEffect( () => {
@@ -153,7 +170,7 @@ const Content = (props) => {
                 <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
             </ContentWrap>
             
-            <ImageFileBoxLabel for="file">Attach files by selecting here</ImageFileBoxLabel>
+            <ImageFileBoxLabel htmlFor="file">Attach files by selecting here</ImageFileBoxLabel>
             <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
             
             <ButtonContainer>

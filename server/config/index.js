@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
-dotenv.config({ path: "config/.env" });
+
+dotenv.config({ path: 'config/.env' });
 
 const {
   DB_USER,
@@ -11,6 +12,7 @@ const {
   GITHUB_OAUTH_SECRET,
   GITHUB_OAUTH_CALLBACK,
 } = process.env;
+
 const config = {
   development: {
     username: DB_USER,
@@ -29,6 +31,11 @@ const config = {
     database: DB_NAME,
     host: DB_HOST,
     dialect: 'mysql',
+    secretKey: JWT_SECRET_KEY,
+    githubOauthClientID: GITHUB_OAUTH_CLIENTID,
+    githubOauthSecret: GITHUB_OAUTH_SECRET,
+    githubOauthCallback: GITHUB_OAUTH_CALLBACK,
   },
 };
+
 module.exports = config;

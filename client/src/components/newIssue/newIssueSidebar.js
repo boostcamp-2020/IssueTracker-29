@@ -2,7 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import SvgSettingsLogo from '../common/svgSettingsLogo.js';
 import { useAssignees, useLabels, useMilestones, useIssueAssignees, useIssueLabels } from '../common/issueSideBarHook';
-import IssueSideBarModal from '../common/issueSideBarModal';
+// import IssueSideBarModal from '../common/issueSideBarModal';
+import Modal from '../common/modal';
 import { ControlValueContext, LabelContext, AssigneesContext } from '../common/context.js';
 import NewIssueSidebarItem from './newIssueSidebarItem';
 import LabelItem from '../common/labelItem';
@@ -79,8 +80,9 @@ const AssigneesModal = (props) => {
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
             {newAssigneesComponent}
-            <IssueSideBarModal
+            <Modal
                 onModal={onModal}
+                setOnModal={setOnModal}
                 title="Assign up to 10 people to this issue"
                 items={assigneesComponent}
             />
@@ -103,8 +105,9 @@ const LabelsModal = (props) => {
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
             {newLabelsComponent ? <div>{newLabelsComponent}</div> : <div>No Labels</div>}
-            <IssueSideBarModal
+            <Modal
                 onModal={onModal}
+                setOnModal={setOnModal}
                 title="Apply labels to this issue"
                 items={labelsComponent}
             />
@@ -132,8 +135,9 @@ const MilestonesModal = (props) => {
             <SvgSettingsLogo toggle={toggleModal} />
             {/* {milestoneTitle ? <div>{milestoneTitle}</div> : <div>No milestone</div>} */}
             {props.newMilestone.title}
-            <IssueSideBarModal
+            <Modal
                 onModal={onModal}
+                setOnModal={setOnModal}
                 title="Set milestone"
                 items={milestonesComponent}
             />

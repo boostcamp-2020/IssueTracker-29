@@ -14,7 +14,7 @@ const useMilestones = () => {
     putMilestonesInState(setMilestones);
   }, []);
 
-  return milestones;
+  return [milestones, setMilestones];
 }
 
 const useDueDate = (date = null) => {
@@ -23,11 +23,12 @@ const useDueDate = (date = null) => {
 
   useEffect(() => {
     verifyDate(dueDate);
-  }, [dueDate])
+  }, [dueDate]);
 
-  const verifyDate = (dueDate) => {
-    if(!dueDate) return;
+  const verifyDate = (date) => {
+    if(!date) return;
     const current = new Date();
+    const dueDate = new Date(date);
     if (current.getFullYear() > dueDate.getFullYear() || current.getMonth() > dueDate.getMonth() || current.getDate() > dueDate.getDate())
       setDateColor('red');
     else
