@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import SvgSettingsLogo from './svgSettingsLogo.js';
-import { useAssignees, useLabels, useMilestones, useIssueAssignees, useIssueLabels } from './issueSideBarHook';
-import Modal from './modal';
-import useModal from './modalhook';
-import { ControlValueContext } from './context.js';
-import { Redirect } from 'react-router-dom';
-import SideBarItem from './sideBarItem.js';
-import LabelItem from './labelItem';
+import SvgSettingsLogo from '../common/svgSettingsLogo.js';
+import { useAssignees, useLabels, useMilestones, useIssueAssignees, useIssueLabels } from '../common/issueSideBarHook';
+// import IssueSideBarModal from '../common/issueSideBarModal';
+import Modal from '../common/modal';
+import { ControlValueContext, LabelContext, AssigneesContext } from '../common/context.js';
+import NewIssueSidebarItem from './newIssueSidebarItem';
+import LabelItem from '../common/labelItem';
+
 
 const IssueSideBar = styled.div`
     width: 30%;
@@ -67,20 +67,19 @@ const AssgineesBox = styled.div`
 `;
 
 const AssigneesModal = (props) => {
-    const [onModal, setOnModal] = useModal('assignee');
+    const [onModal, setOnModal] = useState(false);
     const assignees = useAssignees();
-    const issueAssignees = useIssueAssignees(props.issue_id);
 
-    const assigneesNameComponent = issueAssignees.map(item => <AssgineesBox><ProfileBox src={item.profile} /><div>{item.username}</div></AssgineesBox>)
-    const [selectedAssignees, setSelectedAssignees] = useState([]);
+    const assigneesComponent = assignees.map(item => <NewIssueSidebarItem key={item.id} user={item} username={item.username} profile={item.profile} newAssignees={props.newAssignees} setNewAssignees={props.setNewAssignees} />)
 
-    const assigneesComponent = assignees.map(item => <SideBarItem key={item.id} username={item.username} profile={item.profile} selectedAssignees={selectedAssignees} setSelectedAssignees={setSelectedAssignees}/>)
+    const filteredNewAssignees = assignees.filter(item => props.newAssignees.includes(item.id));
+    const newAssigneesComponent = filteredNewAssignees.map(item => <AssgineesBox><ProfileBox src={item.profile} /><div>{item.username}</div></AssgineesBox>);
 
     const toggleModal = () => setOnModal(!onModal);
     return (
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
-            {assigneesNameComponent}
+            {newAssigneesComponent}
             <Modal
                 onModal={onModal}
                 setOnModal={setOnModal}
@@ -92,19 +91,19 @@ const AssigneesModal = (props) => {
 };
 
 const LabelsModal = (props) => {
-    const [onModal, setOnModal] = useModal('label');
+    const [onModal, setOnModal] = useState(false);
     const labels = useLabels();
 
-    const issueLabels = useIssueLabels(props.issue_id);
-    const labelsListComponent = issueLabels.map(item => <LabelItem key={item.id} label={item}/>)
+    const labelsComponent = labels.map(item => <NewIssueSidebarItem key={item.id} label={item} name={item.name} description={item.description} color={item.color} newLabels={props.newLabels} setNewLabels={props.setNewLabels} />)
 
-    const labelsComponent = labels.map(item => <SideBarItem key={item.id} name={item.name} description={item.description} color={item.color}/>)
+    const filteredNewLabels = labels.filter(item => props.newLabels.includes(item.id));
+    const newLabelsComponent = filteredNewLabels.map(item => <LabelItem key={item.id} label={item} />)
 
     const toggleModal = () => setOnModal(!onModal)
     return (
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
-            {labelsListComponent}
+            {newLabelsComponent ? <div>{newLabelsComponent}</div> : <div>No Labels</div>}
             <Modal
                 onModal={onModal}
                 setOnModal={setOnModal}
@@ -116,19 +115,17 @@ const LabelsModal = (props) => {
 };
 
 const MilestonesModal = (props) => {
-    const [onModal, setOnModal] = useModal('milestone');
+    const [onModal, setOnModal] = useState(false);
     const milestones = useMilestones();
 
-    const [milestoneTitle, setMilestoneTitle] = useState(props.issue.milestone_title);
-    useEffect(() => {setMilestoneTitle(props.issue.milestone_title)}, [props.issue.milestone_title]);
-
-    const milestonesComponent = milestones.map(item => <SideBarItem key={item.id} id={item.id} title={item.title} due_date={item.due_date} issue_id={props.issue_id} setMilestoneTitle={setMilestoneTitle}/>)
+    const milestonesComponent = milestones.map(item => <NewIssueSidebarItem key={item.id} id={item.id} milestone={item} title={item.title} due_date={item.due_date} newMilestone={props.newMilestone} setNewMilestone={props.setNewMilestone} />)
 
     const toggleModal = () => setOnModal(!onModal)
     return (
         <div>
             <SvgSettingsLogo toggle={toggleModal} />
-            {milestoneTitle ? <div>{milestoneTitle}</div> : <div>No milestone</div>}
+            {/* {milestoneTitle ? <div>{milestoneTitle}</div> : <div>No milestone</div>} */}
+            {props.newMilestone.title}
             <Modal
                 onModal={onModal}
                 setOnModal={setOnModal}
@@ -139,26 +136,26 @@ const MilestonesModal = (props) => {
     );
 };
 
-const IssueDetailSideBar = (props) => {
+const NewIssueDetailSideBar = (props) => {
     return (
         <>
             <IssueSideBar>
                 <AssigneesContainer>
                     <AssigneesHeader>
-                            <h3>Assignees</h3>
-                            <AssigneesModal issue_id={props.issue_id} issue={props.issue} />
+                        <h3>Assignees</h3>
+                        <AssigneesModal newAssignees={props.newAssignees} setNewAssignees={props.setNewAssignees} />
                     </AssigneesHeader>
                 </AssigneesContainer>
                 <LabelsContainer>
                     <LabelsHeader>
                         <h3>Labels</h3>
-                        <LabelsModal issue_id={props.issue_id} issue={props.issue} />
+                        <LabelsModal newLabels={props.newLabels} setNewLabels={props.setNewLabels} />
                     </LabelsHeader>
                 </LabelsContainer>
                 <MilestoneContainer>
                     <MilestoneHeader>
                         <h3>Milestone</h3>
-                        <MilestonesModal issue_id={props.issue_id} issue={props.issue} />
+                        <MilestonesModal newMilestone={props.newMilestone} setNewMilestone={props.setNewMilestone} />
                     </MilestoneHeader>
                 </MilestoneContainer>
             </IssueSideBar>
@@ -166,4 +163,4 @@ const IssueDetailSideBar = (props) => {
     )
 }
 
-export default IssueDetailSideBar;
+export default NewIssueDetailSideBar;

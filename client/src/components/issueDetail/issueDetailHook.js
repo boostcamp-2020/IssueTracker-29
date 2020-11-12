@@ -48,20 +48,4 @@ const useIssueDetailComments = (id) => {
   return [comments, setComments];
 }
 
-// const getUsers = async (setUsers) => {
-//   const users = await sendGetRequest(`/user`);
-
-//   setUsers(users);
-// }
-
-// const useUsers = () => {
-//   const [users, setUsers] = useState([]);
-
-//   useEffect(() => {
-//     getUsers(setUsers);
-//   }, []);
-
-//   return [users, setUsers];
-// }
-
 export { useIssueDetail, useIssueDetailLabels, useIssueDetailComments };

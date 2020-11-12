@@ -63,13 +63,13 @@ const App = () => {
             <LabelContext.Provider value={{labelState, labelDispatch: asyncLabelDispatch}}>
               <MilestoneContext.Provider value={{milestones, setMilestones}}>
                 {redirect}
-                <Switch>
                   <UsersContext.Provider value={{users, setUsers}}>
+                  <Switch>
                     <Route exact path="/issue/create" component={NewIssue}/>
                     <Route exact path="/issue/:id" component={IssueDetail} />
                     <Route exact path="/issue" component={Issue}/>
+                  </Switch>
                   </UsersContext.Provider>
-                </Switch>
                 <Route exact path='/label' component={Label}/>
                 <Route exact path="/" component={Login}/>
                 <Switch>
