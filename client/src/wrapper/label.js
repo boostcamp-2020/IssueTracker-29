@@ -15,7 +15,7 @@ const asyncLabelWrapper = (dispatch) => async (action) => {
     case DELETE_LABEL: {
       const res = await sendDeleteRequest(`/label/${action.payload.id}`);
       if (res && res.success) {
-        dispatch({type: DELETE_LABEL, payload: {id: action.paydload.id}});
+        dispatch({type: DELETE_LABEL, payload: {id: action.payload.id}});
       }
       break;
     }
