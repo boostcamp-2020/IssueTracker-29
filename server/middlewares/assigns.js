@@ -2,8 +2,8 @@ const db = require('../models/connection');
 const { CREATE_ASSIGNS, READ_ASSIGNS_BY_ID, DELETE_ASSIGNS } = require('../models/query');
 
 const createAssigns = async (req, res) => {
-  const { issueID } = req.params;
-  const userID = req.user.id;
+  const { issueid: issueID } = req.params;
+  const { userid: userID } = req.body;
   if (!issueID) {
     return res.status(403).json({ success: false, message: '없는 이슈입니다.' });
   }
