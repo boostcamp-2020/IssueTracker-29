@@ -3,6 +3,7 @@ const issueMiddleware = require('../middlewares/issue');
 const commentMiddleware = require('../middlewares/comment');
 const labelMiddleware = require('../middlewares/label');
 const assignsMiddleware = require('../middlewares/assigns');
+const milestoneMiddleware = require('../middlewares/milestone');
 
 const router = express.Router();
 
@@ -24,5 +25,7 @@ router.delete('/:issueid/label/:labelid', labelMiddleware.deleteLabelInIssue);
 
 router.get('/:issueid/assigns', assignsMiddleware.readAssignsById);
 router.post('/:issueid/assigns', assignsMiddleware.createAssigns);
+
+router.put('/:issueid/milestone/:milestoneid', milestoneMiddleware.updateIssueMilestone);
 
 module.exports = router;

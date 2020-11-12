@@ -1,5 +1,5 @@
 const db = require('../models/connection');
-const { CREATE_MILESTONE, READ_MILESTONE, UPDATE_MILESTONE, DELETE_MILESTONE, READ_ISSUE_BY_MILESTONE, CREATE_ISSUE_BY_MILESTONE, UPDATE_MILESTONE_STATE, READ_ALL_MILESTONE } = require('../models/query');
+const { CREATE_MILESTONE, READ_MILESTONE, UPDATE_MILESTONE, DELETE_MILESTONE, READ_ISSUE_BY_MILESTONE, CREATE_ISSUE_BY_MILESTONE, UPDATE_MILESTONE_STATE, READ_ALL_MILESTONE, UPDATE_MILESTONE_IN_ISSUE } = require('../models/query');
 
 const readMilestone = async (req, res) => {
     const { state: isOpen } = req.params;
@@ -62,4 +62,13 @@ const readAllMilestone = async (req, res) => {
   return res.json({ success: true, result });
 };
 
-module.exports = { readMilestone, createMilestone, updateMilestone, deleteMilestone, readIssueByMilestone, createIssueByMilestone, updateMilestoneState, readAllMilestone };
+const updateIssueMilestone = async (req, res) => {
+    const { issueid: issueID, milestoneid: milestoneID } = req.params;
+
+    const a = await db(UPDATE_MILESTONE_IN_ISSUE, [milestoneID, issueID]);
+    console.log(a)
+
+    return res.status(200).json({ success: true });    
+};
+
+module.exports = { readMilestone, createMilestone, updateMilestone, deleteMilestone, readIssueByMilestone, createIssueByMilestone, updateMilestoneState, readAllMilestone, updateIssueMilestone };

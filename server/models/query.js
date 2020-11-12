@@ -22,7 +22,7 @@ module.exports = {
   CREATE_ISSUE: 'insert into issue(title, is_open, user_id, milestone_id, changed_at, created_at) values(?, ?, ?, ?, ?, ?);',
   UPDATE_ISSUE_STATE: 'update issue set is_open = ?, changed_at = ? where id in (?);',
 
-  READ_ISSUE_BY_ID: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, created_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id where issue.id = ?',
+  READ_ISSUE_BY_ID: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, created_at, milestone_id, username, milestone.title as milestone_title, milestone.due_date from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id where issue.id = ?',
   UPDATE_ISSUE: 'update issue set title = ? where id = ?;',
   DELETE_ISSUE: 'delete from issue where id = ?;',
 
@@ -38,8 +38,9 @@ module.exports = {
   READ_ISSUE_BY_MILESTONE: `select id, title, contents, user_id, (select count(*) from issue where is_open=1 AND milestone_id = ?) as openCount, (select count(*) from issue where is_open=0 AND milestone_id = ?) as closeCount
   from issue where milestoneid = ? AND is_open = 1;`,
   CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?);',
+  UPDATE_MILESTONE_IN_ISSUE: 'update issue set milestone_id = ? where id = ?;',
 
   CREATE_ASSIGNS: 'insert into assigns(user_id, issue_id) value(?,?);',
-  READ_ASSIGNS_BY_ID: 'select id, user_id, issue_id from assigns where issue_id = ?;',
+  READ_ASSIGNS_BY_ID: 'select assigns.id, assigns.user_id, assigns.issue_id, user.username, user.profile from assigns join user on assigns.user_id = user.id where issue_id = ?;',
   DELETE_ASSIGNS: 'delete from assigns where id = ?;',
 }

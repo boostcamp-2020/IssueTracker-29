@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { sendPutRequest, sendGetRequest } from './api';
 
 const SideBarContainer = styled.div`
-    width: 80%;
+    width: 100%;
     // height: 50px;
 `;
 
@@ -20,25 +21,38 @@ const ProfileBox = styled.img`
     border: 1px solid black;
 `;
 
-const sideBarItem = (props) => {
+const FlexWrap = styled.div`
+    display: flex;
+`;
+
+const SideBarItem = (props) => {
+  const updateMilestone = async () => {
+      const res = await sendPutRequest(`/issue/${props.issue_id}/milestone/${props.id}`);
+      if (res && res.success) {
+          const issue = await sendGetRequest(`/issue/${props.issue_id}`);
+          props.setMilestoneTitle(issue.milestone_title);
+      }
+  }
   return (
     <SideBarContainer>
         {props.username ?
-            <>
+            <FlexWrap>
                 <ProfileBox src={props.profile} />
                 <div>{props.username}</div>
-            </>
+            </FlexWrap>
         : null}
         {props.name ? 
             <>
-                <ColorBox color={props.color} />
-                <div>{props.name}</div>
+                <FlexWrap>
+                    <ColorBox color={props.color} />
+                    <div>{props.name}</div>
+                </FlexWrap>
                 <div>{props.description}</div>
             </>
         : null}
-        {props.title ? <p>{props.title}</p> : null}
+        {props.title ? <><p onClick={updateMilestone}>{props.title}</p><p>Due by {new Date(props.due_date).toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p></> : null}
     </SideBarContainer>
   )
 }
 
-export default sideBarItem;
+export default SideBarItem;

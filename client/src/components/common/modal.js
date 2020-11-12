@@ -29,7 +29,7 @@ const ModalContainer = styled.div`
 const Modal = ({ title, items, onModal, setOnModal, onEvent }) => {
 
   const handleModalEvent = (e) => {
-    onEvent(e);
+    if (onEvent) onEvent(e);
     setOnModal(false);
   };
 
