@@ -21,7 +21,7 @@ const NewMilestone = (props) => {
     <div>
       <div>
         <h2>New Milestone</h2>
-        Create a new milestone to help organize your issues and pull requests. Learn more about milestones and issues.
+        Create a new milestone to help organize your issues and pull requests. Learn more about <a href="https://guides.github.com/features/issues/">milestones and issues</a>.
       </div>
       <hr />
       <MilestoneInputForm setTitle={setTitle} setDueDate={setDueDate} setDescription={setDescription} dateColor={dateColor} />
