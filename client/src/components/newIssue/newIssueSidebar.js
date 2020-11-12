@@ -69,7 +69,7 @@ const AssgineesBox = styled.div`
 const AssigneesModal = (props) => {
     const [onModal, setOnModal] = useState(false);
     const assignees = useAssignees();
-    // const [newAssignees, setNewAssignees] = useState([]);
+
     const assigneesComponent = assignees.map(item => <NewIssueSidebarItem key={item.id} user={item} username={item.username} profile={item.profile} newAssignees={props.newAssignees} setNewAssignees={props.setNewAssignees} />)
 
     const filteredNewAssignees = assignees.filter(item => props.newAssignees.includes(item.id));
@@ -93,7 +93,6 @@ const AssigneesModal = (props) => {
 const LabelsModal = (props) => {
     const [onModal, setOnModal] = useState(false);
     const labels = useLabels();
-    // const [newLabels, setNewLabels] = useState([]);
 
     const labelsComponent = labels.map(item => <NewIssueSidebarItem key={item.id} label={item} name={item.name} description={item.description} color={item.color} newLabels={props.newLabels} setNewLabels={props.setNewLabels} />)
 
@@ -118,16 +117,8 @@ const LabelsModal = (props) => {
 const MilestonesModal = (props) => {
     const [onModal, setOnModal] = useState(false);
     const milestones = useMilestones();
-    // const [newMilestone, setNewMilestone] = useState("");
 
     const milestonesComponent = milestones.map(item => <NewIssueSidebarItem key={item.id} id={item.id} milestone={item} title={item.title} due_date={item.due_date} newMilestone={props.newMilestone} setNewMilestone={props.setNewMilestone} />)
-
-    // const filteredNewMilestone = milestones.filter(item => newMilestone.id === item.id);
-    // const newMilestoneComponent = filteredNewMilestone
-    // console.log(filteredNewMilestone);
-    // console.log(newMilestone)
-    // const [milestoneTitle, setMilestoneTitle] = useState(props.issue.milestone_title);
-    // useEffect(() => {setMilestoneTitle(props.issue.milestone_title)}, [props.issue.milestone_title]);
 
     const toggleModal = () => setOnModal(!onModal)
     return (
