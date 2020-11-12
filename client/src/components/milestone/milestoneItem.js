@@ -1,10 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import ListItem from '../common/style/listitem';
 import CustomProgress from '../common/style/progress';
+
+const MilestoneItemContainer = styled(ListItem)`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const MilestoneItem = ({ milestone }) => {
   return (
-    <div>
+    <MilestoneItemContainer>
       <div>
         <h2>{milestone.title}</h2>
         <p>{milestone.due_date === null ?
@@ -27,7 +34,7 @@ const MilestoneItem = ({ milestone }) => {
           <span>Delete</span>
         </div>
       </div>
-    </div>
+    </MilestoneItemContainer>
   )
 }
 

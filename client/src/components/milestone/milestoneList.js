@@ -7,6 +7,8 @@ import { LabelLink, LabelMilestoneNav, MilestoneLink, NewItemLink } from '../com
 import LabelIcon from '../common/icon/svgLabelIcon';
 import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 import { PRIMARY_COLOR } from '../common/color';
+import TabBar from '../common/style/tabbar';
+import TabButton from './tabbutton';
 
 const TabTopbarDiv = styled.div`
   margin-top: 32px;
@@ -18,7 +20,12 @@ const TabTopbarDiv = styled.div`
 const MilestoneList = (props) => {
   const milestones = useMilestones();
 
-  const milestoneItemComponent = milestones.map((item) => <MilestoneItem milestone={item}/>);
+  const [isOpenMode, setIsOpenMode] = useState(true);
+
+  const numOpenMilestone = milestones.filter(item => item.is_open === 1).length;
+
+  const milestoneItemComponent = isOpenMode ? milestones.filter((item) => item.is_open).map((item) => <MilestoneItem key={item.id} milestone={item}/>)
+                                  : milestones.filter((item) => !item.is_open).map((item) => <MilestoneItem key={item.id} milestone={item}/>)
   return (
     <div>
       <TabTopbarDiv>
@@ -28,6 +35,9 @@ const MilestoneList = (props) => {
         </LabelMilestoneNav>
         <NewItemLink to="/milestone/create">New milestone</NewItemLink>
       </TabTopbarDiv>
+      <TabBar>
+        <TabButton isOpen={isOpenMode} setIsOpen={setIsOpenMode} numOpen={numOpenMilestone} numClose={milestones.length - numOpenMilestone}/>
+      </TabBar>
       <div>
         {milestoneItemComponent}
       </div>
