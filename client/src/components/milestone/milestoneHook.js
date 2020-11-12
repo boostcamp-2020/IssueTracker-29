@@ -14,7 +14,7 @@ const useMilestones = () => {
     putMilestonesInState(setMilestones);
   }, []);
 
-  return milestones;
+  return [milestones, setMilestones];
 }
 
 const useDueDate = (date = null) => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { TextButton } from '../common/style/button';
 import ListItem from '../common/style/listitem';
 import CustomProgress from '../common/style/progress';
 
@@ -9,7 +10,12 @@ const MilestoneItemContainer = styled(ListItem)`
   justify-content: space-between;
 `;
 
-const MilestoneItem = ({ milestone }) => {
+const DeleteButtonContainer = styled(TextButton)`
+  color: red;
+`;
+
+const MilestoneItem = (props) => {
+  const milestone = props.milestone;
   return (
     <MilestoneItemContainer>
       <div>
@@ -31,7 +37,7 @@ const MilestoneItem = ({ milestone }) => {
           }
           }}>Edit</Link>
           <span>{milestone.is_open? 'Close' : 'Open'}</span>
-          <span>Delete</span>
+          <DeleteButtonContainer onClick={() => props.onDelete()}>Delete</DeleteButtonContainer>
         </div>
       </div>
     </MilestoneItemContainer>

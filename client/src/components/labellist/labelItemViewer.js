@@ -14,7 +14,7 @@ const LabelItemViewer = (props) => {
       <p>{props.label.description}</p>
       <div>
         <button onClick={() => labelDispatch({type: TOGGLE_ISEDIT, payload: {id: props.label.id}})}>Edit</button>
-        <button onClick={null}>Delete</button>
+        <button onClick={() => props.onDelete()}>Delete</button>
       </div>
     </LabelItemContainer>
   )
