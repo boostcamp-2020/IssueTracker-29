@@ -19,7 +19,7 @@ module.exports = {
   CREATE_LABEL_IN_ISSUE: 'insert into label_issue(label_id, issue_id) values(?, ?);',
   DELETE_LABEL_IN_ISSUE: 'delete from label_issue where label_id = ? and issue_id = ?;',
 
-  READ_ALL_ISSUE: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, created_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id;',
+  READ_ALL_ISSUE: 'select issue.id, issue.title as issue_title, issue.is_open, issue.user_id, changed_at, created_at, milestone_id, username, milestone.title as milestone_title from (issue join user on issue.user_id = user.id) left outer join milestone on issue.milestone_id = milestone.id order by issue.id;',
   CREATE_ISSUE: 'insert into issue(title, is_open, user_id, milestone_id, changed_at, created_at) values(?, ?, ?, ?, ?, ?);',
   UPDATE_ISSUE_STATE: 'update issue set is_open = ?, changed_at = ? where id in (?);',
 
