@@ -6,6 +6,7 @@ module.exports = {
   
   CREATE_USER: 'insert into user(is_auth, username, profile) values(?, ?, ?);',
   READ_ALL_USER: 'select id, username, profile from user;',
+  READ_USER_BY_ID: 'select id, username, profile from user where id = ?;',
   READ_USER: 'select id, is_auth, username, password, profile from user where username = ?;',
 
   CREATE_LABEL: 'insert into label(name, description, color) values(?, ?, ?);',

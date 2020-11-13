@@ -15,8 +15,11 @@ const COLOR_SETTINGS = '#959da5';
 const IssueBody = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 90%;
-  border: 1px solid #d1d5da;
+  width: 100%;
+`;
+
+const NewIssueBody = styled.div`
+  width: 100%;
 `;
 
 const IssueDetail = ({ match }) => {
@@ -45,7 +48,9 @@ const IssueDetail = ({ match }) => {
         <IssueDetailContent comments={commentComponent} id={issue.id} />
         <IssueSideBar settingsIcon={svgSettingsIcon} labels={labelComponent} issue_id={id} issue={issue} />
       </IssueBody>
-      <IssueDetailCommentInput issue={issue} setIssue={setIssue} comments={comments} setComments={setComments}/>
+      <NewIssueBody>
+        <IssueDetailCommentInput issue={issue} setIssue={setIssue} comments={comments} setComments={setComments}/>
+      </NewIssueBody>
     </>
   );
 };

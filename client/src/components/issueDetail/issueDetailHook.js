@@ -48,4 +48,19 @@ const useIssueDetailComments = (id) => {
   return [comments, setComments];
 }
 
-export { useIssueDetail, useIssueDetailLabels, useIssueDetailComments };
+const getUserById = async (setUser, id) => {
+  const user = await sendGetRequest(`/user/${id}`);
+
+  setUser(user);
+}
+
+const useUser = (id) => {
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    getUserById(setUser, id);
+  }, []);
+  return user;
+}
+
+export { useIssueDetail, useIssueDetailLabels, useIssueDetailComments, useUser };

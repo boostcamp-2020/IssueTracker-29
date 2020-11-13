@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { ISSUE_CLOSE, ISSUE_OPEN } from '../../../util/config';
 import { BASE_API_URL } from '../../../util/config';
 import { sendPutRequest, sendPostRequest, sendImagePostRequest, sendGetRequest } from '../common/api';
+import SvgCloseLogo from '../common/icon/svgCloseLogo';
+import SvgOpenLogo from '../common/icon/svgOpenLogo';
+import { UserContext } from '../common/context';
+import { useUser } from './issueDetailHook';
 
+const COLOR_SUCCESS = "#22863a";
+const COLOR_DANGER = "#cb2431";
 
 const IssueCommentInput = styled.textarea`
     margin-top: 50px;
-    height: 200px;
-    width: 100%;
+    width: 97%;
+    height: 80%;
 `;
 
 const ButtonContainer = styled.div`
     display: flex;
+    margin-top: 50px;
+    justify-content: flex-end;
 `;
 
 const ContentWrap = styled.div`
-    width: 300px;
-    height: auto;
-    position: relative;
-    display: inline-block;
+    width: 90%;
+    height: 200px;
 `;
 
 const TextCountSpan = styled.span`
@@ -40,9 +46,52 @@ const ImageFileBoxInput = styled.input`
     clip: rect(0, 0, 0, 0);
 `;
 
-const CloseIssueButton = styled.button``;
+const SvgContainer = styled.div``;
 
-const CommentIssueButton = styled.button``;
+const MsgContainer = styled.div`
+    color: black;
+    margin-top: 3px;
+`;
+
+const ToggleButtonContainer = styled.div`
+    display: flex;
+    padding: 10px;
+    margin-right: 10px;
+    color: #24292E;
+    background-color: #FAFBFC;
+    border: 1px #e1e4e8 solid;
+    border-radius: 5px;
+    cursor: default;
+`;
+
+const CommentIssueButton = styled.button`
+    padding: 10px 20px;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-weight: 600;
+    background: #2ea44f;
+    border-radius: 5px;
+`;
+
+const NewCommentContainer = styled.div`
+    width: 70%;
+    margin-right: 10px;
+`;
+
+const ProfileBox = styled.img`
+  width: 50px;
+  height: 50px;
+  src: ${props => props.src};
+  border-radius: 10px;
+  margin-right: 20px;
+`;
+
+const NewCommentWrap = styled.div``;
+
+const CommentWrap = styled.div`
+    display: flex;
+`;
 
 function convertMarkDownImage(imageFileName, imageURL) {
     return `![${imageFileName}](${imageURL})`;
@@ -57,6 +106,9 @@ const IssueDetailCommentInput = (props) => {
 
     const [clear, setClear] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+
+    const user = useContext(UserContext);
+    const userInfo = useUser(user.id);
 
     useEffect( () => {
         if (timeCheck) {
@@ -131,19 +183,29 @@ const IssueDetailCommentInput = (props) => {
     }
 
     return (
-        <>
-            <ContentWrap>
-              <IssueCommentInput placeholder="Leave a comment" value={commentContent} onChange={onChange} />
-              <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
-            </ContentWrap>
-            <ImageFileBoxLabel htmlFor="file">Attach files by selecting here</ImageFileBoxLabel>
-            <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput>
-            
+        <NewCommentContainer>
+            <NewCommentWrap>
+                <CommentWrap>
+                    <ProfileBox src={userInfo.profile} />
+                    <ContentWrap>
+                        <IssueCommentInput placeholder="Leave a comment" value={commentContent} onChange={onChange} />
+                        <TextCountSpan timeCheck={timeCheck}>{characterCount} characters</TextCountSpan>
+                        <ImageFileBoxLabel htmlFor="file">Attach files by selecting here</ImageFileBoxLabel>
+                        <ImageFileBoxInput type="file" id="file" accept="image/jpeg, image/jpg, image/png" onChange={handleImageFile}></ImageFileBoxInput> 
+                    </ContentWrap>
+                </CommentWrap>
+                <div>
+                    
+                </div>
+            </NewCommentWrap>
             <ButtonContainer>
-                <CloseIssueButton onClick={toggleIssueState}>{(props.issue.is_open === ISSUE_OPEN) ? "Close issue" : "Reopen issue"}</CloseIssueButton>
+                <ToggleButtonContainer onClick={toggleIssueState}>
+                    <SvgContainer>{props.issue.is_open === ISSUE_OPEN ? <SvgCloseLogo color={COLOR_DANGER} /> : <SvgOpenLogo color={COLOR_SUCCESS} />}</SvgContainer>
+                    <MsgContainer>{props.issue.is_open === ISSUE_OPEN ? "Close issue" : "Reopen issue"}</MsgContainer>
+                </ToggleButtonContainer>
                 <CommentIssueButton onClick={submitClickEvent}>Comment</CommentIssueButton>
             </ButtonContainer>
-        </>
+        </NewCommentContainer>
     )
 }
 
