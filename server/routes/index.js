@@ -13,7 +13,6 @@ const tokenRouter = require('../middlewares/auth/token');
 
 router.use('/user', userRouter);
 router.use('/', tokenRouter.verifyToken);
-router.use('/', tokenRouter.verifyToken);
 router.use('/milestone', milestoneRouter);
 router.use('/issue', issueRouter);
 router.use('/comment', commentRouter);
