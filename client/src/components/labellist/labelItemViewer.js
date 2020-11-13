@@ -6,6 +6,16 @@ import { LabelContext } from '../common/context';
 import BigLabelItem from './biglabelitem';
 import LabelItemContainer from './itemContainer';
 
+const BigLabelContainer = styled.div`
+  display:flex;
+  align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+  display:flex;
+  align-items: center;
+`;
+
 const TabButton = styled.button`
   color: ${SECONDARY_COLOR};
   border: none;
@@ -23,12 +33,14 @@ const LabelItemViewer = (props) => {
 
   return (
     <LabelItemContainer>
-      <BigLabelItem label={props.label}/>
+      <BigLabelContainer>
+        <BigLabelItem label={props.label}/>
+      </BigLabelContainer>
       <p>{props.label.description}</p>
-      <div>
+      <ButtonContainer>
         <TabButton onClick={() => labelDispatch({type: TOGGLE_ISEDIT, payload: {id: props.label.id}})}>Edit</TabButton>
         <TabButton onClick={() => props.onDelete()}>Delete</TabButton>
-      </div>
+      </ButtonContainer>
     </LabelItemContainer>
   )
 }
