@@ -4,6 +4,15 @@ import { sendPostRequest } from '../common/api';
 import { useDueDate } from '../milestone/milestoneHook';
 import MilestoneInputForm from './milestoneInputForm';
 import { ButtonContainer, OkButton } from '../common/style/button';
+import styled from 'styled-components';
+import { BORDER_COLOR } from '../common/color';
+
+const RightButtonContainer = styled(ButtonContainer)`
+border-top: 1px solid ${BORDER_COLOR};
+justify-content: end;
+margin-top: 0.5rem;
+padding-top: 0.5rem;
+`;
 
 const NewMilestone = (props) => {
   const [title, setTitle] = useState('');
@@ -26,9 +35,9 @@ const NewMilestone = (props) => {
       </div>
       <hr />
       <MilestoneInputForm setTitle={setTitle} setDueDate={setDueDate} setDescription={setDescription} dateColor={dateColor} />
-      <ButtonContainer>
+      <RightButtonContainer>
         <OkButton onClick={createMilestone}>Create milestone</OkButton>
-      </ButtonContainer>
+      </RightButtonContainer>
       {redirect? <Redirect to='/milestone' /> : null}
     </div>
   )
