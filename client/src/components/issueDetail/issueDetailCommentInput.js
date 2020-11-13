@@ -108,9 +108,8 @@ const IssueDetailCommentInput = (props) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const user = useContext(UserContext);
-    console.log(user.id)
     const userInfo = useUser(user.id);
-    console.log(userInfo);
+
     useEffect( () => {
         if (timeCheck) {
             clearTimeout(clear)

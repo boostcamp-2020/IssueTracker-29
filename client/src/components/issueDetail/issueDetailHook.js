@@ -50,8 +50,6 @@ const useIssueDetailComments = (id) => {
 
 const getUserById = async (setUser, id) => {
   const user = await sendGetRequest(`/user/${id}`);
-  console.log(user)
-  console.log(id)
 
   setUser(user);
 }
