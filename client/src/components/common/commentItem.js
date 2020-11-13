@@ -12,8 +12,12 @@ const CommentWrap = styled.div`
 
 const CommentContainer = styled.div`
   width: 90%;
-  height: 200px;
   margin-bottom: 50px;
+  border-radius: 5px;
+  
+  h1 {
+    word-break: break-all;
+  }
 `;
 
 const CommentHeader = styled.div`
@@ -123,6 +127,17 @@ const CommentItem = (props) => {
 
   const user = useContext(UserContext);
 
+  const renderers = {
+    image: ({
+        src
+    }) => (
+        <img 
+            src={src} 
+            style={{ maxWidth: 475 }}  />
+    )
+  };
+
+
   return (
     <CommentWrap>
       <ProfileBox src={props.comment.profile} />
@@ -135,7 +150,7 @@ const CommentItem = (props) => {
             </CommentTitleOption>
           </CommentHeader>
           <CommentBody>
-            {user.id === props.comment.user_id ? <CommentBodyBox>{isEditing ? <EditTextArea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} />}</CommentBodyBox> : <CommentBodyBox><ReactMarkdown source={props.comment.contents} /></CommentBodyBox>}
+            {user.id === props.comment.user_id ? <CommentBodyBox>{isEditing ? <EditTextArea value={commentContents} onChange={setContentState}/> : <ReactMarkdown source={props.comment.contents} escapeHtml={false} renderers={renderers} />}</CommentBodyBox> : <CommentBodyBox><ReactMarkdown source={props.comment.contents} escapeHtml={false} renderers={renderers} /></CommentBodyBox>}
             {user.id === props.comment.user_id ? <>{isEditing ? <><UpdateCommentButton onClick={editComment}>Update comment</UpdateCommentButton><CancelButtonContainer onClick={cancelContentEdit}>Cancel</CancelButtonContainer></> : null}</> : null}
           </CommentBody>
       </CommentContainer>
