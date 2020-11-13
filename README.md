@@ -27,7 +27,7 @@
 |  [고병화](https://github.com/bbbyung2)   |  [김하균](https://github.com/hagyun93)   |  [이준희](https://github.com/GodDrinkTeJAVA)   |  [하이현](https://github.com/hyh1016)   |
 
 ## 데모 링크
-http://www.tutoringmachine.shop/issue
+[데모!!](http://118.67.132.176/)
 
 ## Git Branch Strategy
 
