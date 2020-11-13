@@ -36,6 +36,9 @@ module.exports = {
   UPDATE_MILESTONE_STATE: 'update milestone set is_open = ? where id = ?;',
 
   READ_ALL_ISSUE_LABEL: 'select label_issue.id, label_issue.label_id, label_issue.issue_id, label.name, label.color from label_issue join label on label_issue.label_id = label.id;',
+
+  READ_ALL_ISSUE_OPENCOUNT: 'SELECT milestone_id, COUNT(case when is_open = 1 then 1 end) AS opened, COUNT(case when is_open = 0 then 1 end) AS closed FROM issue WHERE milestone_id IS NOT NULL GROUP BY milestone_id;',
+
   READ_ISSUE_BY_MILESTONE: `select id, title, contents, user_id, (select count(*) from issue where is_open=1 AND milestone_id = ?) as openCount, (select count(*) from issue where is_open=0 AND milestone_id = ?) as closeCount
   from issue where milestoneid = ? AND is_open = 1;`,
   CREATE_ISSUE_BY_MILESTONE: 'insert into issue(title, contents, is_open, user_id, milestone_id) value(?, ?, ?, ?, ?);',

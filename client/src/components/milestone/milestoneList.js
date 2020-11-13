@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useMilestones } from './milestoneHook';
+import { useMilestoneIssueCount, useMilestones } from './milestoneHook';
 import MilestoneItem from './milestoneItem';
 import styled from 'styled-components';
 import { LabelLink, LabelMilestoneNav, MilestoneLink, NewItemLink } from '../common/style/toplink';
@@ -21,6 +21,7 @@ const TabTopbarDiv = styled.div`
 
 const MilestoneList = (props) => {
   const [milestones, setMilestones] = useMilestones();
+  const [milestoneIssueCount, setMilestoneIssueCount] = useMilestoneIssueCount();
 
   const [isOpenMode, setIsOpenMode] = useState(true);
   const [isPopupActive, setIsPopupActive] = useState(false);
@@ -28,15 +29,18 @@ const MilestoneList = (props) => {
 
   const numOpenMilestone = milestones.filter(item => item.is_open === 1).length;
 
+  const milestoneIssueCountObj = milestoneIssueCount.reduce((accu, item) =>
+                                                            ({...accu, [item.milestone_id]: {opened: item.opened, closed: item.closed}}), {});
+
   const milestoneItemComponent = isOpenMode 
-  ? milestones.filter((item) => item.is_open).map((item) => <MilestoneItem key={item.id} milestone={item} onDelete={() => {
+  ? milestones.filter((item) => item.is_open).map((item) => <MilestoneItem key={item.id} milestone={item} issueCount={milestoneIssueCountObj[item.id]} onDelete={() => {
     setDeleteMilestoneId(item.id);
     setIsPopupActive(true);
-  }}/>)
-  : milestones.filter((item) => !item.is_open).map((item) => <MilestoneItem key={item.id} milestone={item} onDelete={() => {
+  }} milestones={milestones} setMilestones={setMilestones}/>)
+  : milestones.filter((item) => !item.is_open).map((item) => <MilestoneItem key={item.id} milestone={item} issueCount={milestoneIssueCountObj[item.id]} onDelete={() => {
     setDeleteMilestoneId(item.id);
     setIsPopupActive(true);
-  }}/>)
+  }} milestones={milestones} setMilestones={setMilestones}/>)
   return (
     <div>
       <DeletePopup
