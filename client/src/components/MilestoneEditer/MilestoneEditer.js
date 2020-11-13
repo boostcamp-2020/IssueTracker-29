@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { sendPutRequest } from '../common/api';
-import { PRIMARY_COLOR } from '../common/color';
+import { BORDER_COLOR, PRIMARY_COLOR } from '../common/color';
 import LabelIcon from '../common/icon/svgLabelIcon';
 import MilestoneIcon from '../common/icon/svgMilestoneIcon';
 import { LabelLink, LabelMilestoneNav, MilestoneLink } from '../common/style/toplink';
 import { useDueDate } from '../milestone/milestoneHook';
 import MilestoneInputForm from '../newMilestone/milestoneInputForm';
 import { ButtonContainer, OkButton, CommonButton } from '../common/style/button';
+import styled from 'styled-components';
+
+const RightButtonContainer = styled(ButtonContainer)`
+border-top: 1px solid ${BORDER_COLOR};
+justify-content: end;
+margin-top: 0.5rem;
+padding-top: 0.5rem;
+`;
 
 const MilestoneEditer = ({ match, location }) => {
   const { oldTitle, oldDueDate, oldDescription, isOpen } = location.state;
@@ -26,7 +34,6 @@ const MilestoneEditer = ({ match, location }) => {
   };
 
   const editMilestoneState = async () => {
-    debugger;
     await sendPutRequest(`/milestone/${id}/state`, { isOpen: isOpen? 0 : 1 });
     setRedirect(true);
   };
@@ -47,11 +54,11 @@ const MilestoneEditer = ({ match, location }) => {
         setDescription={setDescription}
         dateColor={dateColor}
       />
-      <ButtonContainer>
+      <RightButtonContainer>
         <CommonButton onClick={() => {setRedirect(true)}}>Cancel</CommonButton>
         <CommonButton onClick={editMilestoneState}>{isOpen? 'Close' : 'Open'} milestone</CommonButton>
         <OkButton onClick={editMilestone}>Save changes</OkButton>
-      </ButtonContainer>
+      </RightButtonContainer>
       {redirect? <Redirect to='/milestone' /> : null}
     </div>
   );

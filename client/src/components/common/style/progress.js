@@ -33,7 +33,7 @@ const UndoneProgress = styled.div`
 
 const CustomProgress = (props) => {
   return (
-    <ProgressContainer>
+    <ProgressContainer className={props.className}>
       <DoneProgress percentage={props.percentage}/>
       <UndoneProgress percentage={100 - props.percentage}/>
     </ProgressContainer>

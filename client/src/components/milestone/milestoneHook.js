@@ -17,6 +17,20 @@ const useMilestones = () => {
   return [milestones, setMilestones];
 }
 
+const useMilestoneIssueCount = () => {
+  const [milestoneIssueCount, setMilestoneIssueCount] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const issueCount = await sendGetRequest('/milestone/issuecount');
+      setMilestoneIssueCount(issueCount);
+    })();
+
+  }, []);
+
+  return [milestoneIssueCount, setMilestoneIssueCount]
+}
+
 const useDueDate = (date = null) => {
   const [dueDate, setDueDate] = useState(date);
   const [dateColor, setDateColor] = useState('black');
@@ -38,4 +52,4 @@ const useDueDate = (date = null) => {
   return { dueDate, setDueDate, dateColor };
 };
 
-export { useMilestones, useDueDate };
+export { useMilestones, useMilestoneIssueCount, useDueDate };

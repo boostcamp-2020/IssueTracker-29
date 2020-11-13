@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.get('/', milestoneMiddleware.readAllMilestone);
 
+router.get('/issuecount', milestoneMiddleware.readMilestoneIssueCount);
+
 router.get('/:state', milestoneMiddleware.readMilestone);
 router.post('/', milestoneMiddleware.createMilestone);
 router.put('/:milestoneid', milestoneMiddleware.updateMilestone);
